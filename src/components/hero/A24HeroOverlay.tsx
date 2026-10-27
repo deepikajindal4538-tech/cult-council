@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ArrowUpRight, Sparkles, X } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { ISociety } from "@/models/Society";
+import { SocietyIndex } from "./SocietyIndex";
 
 interface A24HeroOverlayProps {
   societies: (ISociety | any)[];
@@ -17,12 +18,11 @@ export function A24HeroOverlay({
   activeIndex,
   onSelectIndex,
 }: A24HeroOverlayProps) {
-  const [indexMenuOpen, setIndexMenuOpen] = useState(false);
   const society = societies[activeIndex] || societies[0];
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 overflow-hidden select-none">
-      {/* 1. TOP HEADER (Exact A24 Navigation & Branding) */}
+    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 pt-6 sm:pt-8 overflow-hidden select-none">
+      {/* 1. TOP HEADER (Society Details Only) */}
       <header className="w-full flex items-start justify-between">
         {/* Top-Left: Active Society Title & Hairline Metadata Table */}
         <div className="pointer-events-auto max-w-sm sm:max-w-md">
@@ -35,7 +35,7 @@ export function A24HeroOverlay({
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
               {/* Massive Editorial Serif Title */}
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink uppercase leading-none mb-4">
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink uppercase leading-none mb-4">
                 {society.name}
               </h1>
 
@@ -80,55 +80,18 @@ export function A24HeroOverlay({
             </motion.div>
           </AnimatePresence>
         </div>
-
-        {/* Top-Right / Center: Minimalist A24 Nav Links */}
-        <div className="pointer-events-auto flex items-center gap-6 sm:gap-10 font-mono text-xs uppercase tracking-widest text-ink">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="font-serif font-bold text-lg tracking-tighter hover:opacity-75 transition-opacity"
-          >
-            CC
-          </Link>
-
-          {/* Nav Items */}
-          <div className="hidden md:flex items-center gap-7">
-            <Link
-              href="/societies"
-              className="relative text-ink font-semibold flex flex-col items-center"
-            >
-              <span>Societies</span>
-              <span className="w-1 h-1 rounded-full bg-ink mt-0.5" />
-            </Link>
-
-            <Link
-              href="/events"
-              className="text-ink-muted hover:text-ink transition-colors"
-            >
-              Events
-            </Link>
-
-            <Link
-              href="/fests"
-              className="text-ink-muted hover:text-ink transition-colors"
-            >
-              Fests
-            </Link>
-
-            {/* Index Dropdown Toggle */}
-            <button
-              type="button"
-              onClick={() => setIndexMenuOpen(!indexMenuOpen)}
-              className="flex items-center gap-1 text-ink-muted hover:text-ink transition-colors focus:outline-none"
-            >
-              <span>Index</span>
-              <ChevronDown className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
       </header>
 
-      {/* 2. BOTTOM CONTROLS & CRITIC PULL QUOTES (Exact A24 Layout) */}
+      {/* Right Side: The Interactive Societies Ladder Rail Index */}
+      <div className="pointer-events-auto hidden md:flex absolute right-6 sm:right-10 lg:right-12 top-1/2 -translate-y-1/2 z-30">
+        <SocietyIndex
+          societies={societies}
+          activeIndex={activeIndex}
+          onSelectIndex={onSelectIndex}
+        />
+      </div>
+
+      {/* 2. BOTTOM CONTROLS & CRITIC PULL QUOTES */}
       <footer className="w-full flex flex-col md:flex-row items-end justify-between gap-6 pt-8">
         {/* Left Ticker / Hint */}
         <div className="pointer-events-auto hidden lg:flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-ink-faint">
@@ -136,7 +99,7 @@ export function A24HeroOverlay({
           <span>DRAG OR SCROLL TO ROTATE CRATE DISCS</span>
         </div>
 
-        {/* Center: Twin Critic Pull Quotes with Star Ratings (As shown in user's image) */}
+        {/* Center: Twin Critic Pull Quotes with Star Ratings */}
         <div className="pointer-events-auto flex items-start gap-8 sm:gap-16 max-w-xl text-center md:text-left mx-auto md:mx-0">
           <AnimatePresence mode="wait">
             <motion.div
@@ -192,55 +155,6 @@ export function A24HeroOverlay({
           </Link>
         </div>
       </footer>
-
-      {/* 3. Index Dropdown Drawer / Modal */}
-      <AnimatePresence>
-        {indexMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.96 }}
-            transition={{ duration: 0.2 }}
-            className="pointer-events-auto absolute top-20 right-6 sm:right-12 z-50 w-72 bg-[#FAF8F5] border border-stone-300 rounded-xl shadow-soft-xl p-5"
-          >
-            <div className="flex items-center justify-between border-b border-stone-200 pb-3 mb-3">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-ink-faint">
-                ARCHIVAL CRATE INDEX
-              </span>
-              <button
-                type="button"
-                onClick={() => setIndexMenuOpen(false)}
-                className="text-ink-muted hover:text-ink focus:outline-none"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="space-y-1">
-              {societies.map((soc, idx) => (
-                <button
-                  key={soc.slug}
-                  type="button"
-                  onClick={() => {
-                    onSelectIndex(idx);
-                    setIndexMenuOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-mono transition-colors ${
-                    idx === activeIndex
-                      ? "bg-ink text-canvas font-semibold"
-                      : "text-ink-muted hover:text-ink hover:bg-stone-200/50"
-                  }`}
-                >
-                  <span className="uppercase">{soc.name}</span>
-                  <span className="text-[10px] opacity-60">
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

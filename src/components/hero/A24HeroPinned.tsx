@@ -54,14 +54,15 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
 
   return (
     <div
+      id="societies-stage"
       ref={containerRef}
       className="relative w-full"
       style={{ height: `${Math.max(250, n * 85)}vh` }}
     >
-      {/* 100% Full-Window Sticky Viewport */}
+      {/* Pinned Sticky Stage */}
       <section
         aria-label="A24-Style Full Window 3D Cultural Objects Showcase"
-        className="sticky top-0 h-screen w-full overflow-hidden transition-colors duration-700 ease-out select-none border-b border-stone-300"
+        className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden transition-colors duration-700 ease-out select-none border-b border-stone-300"
         style={{
           backgroundColor: activeSociety?.washColor || "#F4F1EA",
         }}
