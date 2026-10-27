@@ -28,7 +28,78 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAF8F5] text-ink selection:bg-stone-300">
-      {/* 1. Hero Pinned Physical 3D Crate Showcase with Seamless Title & Ladder */}
+      {/* 0. Cultural Council Header Title Section (Exact Theme & Color, Zero Harsh Borders) */}
+      <section
+        id="hero-title"
+        className="relative min-h-[75vh] flex flex-col justify-between pt-12 pb-8 px-4 sm:px-6 lg:px-8 bg-[#FAF8F5] overflow-hidden select-none"
+      >
+        {/* Subtle Paper Noise Background matching the hero stage 100% */}
+        <div
+          className="absolute inset-0 opacity-[0.035] pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(#1C1917 1px, transparent 1px)`,
+            backgroundSize: "20px 20px",
+          }}
+        />
+
+        {/* Top Ledger Ribbon */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full flex items-center justify-between border-b border-stone-300/80 pb-4 font-mono text-xs uppercase tracking-widest text-ink-faint">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
+            <span className="text-ink font-semibold">INSTITUTE OF NATIONAL IMPORTANCE</span>
+            <span className="hidden sm:inline">// ESTD. 1999</span>
+          </div>
+          <div className="text-[10px] tracking-wider text-amber-800 font-semibold">
+            APEX ARTS &amp; CULTURE BODY
+          </div>
+        </div>
+
+        {/* Monumental Editorial Title */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full text-center space-y-4 my-auto py-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-200/50 border border-stone-300 font-mono text-xs uppercase tracking-widest text-ink">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span>OFFICIAL CULTURAL PORTAL</span>
+          </div>
+
+          <div className="space-y-1">
+            <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-ink uppercase leading-[0.92]">
+              CULTURAL COUNCIL
+            </h1>
+            <p className="font-serif italic text-2xl sm:text-4xl md:text-5xl text-stone-700 tracking-tight">
+              IIIT Allahabad
+            </p>
+          </div>
+
+          <p className="max-w-2xl mx-auto font-serif text-base sm:text-xl text-ink-muted leading-relaxed pt-1">
+            Where technical precision yields to unfiltered artistic fervor. The statutory body governing music, dramatics, choreography, fine arts, literature, and visual storytelling.
+          </p>
+
+          {/* Six Autonomous Societies Tags */}
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-2 font-mono text-xs">
+            {societies.map((soc) => (
+              <span
+                key={soc.slug}
+                className="px-3 py-1 rounded-md bg-[#FAF8F5] border border-stone-300 text-ink-muted font-medium hover:border-ink hover:text-ink transition-colors"
+              >
+                <strong style={{ color: soc.accentColor }}>{soc.name}</strong> • {soc.category?.split(" ")[0]}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Clean Scroll Cue without hard borders */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full flex items-center justify-center font-mono text-xs uppercase tracking-widest text-ink-muted">
+          <a
+            href="#societies-stage"
+            className="flex items-center gap-2 text-ink hover:text-stone-600 transition-colors py-2"
+          >
+            <span>SCROLL DOWN TO EXPLORE SOCIETIES LADDER</span>
+            <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
+          </a>
+        </div>
+      </section>
+
+      {/* 1. Hero Pinned Physical 3D Crate Showcase */}
       <A24HeroPinned societies={societies} />
 
       {/* 2. Chapter 01: Prologue / About the Council & College */}

@@ -42,7 +42,7 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
     if (!containerRef.current) return;
     const containerTop = containerRef.current.offsetTop;
     const scrollDistance = containerRef.current.offsetHeight - window.innerHeight;
-    const target = containerTop + (0.10 + (index / (n - 1 || 1)) * 0.90) * scrollDistance;
+    const target = containerTop + (index / (n - 1 || 1)) * scrollDistance;
 
     window.scrollTo({
       top: target,
@@ -57,14 +57,14 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
       id="societies-stage"
       ref={containerRef}
       className="relative w-full"
-      style={{ height: `${Math.max(300, (n + 1) * 85)}vh` }}
+      style={{ height: `${Math.max(250, n * 85)}vh` }}
     >
-      {/* Pinned Sticky Stage */}
+      {/* 100% Full-Window Sticky Viewport */}
       <section
         aria-label="A24-Style Full Window 3D Cultural Objects Showcase"
         className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden transition-colors duration-700 ease-out select-none border-b border-stone-300"
         style={{
-          backgroundColor: activeSociety?.washColor || "#F4F1EA",
+          backgroundColor: scrollProgress < 0.04 ? "#FAF8F5" : (activeSociety?.washColor || "#FAF8F5"),
         }}
       >
         {/* Subtle Paper Noise Background */}
@@ -84,12 +84,11 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
           onIndexChange={(idx) => setActiveIndex(idx)}
         />
 
-        {/* 2. Full-Window A24 Editorial Overlay with Smooth Title & Ladder Transition */}
+        {/* 2. Full-Window A24 Editorial Overlay */}
         <A24HeroOverlay
           societies={societies}
           activeIndex={activeIndex}
           onSelectIndex={handleSelectIndex}
-          scrollProgress={scrollProgress}
         />
       </section>
     </div>
