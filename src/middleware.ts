@@ -42,14 +42,23 @@ export function middleware(request: NextRequest) {
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
 
-  // Strict CSP - Only upgrade insecure requests in production HTTPS environments
   const isProd = process.env.NODE_ENV === "production";
+
+  if (isProd) {
+    response.headers.set(
+      "Strict-Transport-Security",
+      "max-age=31536000; includeSubDomains; preload"
+    );
+  }
+
+  // Strict CSP
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    img-src 'self' blob: data: https://*.staticflickr.com https://live.staticflickr.com;
+    img-src 'self' blob: data: https://*.staticflickr.com https://live.staticflickr.com https://images.unsplash.com;
     font-src 'self' data: https://fonts.gstatic.com;
+    connect-src 'self' https://*.staticflickr.com https://live.staticflickr.com https://images.unsplash.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self';

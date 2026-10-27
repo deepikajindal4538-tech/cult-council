@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAlbumPhotos, FlickrClientError } from "@/lib/flickr/client";
+import { getAlbumPhotosWithFallback, FlickrClientError } from "@/lib/flickr/client";
 import { rateLimiter } from "@/lib/rateLimit";
 import { ZodError } from "zod";
 
@@ -43,7 +43,14 @@ export async function GET(
       ? parseInt(searchParams.get("per_page")!, 10)
       : undefined;
 
-    const data = await getAlbumPhotos(albumId, { page, per_page });
+    const data = await getAlbumPhotosWithFallback(albumId, { page, per_page });
+
+    if (!data) {
+      return NextResponse.json(
+        { error: "Requested album could not be found." },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json(data, {
       status: 200,

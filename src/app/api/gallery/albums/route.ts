@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAlbums, FlickrClientError } from "@/lib/flickr/client";
+import { getAlbumsWithFallback, FlickrClientError } from "@/lib/flickr/client";
 import { rateLimiter } from "@/lib/rateLimit";
 import { ZodError } from "zod";
 
@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
       ? parseInt(searchParams.get("per_page")!, 10)
       : undefined;
 
-    const data = await getAlbums({ page, per_page });
+    const data = await getAlbumsWithFallback({ page, per_page });
 
     return NextResponse.json(data, {
       status: 200,

@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { ISociety } from "@/models/Society";
-import { SocietyObject } from "./SocietyObject";
+import { Society3DVectorObject } from "./Society3DVectorObject";
 
 interface A24SmoothHeroStageProps {
   societies: (ISociety | any)[];
@@ -67,9 +67,17 @@ export function A24SmoothHeroStage({
 
       const s = stateRef.current;
 
-      // Smooth damped lerp toward target progress
+      // Smooth damped lerp toward target progress (respecting prefers-reduced-motion)
+      const prefersReduced =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
       const diff = s.targetProgress - s.currentProgress;
-      s.currentProgress += diff * 0.085;
+      if (prefersReduced) {
+        s.currentProgress = s.targetProgress;
+      } else {
+        s.currentProgress += diff * 0.085;
+      }
 
       // Update render state when difference is visible
       if (Math.abs(diff) > 0.0001 || s.isDragging) {
@@ -237,7 +245,7 @@ export function A24SmoothHeroStage({
               }}
             >
               <div className="w-[380px] sm:w-[520px] md:w-[620px] lg:w-[700px] h-[380px] sm:h-[520px] md:h-[620px] lg:h-[700px] flex items-center justify-center">
-                <SocietyObject
+                <Society3DVectorObject
                   society={soc}
                   isActive={isCurrent}
                   progress={isCurrent ? 1 : Math.max(0, 1 - Math.abs(delta))}
