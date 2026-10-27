@@ -42,10 +42,15 @@ export function A24SmoothHeroStage({
     }
   }, [targetIndex]);
 
-  // Sync external scroll progress from page scroll
+  // Sync external scroll progress from page scroll with smooth intro transition
   useEffect(() => {
     if (externalProgress !== undefined && !stateRef.current.isDragging) {
-      stateRef.current.targetProgress = externalProgress * (n - 1);
+      if (externalProgress < 0.10) {
+        stateRef.current.targetProgress = 0;
+      } else {
+        const ratio = (externalProgress - 0.10) / 0.90;
+        stateRef.current.targetProgress = Math.min(n - 1, Math.max(0, ratio * (n - 1)));
+      }
     }
   }, [externalProgress, n]);
 

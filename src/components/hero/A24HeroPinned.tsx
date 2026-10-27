@@ -42,7 +42,7 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
     if (!containerRef.current) return;
     const containerTop = containerRef.current.offsetTop;
     const scrollDistance = containerRef.current.offsetHeight - window.innerHeight;
-    const target = containerTop + (index / (n - 1 || 1)) * scrollDistance;
+    const target = containerTop + (0.10 + (index / (n - 1 || 1)) * 0.90) * scrollDistance;
 
     window.scrollTo({
       top: target,
@@ -57,7 +57,7 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
       id="societies-stage"
       ref={containerRef}
       className="relative w-full"
-      style={{ height: `${Math.max(250, n * 85)}vh` }}
+      style={{ height: `${Math.max(300, (n + 1) * 85)}vh` }}
     >
       {/* Pinned Sticky Stage */}
       <section
@@ -84,11 +84,12 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
           onIndexChange={(idx) => setActiveIndex(idx)}
         />
 
-        {/* 2. Full-Window A24 Editorial Overlay */}
+        {/* 2. Full-Window A24 Editorial Overlay with Smooth Title & Ladder Transition */}
         <A24HeroOverlay
           societies={societies}
           activeIndex={activeIndex}
           onSelectIndex={handleSelectIndex}
+          scrollProgress={scrollProgress}
         />
       </section>
     </div>
