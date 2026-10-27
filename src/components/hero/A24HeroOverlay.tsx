@@ -21,7 +21,7 @@ export function A24HeroOverlay({
   const society = societies[activeIndex] || societies[0];
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 pt-16 sm:pt-20 overflow-hidden select-none">
+    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 pt-8 sm:pt-12 overflow-hidden select-none">
       {/* 1. TOP HEADER (Society Details) */}
       <header className="w-full flex items-start justify-between">
         {/* Top-Left: Active Society Title & Hairline Metadata Table */}
@@ -29,19 +29,30 @@ export function A24HeroOverlay({
           <AnimatePresence mode="wait">
             <motion.div
               key={society.slug}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
+              {/* Category Eyebrow */}
+              <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-[0.2em]">
+                <span
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: society.accentColor }}
+                />
+                <span className="font-semibold text-ink">
+                  SECTOR 0{activeIndex + 1} // {society.category}
+                </span>
+              </div>
+
               {/* Massive Editorial Serif Title */}
-              <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink uppercase leading-none mb-4">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink uppercase leading-none mb-4">
                 {society.name}
               </h2>
 
               {/* Hairline Credits Ledger Table */}
               <div className="w-full border-t border-stone-300 text-xs font-mono">
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200">
+                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80">
                   <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
                     DIRECTED BY
                   </span>
@@ -50,7 +61,7 @@ export function A24HeroOverlay({
                   </span>
                 </div>
 
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200">
+                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80">
                   <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
                     FOUNDED
                   </span>
@@ -59,7 +70,7 @@ export function A24HeroOverlay({
                   </span>
                 </div>
 
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200">
+                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80">
                   <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
                     DISCIPLINE
                   </span>
@@ -83,7 +94,7 @@ export function A24HeroOverlay({
       </header>
 
       {/* Right Side: The Interactive Societies Ladder Rail Index */}
-      <div className="pointer-events-auto hidden md:flex absolute right-6 sm:right-10 lg:right-12 top-1/2 -translate-y-1/2 z-30">
+      <div className="pointer-events-auto hidden md:flex absolute right-6 sm:right-8 lg:right-10 top-1/2 -translate-y-1/2 z-30">
         <SocietyIndex
           societies={societies}
           activeIndex={activeIndex}
@@ -92,23 +103,23 @@ export function A24HeroOverlay({
       </div>
 
       {/* 2. BOTTOM CONTROLS & CRITIC PULL QUOTES */}
-      <footer className="w-full flex flex-col md:flex-row items-end justify-between gap-6 pt-8">
+      <footer className="w-full flex flex-col md:flex-row items-end justify-between gap-6 pt-6">
         {/* Left Ticker / Hint */}
-        <div className="pointer-events-auto hidden lg:flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-ink-faint">
-          <span className="w-2 h-2 rounded-full bg-ink" />
+        <div className="pointer-events-auto hidden lg:flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-ink-faint">
+          <span className="w-1.5 h-1.5 rounded-full bg-ink" />
           <span>DRAG OR SCROLL TO ROTATE CRATE DISCS</span>
         </div>
 
         {/* Center: Twin Critic Pull Quotes with Star Ratings */}
-        <div className="pointer-events-auto flex items-start gap-8 sm:gap-16 max-w-xl text-center md:text-left mx-auto md:mx-0">
+        <div className="pointer-events-auto flex items-start gap-8 sm:gap-14 max-w-xl text-center md:text-left mx-auto md:mx-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={society.slug + "-quote1"}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35 }}
-              className="space-y-1.5 max-w-[240px]"
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-1 max-w-[220px]"
             >
               <div className="text-amber-600 text-xs tracking-wider">
                 ★★★★★
@@ -125,11 +136,11 @@ export function A24HeroOverlay({
           <AnimatePresence mode="wait">
             <motion.div
               key={society.slug + "-quote2"}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35, delay: 0.05 }}
-              className="space-y-1.5 max-w-[240px] hidden sm:block"
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+              className="space-y-1 max-w-[220px] hidden sm:block"
             >
               <div className="text-amber-600 text-xs tracking-wider">
                 ★★★★½
@@ -148,10 +159,10 @@ export function A24HeroOverlay({
         <div className="pointer-events-auto">
           <Link
             href={`/societies/${society.slug}`}
-            className="group inline-flex items-center gap-3 px-6 py-3 rounded-full bg-ink text-canvas font-mono text-xs uppercase tracking-widest hover:bg-stone-800 transition-all shadow-soft"
+            className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-ink text-canvas font-mono text-xs uppercase tracking-widest hover:bg-stone-800 transition-all duration-300 shadow-sm hover:shadow"
           >
             <span>Explore Dossier</span>
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </div>
       </footer>
