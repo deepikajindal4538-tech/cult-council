@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ArrowUpRight, Sparkles, X } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { ISociety } from "@/models/Society";
 import { SocietyIndex } from "./SocietyIndex";
 
@@ -18,12 +18,11 @@ export function A24HeroOverlay({
   activeIndex,
   onSelectIndex,
 }: A24HeroOverlayProps) {
-  const [indexMenuOpen, setIndexMenuOpen] = useState(false);
   const society = societies[activeIndex] || societies[0];
 
   return (
     <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 pt-20 sm:pt-24 overflow-hidden select-none">
-      {/* 1. TOP HEADER (Exact A24 Navigation & Branding) */}
+      {/* 1. TOP HEADER (Society Details Only) */}
       <header className="w-full flex items-start justify-between">
         {/* Top-Left: Active Society Title & Hairline Metadata Table */}
         <div className="pointer-events-auto max-w-sm sm:max-w-md">
@@ -80,44 +79,6 @@ export function A24HeroOverlay({
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
-
-        {/* Top-Right: Original Minimalist A24 Nav Links & Index Trigger */}
-        <div className="pointer-events-auto flex items-center gap-5 sm:gap-8 font-mono text-xs uppercase tracking-widest text-ink">
-          {/* Nav Items */}
-          <div className="hidden md:flex items-center gap-6">
-            <Link
-              href="/societies"
-              className="relative text-ink font-semibold flex flex-col items-center hover:opacity-80 transition-opacity"
-            >
-              <span>Societies</span>
-              <span className="w-1 h-1 rounded-full bg-ink mt-0.5" />
-            </Link>
-
-            <Link
-              href="/events"
-              className="text-ink-muted hover:text-ink transition-colors"
-            >
-              Events
-            </Link>
-
-            <Link
-              href="/fests"
-              className="text-ink-muted hover:text-ink transition-colors"
-            >
-              Fests
-            </Link>
-
-            {/* Index Dropdown Toggle */}
-            <button
-              type="button"
-              onClick={() => setIndexMenuOpen(!indexMenuOpen)}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#FAF8F5]/80 border border-stone-300 text-ink hover:text-stone-700 hover:bg-stone-200/50 transition-colors focus:outline-none"
-            >
-              <span>Index</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${indexMenuOpen ? "rotate-180" : ""}`} />
-            </button>
-          </div>
         </div>
       </header>
 
@@ -194,55 +155,6 @@ export function A24HeroOverlay({
           </Link>
         </div>
       </footer>
-
-      {/* 3. Index Dropdown Drawer / Modal */}
-      <AnimatePresence>
-        {indexMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.96 }}
-            transition={{ duration: 0.2 }}
-            className="pointer-events-auto absolute top-20 right-6 sm:right-12 z-50 w-72 bg-[#FAF8F5] border border-stone-300 rounded-xl shadow-soft-xl p-5"
-          >
-            <div className="flex items-center justify-between border-b border-stone-200 pb-3 mb-3">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-ink-faint">
-                ARCHIVAL CRATE INDEX
-              </span>
-              <button
-                type="button"
-                onClick={() => setIndexMenuOpen(false)}
-                className="text-ink-muted hover:text-ink focus:outline-none"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="space-y-1">
-              {societies.map((soc, idx) => (
-                <button
-                  key={soc.slug}
-                  type="button"
-                  onClick={() => {
-                    onSelectIndex(idx);
-                    setIndexMenuOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-mono transition-colors ${
-                    idx === activeIndex
-                      ? "bg-ink text-canvas font-semibold"
-                      : "text-ink-muted hover:text-ink hover:bg-stone-200/50"
-                  }`}
-                >
-                  <span className="uppercase">{soc.name}</span>
-                  <span className="text-[10px] opacity-60">
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
