@@ -21,8 +21,8 @@ export function A24HeroOverlay({
   const society = societies[activeIndex] || societies[0];
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 overflow-hidden select-none">
-      {/* 1. TOP HEADER (Exact A24 Navigation & Branding) */}
+    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 pt-20 sm:pt-24 overflow-hidden select-none">
+      {/* 1. TOP HEADER (Society Identity & Quick Switcher) */}
       <header className="w-full flex items-start justify-between">
         {/* Top-Left: Active Society Title & Hairline Metadata Table */}
         <div className="pointer-events-auto max-w-sm sm:max-w-md">
@@ -35,7 +35,7 @@ export function A24HeroOverlay({
               transition={{ duration: 0.35, ease: "easeOut" }}
             >
               {/* Massive Editorial Serif Title */}
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink uppercase leading-none mb-4">
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink uppercase leading-none mb-4">
                 {society.name}
               </h1>
 
@@ -81,50 +81,22 @@ export function A24HeroOverlay({
           </AnimatePresence>
         </div>
 
-        {/* Top-Right / Center: Minimalist A24 Nav Links */}
-        <div className="pointer-events-auto flex items-center gap-6 sm:gap-10 font-mono text-xs uppercase tracking-widest text-ink">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="font-serif font-bold text-lg tracking-tighter hover:opacity-75 transition-opacity"
-          >
-            CC
-          </Link>
-
-          {/* Nav Items */}
-          <div className="hidden md:flex items-center gap-7">
-            <Link
-              href="/societies"
-              className="relative text-ink font-semibold flex flex-col items-center"
-            >
-              <span>Societies</span>
-              <span className="w-1 h-1 rounded-full bg-ink mt-0.5" />
-            </Link>
-
-            <Link
-              href="/events"
-              className="text-ink-muted hover:text-ink transition-colors"
-            >
-              Events
-            </Link>
-
-            <Link
-              href="/fests"
-              className="text-ink-muted hover:text-ink transition-colors"
-            >
-              Fests
-            </Link>
-
-            {/* Index Dropdown Toggle */}
-            <button
-              type="button"
-              onClick={() => setIndexMenuOpen(!indexMenuOpen)}
-              className="flex items-center gap-1 text-ink-muted hover:text-ink transition-colors focus:outline-none"
-            >
-              <span>Index</span>
-              <ChevronDown className="w-3.5 h-3.5" />
-            </button>
+        {/* Top-Right: Minimalist Society Crate Index Control */}
+        <div className="pointer-events-auto flex items-center gap-4 font-mono text-xs uppercase tracking-widest text-ink">
+          <div className="hidden sm:flex items-center gap-2 bg-stone-200/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-stone-300/80 text-[11px]">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+            <span>DISC 0{activeIndex + 1} OF 0{societies.length}</span>
           </div>
+
+          {/* Index Dropdown Toggle */}
+          <button
+            type="button"
+            onClick={() => setIndexMenuOpen(!indexMenuOpen)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#FAF8F5]/90 border border-stone-300 rounded shadow-sm hover:bg-stone-100 transition-colors focus:outline-none"
+          >
+            <span>WING INDEX</span>
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${indexMenuOpen ? "rotate-180" : ""}`} />
+          </button>
         </div>
       </header>
 
