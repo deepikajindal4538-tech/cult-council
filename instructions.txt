@@ -1,0 +1,70 @@
+# Project: IIIT Allahabad Cultural Council Website
+
+## 0. Working rules for the agent
+- Work in phases. After each phase, STOP, summarize what was built, list anything unverified or untested, and wait for my confirmation.
+- Do not generate everything at once. Do not invent API responses; mark anything you could not run.
+- Never put secrets in client code or NEXT_PUBLIC_ variables.
+
+## 1. Stack
+Next.js 14+ (App Router), TypeScript (strict), Tailwind CSS, Framer Motion + GSAP ScrollTrigger (hero), MongoDB (Mongoose), Zod (validation), Upstash Redis or in-memory LRU (rate limiting/cache), deploy on Vercel.
+
+## 2. Design direction
+- LIGHT theme only. Warm off-white base, festival-style expressive typography, generous whitespace, soft shadows.
+- Each society has an accent colour; the page background wash transitions to it as the hero scrolls.
+- Smooth, but respect prefers-reduced-motion. Mobile-first. Target Lighthouse 90+.
+
+## 3. Folder architecture
+src/
+  app/
+    (site)/page.tsx            # landing
+    (site)/societies/page.tsx  # all societies
+    (site)/societies/[slug]/page.tsx
+    (site)/events/page.tsx, fests/page.tsx
+    (site)/gallery/page.tsx, gallery/[albumId]/page.tsx
+    api/gallery/albums/route.ts          # GET only
+    api/gallery/albums/[id]/route.ts     # GET only
+  components/hero/ (HeroPinned, SocietyObject, SocietyInfoPanel, SocietyIndex)
+  components/ui/, components/gallery/
+  lib/flickr/ (client.ts, allowlist.ts, schemas.ts, transform.ts)  # server-only
+  lib/db.ts, lib/rateLimit.ts, lib/cache.ts
+  models/Society.ts, Event.ts, Fest.ts
+  middleware.ts                # security headers, rate limit on /api/*
+
+## 4. Landing hero (reference: https://a24.raviklaassens.com/ — take the interaction idea only, never copy its code or assets)
+- A pinned (sticky) section driven by scroll PROGRESS (GSAP ScrollTrigger or Framer useScroll). Do NOT hijack wheel/touch events.
+- One object per society, rotating/revolving into the front as the user scrolls; an info panel (name, tagline, "Explore" link) changes in sync; side index lists all societies and is clickable.
+- Objects (use ONE consistent style: pre-rendered transparent WebP/AVIF with soft shadow; leave a SocietyObject interface so live 3D (react-three-fiber + Draco GLB) can replace images later):
+  - AMS: photography, camera
+  - Geneticx: dance, disco ball
+  - Sarasva: literary, rolled letter that unrolls when it reaches the front (text must be real HTML, not part of the image)
+  - Nirmiti: art, paintbrush
+  - Rangtarangini: stage/drama, clapboard
+  - Virtousi: music, vinyl disc
+- Society list and objects come from MongoDB (not hard-coded). Must work with N societies, not exactly 6.
+- Mobile: simpler vertical layout, lazy-load images, static poster fallback. Audio, if added, is muted by default.
+- Below the hero: about the college, cultural activities, fests, next-fest CTA, gallery preview, footer. Add a visible "skip to content" link.
+
+## 5. Flickr wrapper (server-only, read-only)
+- API key and user ID only in server env vars (FLICKR_API_KEY, FLICKR_USER_ID). Files in lib/flickr start with `import "server-only"`.
+- Only GET routes. Other methods return 405.
+- Allowlist of Flickr methods: flickr.photosets.getList, flickr.photosets.getPhotos (add others only if needed). Clients can never choose the method.
+- Validate inputs with Zod: album ID format, page >= 1, per_page <= 50.
+- Return only trimmed fields (id, title, image URLs for fixed sizes, width, height). Never forward raw Flickr responses or errors; return generic error messages.
+- Cache responses (revalidate ~10 min) and rate-limit per IP.
+- No OAuth and no write permissions anywhere. Use a key that has no write access.
+- Hotlink the final image URLs from Flickr's CDN via next/image with a remotePatterns allowlist (staticflickr.com). Check Flickr's terms of use for the display requirements.
+
+## 6. Security checklist
+- Security headers: CSP, X-Content-Type-Options, Referrer-Policy, frame-ancestors none, HSTS.
+- Zod validation on all inputs; no raw DB queries from user input.
+- Rate limiting on /api/*; env validation at startup.
+- Any admin/content-editing area (if added later) needs real auth (NextAuth/Auth.js), role checks, and CSRF protection. NOT part of v1.
+- npm audit and lockfile committed; no secrets in the repo (.env.local in .gitignore).
+
+## 7. Phases (stop after each)
+1. Setup, Tailwind design tokens, layout, fonts, DB models and seed data for 6 societies
+2. Flickr wrapper + tests (mock Flickr for tests, since live calls may be unverified)
+3. Landing hero (pinned scroll, image-based) + rest of landing page
+4. Society pages and portal, events/fests pages
+5. Gallery pages using the wrapper
+6. Performance pass, accessibility pass, security review, deployment checklist
