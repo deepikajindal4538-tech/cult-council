@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { ISociety } from "@/models/Society";
-import { SocietyObject } from "./SocietyObject";
+import { Society3DVectorObject } from "./Society3DVectorObject";
 
 interface A24SmoothHeroStageProps {
   societies: (ISociety | any)[];
@@ -237,7 +237,7 @@ export function A24SmoothHeroStage({
               }}
             >
               <div className="w-[380px] sm:w-[520px] md:w-[620px] lg:w-[700px] h-[380px] sm:h-[520px] md:h-[620px] lg:h-[700px] flex items-center justify-center">
-                <SocietyObject
+                <Society3DVectorObject
                   society={soc}
                   isActive={isCurrent}
                   progress={isCurrent ? 1 : Math.max(0, 1 - Math.abs(delta))}
