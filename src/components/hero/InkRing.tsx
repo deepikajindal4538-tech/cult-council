@@ -17,7 +17,7 @@ export function InkRing({ color = "#1C1917", isActive }: InkRingProps) {
     <div className="absolute inset-0 pointer-events-none flex items-center justify-center -z-10">
       <svg
         viewBox="0 0 320 320"
-        className="w-[125%] h-[125%] max-w-[420px] max-h-[420px] overflow-visible"
+        className="w-[130%] h-[130%] max-w-[640px] max-h-[640px] sm:max-w-[720px] sm:max-h-[720px] overflow-visible"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >

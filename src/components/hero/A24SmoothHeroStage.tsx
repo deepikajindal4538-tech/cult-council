@@ -185,13 +185,13 @@ export function A24SmoothHeroStage({
           // When delta > 0 (upcoming from right): x is positive (rightwards)
           // When delta = 0 (center): x is 0
           // When delta < 0 (past toward left): x is negative (leftwards)
-          const x = delta * 390 + Math.pow(delta, 2) * 25;
+          const x = delta * 460 + Math.pow(delta, 2) * 30;
 
           // Y Position:
           // When delta > 0 (top-right): y is negative (upwards)
           // When delta = 0 (center): y is 0
           // When delta < 0 (bottom-left): y is positive (downwards)
-          const y = -delta * 230 + Math.pow(delta, 2) * 20;
+          const y = -delta * 280 + Math.pow(delta, 2) * 24;
 
           // Scale:
           // Center is prominent (1.05 to 1.1)
@@ -236,7 +236,7 @@ export function A24SmoothHeroStage({
                 pointerEvents: isCurrent ? "auto" : "none",
               }}
             >
-              <div className="w-72 sm:w-96 md:w-[440px] h-72 sm:h-96 md:h-[440px] flex items-center justify-center">
+              <div className="w-[380px] sm:w-[520px] md:w-[620px] lg:w-[700px] h-[380px] sm:h-[520px] md:h-[620px] lg:h-[700px] flex items-center justify-center">
                 <SocietyObject
                   society={soc}
                   isActive={isCurrent}

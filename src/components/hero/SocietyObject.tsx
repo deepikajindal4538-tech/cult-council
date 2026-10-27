@@ -55,7 +55,7 @@ export function SocietyObject({
           opacity: isActive ? 0.35 : 0.15,
         }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -bottom-6 w-44 sm:w-60 h-4 rounded-full bg-ink/25 blur-md pointer-events-none -z-10"
+        className="absolute -bottom-10 w-72 sm:w-[420px] md:w-[520px] h-6 rounded-full bg-ink/20 blur-xl pointer-events-none -z-10"
       />
     </div>
   );
@@ -80,7 +80,7 @@ function CameraObject({
             }
       }
       transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      className="w-64 h-64 sm:w-76 sm:h-76 md:w-84 md:h-84 relative flex items-center justify-center filter-none"
+      className="w-80 h-80 sm:w-[420px] sm:h-[420px] md:w-[520px] md:h-[520px] lg:w-[600px] lg:h-[600px] relative flex items-center justify-center filter-none"
     >
       <svg
         viewBox="0 0 260 260"
@@ -171,7 +171,7 @@ function DiscoBallObject({
         y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
         rotate: { duration: 24, repeat: Infinity, ease: "linear" },
       }}
-      className="w-64 h-64 sm:w-76 sm:h-76 md:w-84 md:h-84 relative flex items-center justify-center filter-none"
+      className="w-80 h-80 sm:w-[420px] sm:h-[420px] md:w-[520px] md:h-[520px] lg:w-[600px] lg:h-[600px] relative flex items-center justify-center filter-none"
     >
       <svg
         viewBox="0 0 260 260"
@@ -255,56 +255,56 @@ function LetterObject({
   const unrolled = isReducedMotion || isActive;
 
   return (
-    <div className="relative w-76 sm:w-88 flex flex-col items-center justify-center">
+    <div className="relative w-[320px] sm:w-[440px] md:w-[540px] lg:w-[600px] flex flex-col items-center justify-center">
       {/* Top Turned Wooden Roller */}
-      <div className="w-full h-5 rounded-full bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 shadow-md border border-stone-800 flex items-center justify-between px-3 z-30">
-        <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-inner" />
-        <span className="text-[9px] uppercase tracking-widest font-mono text-amber-200/70">
+      <div className="w-full h-6 rounded-full bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 shadow-md border border-stone-800 flex items-center justify-between px-4 z-30">
+        <span className="w-3 h-3 rounded-full bg-amber-500/80 shadow-inner" />
+        <span className="text-[10px] uppercase tracking-widest font-mono text-amber-200/70">
           SARASVA ARCHIVE
         </span>
-        <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-inner" />
+        <span className="w-3 h-3 rounded-full bg-amber-500/80 shadow-inner" />
       </div>
 
       {/* Real HTML Unrolling Parchment */}
       <motion.div
         animate={{
-          height: unrolled ? 340 : 120,
+          height: unrolled ? 460 : 140,
           opacity: 1,
         }}
         transition={{
           duration: 0.8,
           ease: [0.16, 1, 0.3, 1],
         }}
-        className="w-[92%] bg-[#FAF6EE] border-x border-stone-300 shadow-soft-xl overflow-hidden relative p-6 flex flex-col justify-between transition-all z-20"
+        className="w-[94%] bg-[#FAF6EE] border-x border-stone-300 shadow-soft-xl overflow-hidden relative p-8 flex flex-col justify-between transition-all z-20"
       >
         {/* Subtle antique watermark */}
         <div className="absolute inset-0 bg-gradient-to-b from-stone-200/20 via-transparent to-stone-300/30 pointer-events-none" />
 
         {/* Real HTML Content */}
-        <div className="relative z-10 space-y-4">
-          <div className="flex items-center justify-between border-b border-stone-300 pb-2">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-society-sarasva font-bold">
+        <div className="relative z-10 space-y-5">
+          <div className="flex items-center justify-between border-b border-stone-300 pb-3">
+            <span className="font-mono text-xs uppercase tracking-widest text-society-sarasva font-bold">
               Literary Gazette // Vol. 24
             </span>
-            <span className="font-mono text-[9px] text-ink-faint">EST. 2003</span>
+            <span className="font-mono text-[10px] text-ink-faint">EST. 2003</span>
           </div>
 
-          <p className="font-serif italic text-ink text-base sm:text-lg leading-relaxed selection:bg-indigo-100">
+          <p className="font-serif italic text-ink text-lg sm:text-xl md:text-2xl leading-relaxed selection:bg-indigo-100">
             &ldquo;{letterContent}&rdquo;
           </p>
 
-          <div className="pt-2 flex items-center justify-between border-t border-stone-200">
-            <div className="space-y-0.5">
-              <span className="block font-serif italic text-xs text-ink-muted">
+          <div className="pt-3 flex items-center justify-between border-t border-stone-200">
+            <div className="space-y-1">
+              <span className="block font-serif italic text-sm text-ink-muted">
                 Indian Institute of Information Technology
               </span>
-              <span className="block font-mono text-[9px] text-ink-faint uppercase">
+              <span className="block font-mono text-[10px] text-ink-faint uppercase">
                 Prayagraj, Uttar Pradesh
               </span>
             </div>
 
             {/* Wax Seal Stamped Icon */}
-            <div className="w-9 h-9 rounded-full bg-society-sarasva/15 border border-society-sarasva/40 flex items-center justify-center font-serif text-society-sarasva font-bold text-xs shadow-inner">
+            <div className="w-11 h-11 rounded-full bg-society-sarasva/15 border border-society-sarasva/40 flex items-center justify-center font-serif text-society-sarasva font-bold text-sm shadow-inner">
               सर
             </div>
           </div>
@@ -312,9 +312,9 @@ function LetterObject({
       </motion.div>
 
       {/* Bottom Turned Wooden Roller */}
-      <div className="w-full h-5 rounded-full bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 shadow-md border border-stone-800 flex items-center justify-between px-3 z-30">
-        <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-inner" />
-        <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-inner" />
+      <div className="w-full h-6 rounded-full bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 shadow-md border border-stone-800 flex items-center justify-between px-4 z-30">
+        <span className="w-3 h-3 rounded-full bg-amber-500/80 shadow-inner" />
+        <span className="w-3 h-3 rounded-full bg-amber-500/80 shadow-inner" />
       </div>
     </div>
   );
@@ -339,7 +339,7 @@ function PaintbrushObject({
             }
       }
       transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      className="w-64 h-64 sm:w-76 sm:h-76 md:w-84 md:h-84 relative flex items-center justify-center filter-none"
+      className="w-80 h-80 sm:w-[420px] sm:h-[420px] md:w-[520px] md:h-[520px] lg:w-[600px] lg:h-[600px] relative flex items-center justify-center filter-none"
     >
       <svg
         viewBox="0 0 260 260"
@@ -413,7 +413,7 @@ function ClapboardObject({
             }
       }
       transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      className="w-64 h-64 sm:w-76 sm:h-76 md:w-84 md:h-84 relative flex items-center justify-center filter-none"
+      className="w-80 h-80 sm:w-[420px] sm:h-[420px] md:w-[520px] md:h-[520px] lg:w-[600px] lg:h-[600px] relative flex items-center justify-center filter-none"
     >
       <svg
         viewBox="0 0 260 260"
@@ -487,7 +487,7 @@ function VinylDiscObject({
         rotateZ: { duration: 18, repeat: Infinity, ease: "linear" },
         y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
       }}
-      className="w-64 h-64 sm:w-76 sm:h-76 md:w-84 md:h-84 relative flex items-center justify-center filter-none"
+      className="w-80 h-80 sm:w-[420px] sm:h-[420px] md:w-[520px] md:h-[520px] lg:w-[600px] lg:h-[600px] relative flex items-center justify-center filter-none"
     >
       <svg
         viewBox="0 0 260 260"
