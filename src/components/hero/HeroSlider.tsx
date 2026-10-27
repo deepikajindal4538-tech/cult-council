@@ -116,13 +116,13 @@ export function HeroSlider({ societies }: HeroSliderProps) {
   return (
     <section
       id="hero-title"
-      className="relative w-full min-h-[82vh] lg:min-h-[88vh] flex flex-col justify-between overflow-hidden bg-black text-white select-none"
+      className="relative w-full min-h-[85vh] lg:min-h-[92vh] flex flex-col justify-between overflow-hidden bg-[#FAF8F5] select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       aria-label="Cultural Council Hero Slider"
     >
-      {/* 1. SLIDING BACKGROUND PHOTOS */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      {/* 1. SLIDING BACKGROUND PHOTOS & SEAMLESS MULTI-STOP DISSOLVE */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-black">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={current}
@@ -145,23 +145,33 @@ export function HeroSlider({ societies }: HeroSliderProps) {
           </motion.div>
         </AnimatePresence>
 
-        {/* High-Legibility Cinematic Gradient Overlays */}
-        {/* Top Scrim */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/55 to-black/90 z-10 pointer-events-none" />
+        {/* High-Legibility Top & Center Scrim */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/55 to-black/30 z-10 pointer-events-none" />
+
         {/* Radial Center Vignette for focal clarity */}
         <div
           className="absolute inset-0 z-10 pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%)",
+              "radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.75) 100%)",
           }}
         />
+
         {/* Subtle dot mesh texture */}
         <div
-          className="absolute inset-0 opacity-[0.07] z-10 pointer-events-none"
+          className="absolute inset-0 opacity-[0.06] z-10 pointer-events-none"
           style={{
             backgroundImage: `radial-gradient(#FAF8F5 1px, transparent 1px)`,
             backgroundSize: "24px 24px",
+          }}
+        />
+
+        {/* 🌟 ULTRA-SMOOTH LIQUID GRADIENT DISSOLVE (Fades dark image directly into #FAF8F5) */}
+        <div
+          className="absolute -bottom-1 inset-x-0 h-48 sm:h-72 pointer-events-none z-10"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(250,248,245,0) 0%, rgba(250,248,245,0.08) 20%, rgba(250,248,245,0.35) 45%, rgba(250,248,245,0.72) 70%, rgba(250,248,245,0.94) 88%, #FAF8F5 100%)",
           }}
         />
       </div>
@@ -216,12 +226,12 @@ export function HeroSlider({ societies }: HeroSliderProps) {
             <Link
               key={soc.slug}
               href={`/societies/${soc.slug}`}
-              className="group px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-stone-200 text-xs font-mono hover:bg-white hover:text-black hover:border-white transition-all duration-200 shadow-sm hover:scale-105"
+              className="group px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-stone-200 text-xs font-mono hover:bg-white hover:text-black hover:border-white transition-all duration-200 shadow-sm hover:scale-105"
             >
               <strong style={{ color: soc.accentColor }} className="group-hover:text-black">
                 {soc.name}
               </strong>{" "}
-              <span className="text-stone-400 group-hover:text-stone-700">
+              <span className="text-stone-300 group-hover:text-stone-700">
                 • {soc.category?.split(" ")[0]}
               </span>
             </Link>
@@ -229,76 +239,79 @@ export function HeroSlider({ societies }: HeroSliderProps) {
         </div>
       </div>
 
-      {/* 4. BOTTOM BAR: SLIDER CONTROLS, CAPTIONS & SCROLL CUE */}
-      <footer className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/15 pt-4 text-xs font-mono">
-        {/* Active Slide Info */}
-        <div className="flex items-center gap-3 text-stone-300">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
-          <div className="flex flex-col">
-            <span className="font-bold text-white uppercase tracking-wider text-[11px]">
-              {SLIDES[current].title}
-            </span>
-            <span className="text-[10px] text-stone-400">
-              {SLIDES[current].category} // {SLIDES[current].caption}
-            </span>
+      {/* 4. BOTTOM BAR: FLOATING FROSTED GLASS CAPSULE & LIQUID SCROLL CUE */}
+      <footer className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 flex flex-col items-center gap-3.5">
+        {/* Floating Capsule Bar (Sits over the soft fade) */}
+        <div className="w-full max-w-4xl bg-stone-950/80 backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-full px-5 sm:px-7 py-2.5 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-white">
+          {/* Active Slide Info */}
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
+            <div className="flex items-center gap-2 overflow-hidden">
+              <span className="font-bold text-white uppercase tracking-wider text-[11px] truncate">
+                {SLIDES[current].title}
+              </span>
+              <span className="hidden md:inline text-stone-400 text-[10px]">
+                // {SLIDES[current].caption}
+              </span>
+            </div>
           </div>
-        </div>
 
-        {/* Slider Controls: Dots + Prev/Next + Pause/Play */}
-        <div className="flex items-center gap-3">
-          {/* Slide Dots / Indicators */}
-          <div className="flex items-center gap-1.5">
-            {SLIDES.map((slide, idx) => (
+          {/* Slider Controls: Dots + Prev/Next + Pause/Play */}
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Slide Dots / Indicators */}
+            <div className="flex items-center gap-1.5">
+              {SLIDES.map((slide, idx) => (
+                <button
+                  key={slide.id}
+                  type="button"
+                  onClick={() => goToSlide(idx)}
+                  aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
+                  className={`transition-all duration-300 rounded-full h-1.5 ${
+                    idx === current
+                      ? "w-6 bg-amber-400"
+                      : "w-1.5 bg-white/35 hover:bg-white/60"
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            <div className="flex items-center gap-1 pl-2 border-l border-white/20">
               <button
-                key={slide.id}
                 type="button"
-                onClick={() => goToSlide(idx)}
-                aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
-                className={`transition-all duration-300 rounded-full h-1.5 ${
-                  idx === current
-                    ? "w-7 bg-amber-400"
-                    : "w-2 bg-white/30 hover:bg-white/60"
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Navigation Arrows */}
-          <div className="flex items-center gap-1 pl-2 border-l border-white/20">
-            <button
-              type="button"
-              onClick={prevSlide}
-              aria-label="Previous slide"
-              className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors backdrop-blur-xs"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsPaused(!isPaused)}
-              aria-label={isPaused ? "Play slider" : "Pause slider"}
-              className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 text-stone-300 hover:text-white flex items-center justify-center transition-colors backdrop-blur-xs"
-            >
-              {isPaused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
-            </button>
-            <button
-              type="button"
-              onClick={nextSlide}
-              aria-label="Next slide"
-              className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors backdrop-blur-xs"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
+                onClick={prevSlide}
+                aria-label="Previous slide"
+                className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsPaused(!isPaused)}
+                aria-label={isPaused ? "Play slider" : "Pause slider"}
+                className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/25 text-stone-300 hover:text-white flex items-center justify-center transition-colors"
+              >
+                {isPaused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
+              </button>
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Next slide"
+                className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Scroll Cue to Societies Ladder Stage */}
+        {/* Scroll Cue (Transitioning directly onto the #FAF8F5 stage tone) */}
         <a
           href="#societies-stage"
-          className="group inline-flex items-center gap-2 text-stone-300 hover:text-white transition-colors uppercase tracking-widest text-[11px]"
+          className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-ink/75 hover:text-ink transition-colors py-1"
         >
           <span>EXPLORE SOCIETIES LADDER</span>
-          <ArrowDown className="w-3.5 h-3.5 text-amber-400 animate-bounce group-hover:translate-y-0.5 transition-transform" />
+          <ArrowDown className="w-3.5 h-3.5 text-amber-700 animate-bounce group-hover:translate-y-0.5 transition-transform" />
         </a>
       </footer>
     </section>
