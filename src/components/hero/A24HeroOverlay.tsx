@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowDown } from "lucide-react";
 import { ISociety } from "@/models/Society";
 import { SocietyIndex } from "./SocietyIndex";
 
@@ -21,80 +21,68 @@ export function A24HeroOverlay({
   const society = societies[activeIndex] || societies[0];
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 pt-12 sm:pt-16 lg:pt-20 overflow-hidden select-none">
-      {/* 1. TOP HEADER (Society Details) */}
+    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-14 overflow-hidden select-none">
+      {/* 1. TOP HEADER: Society Dossier Ledger */}
       <header className="w-full flex items-start justify-between">
-        {/* Top-Left: Active Society Title & Hairline Metadata Table */}
-        <div className="pointer-events-auto max-w-sm sm:max-w-md">
+        <div className="pointer-events-auto max-w-md sm:max-w-lg">
           <AnimatePresence mode="wait">
             <motion.div
               key={society.slug}
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-3"
             >
-              {/* Category Eyebrow */}
-              <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-[0.2em]">
-                <span
-                  className="w-2 h-2 rounded-full"
-                  style={{ backgroundColor: society.accentColor }}
-                />
+              {/* Discipline Eyebrow */}
+              <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ink-faint">
                 <span className="font-semibold text-ink">
-                  SECTOR 0{activeIndex + 1} // {society.category}
+                  WING 0{activeIndex + 1}
                 </span>
+                <span>/</span>
+                <span>{society.category}</span>
               </div>
 
-              {/* Massive Editorial Serif Title */}
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink uppercase leading-none mb-4">
+              {/* Serif Headline */}
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-ink leading-[1.02]">
                 {society.name}
-              </h2>
+              </h1>
 
-              {/* Hairline Credits Ledger Table */}
-              <div className="w-full border-t border-stone-300 text-xs font-mono">
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80">
-                  <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    DIRECTED BY
-                  </span>
-                  <span className="col-span-8 font-serif font-medium text-ink">
+              {/* Curatorial Ledger */}
+              <div className="pt-2 border-t border-stone-300/70 font-mono text-xs max-w-sm space-y-1.5">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="uppercase tracking-widest text-ink-faint">STUDENT LEAD</span>
+                  <span className="font-serif italic text-ink text-sm">
                     {society.leads?.[0]?.name || "Student Head"}
                   </span>
                 </div>
-
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80">
-                  <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    FOUNDED
-                  </span>
-                  <span className="col-span-8 font-serif font-medium text-ink">
-                    {society.stats?.foundedYear || 2004}
+                <div className="flex items-center justify-between text-[11px] border-t border-stone-200/60 pt-1.5">
+                  <span className="uppercase tracking-widest text-ink-faint">FOUNDATION</span>
+                  <span className="font-mono text-ink">
+                    EST. {society.stats?.foundedYear || 2004}
                   </span>
                 </div>
-
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80">
-                  <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    DISCIPLINE
-                  </span>
-                  <span className="col-span-8 font-serif font-medium text-ink">
-                    {society.category}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-300">
-                  <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    MEMBERSHIP
-                  </span>
-                  <span className="col-span-8 font-serif font-medium text-ink">
-                    {society.stats?.membersCount || 45}+ Active Campus Artists
+                <div className="flex items-center justify-between text-[11px] border-t border-stone-200/60 pt-1.5">
+                  <span className="uppercase tracking-widest text-ink-faint">COLLECTIVE</span>
+                  <span className="font-mono text-ink">
+                    {society.stats?.membersCount || 45}+ ACTIVE ARTISTS
                   </span>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
+
+        {/* Top-Right: Institute Badge */}
+        <div className="pointer-events-auto hidden sm:flex flex-col items-end text-right font-mono text-[10px] uppercase tracking-[0.2em] text-ink-faint">
+          <span className="font-semibold text-ink">IIIT ALLAHABAD</span>
+          <span>APEX CULTURAL BODY</span>
+          <span className="text-stone-400">DEVGHAT, PRAYAGRAJ</span>
+        </div>
       </header>
 
-      {/* Right Side: The Interactive Societies Ladder Rail Index */}
-      <div className="pointer-events-auto hidden md:flex absolute right-6 sm:right-8 lg:right-10 top-1/2 -translate-y-1/2 z-30">
+      {/* Center-Right: Minimalist Society Navigation Timeline */}
+      <div className="pointer-events-auto hidden md:flex absolute right-8 sm:right-12 top-1/2 -translate-y-1/2 z-30">
         <SocietyIndex
           societies={societies}
           activeIndex={activeIndex}
@@ -102,67 +90,43 @@ export function A24HeroOverlay({
         />
       </div>
 
-      {/* 2. BOTTOM CONTROLS & CRITIC PULL QUOTES */}
-      <footer className="w-full flex flex-col md:flex-row items-end justify-between gap-6 pt-6">
-        {/* Left Ticker / Hint */}
-        <div className="pointer-events-auto hidden lg:flex items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-ink-faint">
-          <span className="w-1.5 h-1.5 rounded-full bg-ink" />
-          <span>DRAG OR SCROLL TO ROTATE CRATE DISCS</span>
-        </div>
-
-        {/* Center: Twin Critic Pull Quotes with Star Ratings */}
-        <div className="pointer-events-auto flex items-start gap-8 sm:gap-14 max-w-xl text-center md:text-left mx-auto md:mx-0">
+      {/* 2. FOOTER: Curatorial Statement & Dossier Entry Link */}
+      <footer className="w-full flex flex-col md:flex-row items-end justify-between gap-6 pt-6 border-t border-stone-300/40">
+        {/* Left: Artistic Manifesto Quote */}
+        <div className="pointer-events-auto max-w-lg">
           <AnimatePresence mode="wait">
             <motion.div
-              key={society.slug + "-quote1"}
+              key={society.slug + "-quote"}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-1 max-w-[220px]"
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-1.5"
             >
-              <div className="text-amber-600 text-xs tracking-wider">
-                ★★★★★
+              <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink-faint">
+                ARTISTIC MANIFESTO
               </div>
-              <div className="font-mono text-[9px] uppercase tracking-widest text-ink-faint">
-                CAMPUS RECORD
-              </div>
-              <p className="font-serif italic text-xs sm:text-sm text-ink leading-snug">
+              <p className="font-serif italic text-base sm:text-lg text-ink/85 leading-snug">
                 &ldquo;{society.tagline}&rdquo;
               </p>
             </motion.div>
           </AnimatePresence>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={society.slug + "-quote2"}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.3, delay: 0.05 }}
-              className="space-y-1 max-w-[220px] hidden sm:block"
-            >
-              <div className="text-amber-600 text-xs tracking-wider">
-                ★★★★½
-              </div>
-              <div className="font-mono text-[9px] uppercase tracking-widest text-ink-faint">
-                COUNCIL CITATION
-              </div>
-              <p className="font-serif italic text-xs sm:text-sm text-ink leading-snug line-clamp-2">
-                &ldquo;{society.description}&rdquo;
-              </p>
-            </motion.div>
-          </AnimatePresence>
         </div>
 
-        {/* Right: Explore Dossier CTA Link */}
+        {/* Center: Subtle Scroll Prompt */}
+        <div className="pointer-events-auto hidden lg:flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-ink-faint">
+          <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
+          <span>SCROLL TO ADVANCE CHRONOLOGY</span>
+        </div>
+
+        {/* Right: Clean Editorial Entry Button */}
         <div className="pointer-events-auto">
           <Link
             href={`/societies/${society.slug}`}
-            className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-ink text-canvas font-mono text-xs uppercase tracking-widest hover:bg-stone-800 transition-all duration-300 shadow-sm hover:shadow"
+            className="group inline-flex items-center gap-3 px-6 py-3 rounded-full bg-ink text-[#FAF8F5] font-mono text-xs uppercase tracking-[0.2em] hover:bg-stone-800 transition-all duration-300 shadow-sm"
           >
-            <span>Explore Dossier</span>
-            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <span>Open Guild Register</span>
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </div>
       </footer>
