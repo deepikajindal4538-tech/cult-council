@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getAllSocieties } from "@/lib/societies";
-import { initialFests } from "@/lib/seedData";
+import { initialFests, initialEvents, councilTeam } from "@/lib/seedData";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
 import {
   ArrowUpRight,
@@ -13,6 +13,12 @@ import {
   Mic,
   Award,
   Users,
+  ShieldCheck,
+  Building2,
+  Clock,
+  MapPin,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 
 export default async function HomePage() {
@@ -27,17 +33,22 @@ export default async function HomePage() {
       {/* 2. Chapter 01: Prologue / About the Council & College */}
       <section
         id="about-section"
-        className="py-24 sm:py-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
+        className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
       >
         <div className="border-b border-stone-300 pb-4 mb-16 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
           <span>CHAPTER 01 // PROLOGUE</span>
-          <span>CAMPUS MANDATE</span>
+          <span>CAMPUS MANDATE &amp; GOVERNANCE</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-          {/* Left Column: Bold Editorial Headline */}
+          {/* Left Column: Bold Editorial Headline & Council Overview */}
           <div className="lg:col-span-7 space-y-8">
-            <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[1.02]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-900 font-mono text-xs uppercase tracking-wider">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>OFFICIAL CULTURAL COUNCIL • IIIT ALLAHABAD</span>
+            </div>
+
+            <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[1.02]">
               Where technical precision yields to{" "}
               <span className="italic font-normal text-stone-600">unfiltered artistic fervor</span>.
             </h2>
@@ -52,14 +63,32 @@ export default async function HomePage() {
               <p>
                 Founded in 1999 as an Institute of National Importance by the Government of India,
                 IIIT Allahabad has cultivated global leaders in science and computational research.
-                Yet alongside terminal lines and algorithms beats our cultural council—a union of
-                six autonomous artistic wings.
+                Yet alongside terminal lines and algorithms beats our cultural council—the statutory apex
+                student-faculty body coordinating performing arts, dramatics, media storytelling, fine arts, and literary inquiry.
               </p>
               <p>
-                Every script is written by students; every film is graded in campus labs; every
-                stage set is hammered into existence by young creators. We exist to ensure that
-                no voice remains silent and no creative spark goes unignited.
+                Working under the office of the <strong>Dean of Student Affairs (DoSA)</strong>, the Cultural Council
+                unites six autonomous student wings, manages campus cultural auditoriums (including the 1,000-seat Main Audi and 3,500-capacity Open Air Theatre),
+                and hosts North India&apos;s largest collegiate cultural festival, <em>Effervescence</em>.
               </p>
+            </div>
+
+            {/* Quick Council Jump Links */}
+            <div className="pt-2 flex flex-wrap gap-4">
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-canvas rounded font-mono text-xs uppercase tracking-widest hover:bg-stone-800 transition-colors"
+              >
+                <span>Read Full Council Charter</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/about#team"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#F4F1EA] text-ink border border-stone-300 rounded font-mono text-xs uppercase tracking-widest hover:bg-stone-200 transition-colors"
+              >
+                <span>Council Office Bearers</span>
+                <Users className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 
@@ -82,14 +111,21 @@ export default async function HomePage() {
                 <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">
                   Annual Productions
                 </span>
-                <span className="font-serif text-3xl font-bold text-ink">50+</span>
+                <span className="font-serif text-3xl font-bold text-ink">75+</span>
               </div>
 
               <div className="flex items-baseline justify-between border-b border-stone-300/60 pb-3">
                 <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">
                   Festival Attendance
                 </span>
-                <span className="font-serif text-3xl font-bold text-ink">10,000+</span>
+                <span className="font-serif text-3xl font-bold text-ink">15,000+</span>
+              </div>
+
+              <div className="flex items-baseline justify-between border-b border-stone-300/60 pb-3">
+                <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">
+                  Active Student Performers
+                </span>
+                <span className="font-serif text-3xl font-bold text-ink">320+</span>
               </div>
 
               <div className="flex items-baseline justify-between">
@@ -113,10 +149,53 @@ export default async function HomePage() {
             </div>
           </div>
         </div>
+
+        {/* 4 Pillars of Cultural Council */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16 pt-16 border-t border-stone-300">
+          <div className="p-6 bg-[#FAF8F5] rounded-xl border border-stone-300 space-y-2">
+            <div className="w-8 h-8 rounded bg-amber-100 text-amber-900 flex items-center justify-center font-mono text-xs font-bold">
+              01
+            </div>
+            <h3 className="font-serif text-xl font-bold text-ink">6 Autonomous Guilds</h3>
+            <p className="text-xs text-ink-muted leading-relaxed">
+              Specialized societies covering photography, western dance, Hindi &amp; English literature, fine arts, street theater, and rock &amp; classical music.
+            </p>
+          </div>
+
+          <div className="p-6 bg-[#FAF8F5] rounded-xl border border-stone-300 space-y-2">
+            <div className="w-8 h-8 rounded bg-rose-100 text-rose-900 flex items-center justify-center font-mono text-xs font-bold">
+              02
+            </div>
+            <h3 className="font-serif text-xl font-bold text-ink">Effervescence Fest</h3>
+            <p className="text-xs text-ink-muted leading-relaxed">
+              Organizing North India&apos;s celebrated annual cultural festival with 15,000+ footfall, multi-genre pro-nights, and nationwide college battles.
+            </p>
+          </div>
+
+          <div className="p-6 bg-[#FAF8F5] rounded-xl border border-stone-300 space-y-2">
+            <div className="w-8 h-8 rounded bg-indigo-100 text-indigo-900 flex items-center justify-center font-mono text-xs font-bold">
+              03
+            </div>
+            <h3 className="font-serif text-xl font-bold text-ink">World-Class Venues</h3>
+            <p className="text-xs text-ink-muted leading-relaxed">
+              Administering institute cultural spaces including the 1,000-seat Main Audi, 3,500-capacity Open Air Theatre (OAT), and SAC production labs.
+            </p>
+          </div>
+
+          <div className="p-6 bg-[#FAF8F5] rounded-xl border border-stone-300 space-y-2">
+            <div className="w-8 h-8 rounded bg-teal-100 text-teal-900 flex items-center justify-center font-mono text-xs font-bold">
+              04
+            </div>
+            <h3 className="font-serif text-xl font-bold text-ink">National Accolades</h3>
+            <p className="text-xs text-ink-muted leading-relaxed">
+              Leading campus delegations with frequent podium honors at IIT Bombay Mood Indigo, IIT Kanpur Antaragni, and IIT BHU Kashiyatra.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* 3. Chapter 02: The Disciplines (Cultural Activities) */}
-      <section className="bg-[#F4F1EA] py-24 sm:py-36 px-4 sm:px-6 lg:px-8 border-y border-stone-300">
+      <section className="bg-[#F4F1EA] py-24 sm:py-32 px-4 sm:px-6 lg:px-8 border-y border-stone-300">
         <div className="max-w-7xl mx-auto w-full">
           <div className="border-b border-stone-300 pb-4 mb-16 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
             <span>CHAPTER 02 // THE DISCIPLINES</span>
@@ -213,7 +292,7 @@ export default async function HomePage() {
       </section>
 
       {/* 4. Chapter 03: Flagship Exhibition (Effervescence '26) */}
-      <section className="py-24 sm:py-36 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="border-b border-stone-300 pb-4 mb-16 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
           <span>CHAPTER 03 // THE FESTIVALS</span>
           <span>FLAGSHIP CALENDAR</span>
@@ -250,105 +329,200 @@ export default async function HomePage() {
               ))}
             </div>
 
-            <div className="flex flex-wrap items-center gap-6 pt-2">
+            <div className="pt-2 flex flex-wrap gap-4">
               <Link
                 href="/fests"
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-canvas text-ink font-mono text-xs uppercase tracking-widest hover:bg-stone-100 transition-all shadow-soft"
+                className="px-6 py-3.5 bg-canvas text-ink font-mono text-xs uppercase tracking-widest font-bold hover:bg-stone-200 transition-colors rounded"
               >
-                <span>View Full Festival Program</span>
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                Explore Festival Dossier
               </Link>
-
               <Link
                 href="/events"
-                className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-stone-300 hover:text-canvas transition-colors"
+                className="px-6 py-3.5 border border-stone-600 text-canvas font-mono text-xs uppercase tracking-widest hover:border-canvas transition-colors rounded"
               >
-                <span>Browse Competitions →</span>
+                View Complete Event Ledger
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Chapter 04: The Photographic Record (Flickr Gallery Archive) */}
-      <section className="bg-[#F4F1EA] py-24 sm:py-36 px-4 sm:px-6 lg:px-8 border-t border-stone-300">
+      {/* 5. Chapter 04: Upcoming Cultural Productions */}
+      <section className="bg-[#F4F1EA] py-24 sm:py-32 px-4 sm:px-6 lg:px-8 border-t border-stone-300">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="border-b border-stone-300 pb-4 mb-16 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
-            <span>CHAPTER 04 // THE PHOTOGRAPHIC RECORD</span>
-            <span>FLICKR ARCHIVE</span>
-          </div>
-
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
-              <h2 className="font-serif text-4xl sm:text-5xl font-bold text-ink">
-                Visual Artifacts & Moments
+              <div className="font-mono text-xs uppercase tracking-widest text-ink-faint mb-2">
+                CHAPTER 04 // UPCOMING CALENDAR
+              </div>
+              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ink">
+                Live Campus Productions &amp; Acts
               </h2>
-              <p className="text-ink-muted text-sm sm:text-base mt-2">
-                Curated high-definition records captured by student photojournalists.
-              </p>
             </div>
-
             <Link
-              href="/gallery"
-              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-ink hover:text-stone-600 transition-colors mt-4 md:mt-0"
+              href="/events"
+              className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-ink hover:text-stone-600 font-semibold mt-4 md:mt-0"
             >
-              <span>Explore All Albums</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <span>View Full Schedule &rarr;</span>
             </Link>
           </div>
 
-          {/* Exhibition Photo Mount Style Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                title: "Effervescence Pro-Nights",
-                sub: "Live Concert Record",
-                count: "120 PLATES",
-                year: "2025",
-              },
-              {
-                title: "Footloose Dance Arena",
-                sub: "Choreography Finals",
-                count: "84 PLATES",
-                year: "2025",
-              },
-              {
-                title: "Nukkad Natak Street Drama",
-                sub: "Amphitheatre Sessions",
-                count: "96 PLATES",
-                year: "2024",
-              },
-              {
-                title: "Incandescence Band Clash",
-                sub: "Rock Ensemble",
-                count: "112 PLATES",
-                year: "2024",
-              },
-            ].map((album, idx) => (
-              <Link
-                key={idx}
-                href="/gallery"
-                className="group bg-[#FAF8F5] p-5 rounded-lg border border-stone-300 shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col justify-between h-72"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {initialEvents.slice(0, 3).map((evt) => (
+              <div
+                key={evt.id}
+                className="bg-[#FAF8F5] p-6 rounded-xl border border-stone-300 shadow-sm flex flex-col justify-between"
               >
-                <div className="w-full h-32 bg-stone-200/60 rounded border border-stone-300/80 flex items-center justify-center font-mono text-[10px] uppercase tracking-widest text-stone-500 group-hover:bg-stone-300/50 transition-colors">
-                  <span>PHOTO ARCHIVE [{album.year}]</span>
-                </div>
-
-                <div className="pt-4">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-ink-faint block">
-                    {album.count} • {album.sub}
-                  </span>
-                  <h3 className="font-serif text-lg font-bold text-ink group-hover:text-stone-700 transition-colors mt-1">
-                    {album.title}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between font-mono text-xs">
+                    <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-semibold text-[10px] uppercase">
+                      {evt.category}
+                    </span>
+                    <span className="text-ink-faint text-[10px]">{evt.status.toUpperCase()}</span>
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-ink leading-snug">
+                    {evt.title}
                   </h3>
+                  <p className="text-xs text-ink-muted leading-relaxed line-clamp-2">
+                    {evt.description}
+                  </p>
+                  <div className="pt-2 font-mono text-xs text-stone-600 space-y-1">
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="w-3 h-3 text-ink-muted" />
+                      <span>{evt.date}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <MapPin className="w-3 h-3 text-ink-muted" />
+                      <span>{evt.venue}</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-widest text-ink pt-2 border-t border-stone-200">
-                  <span>Inspect</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <div className="pt-4 mt-4 border-t border-stone-200">
+                  <Link
+                    href={`/societies/${evt.societySlug}`}
+                    className="font-mono text-xs uppercase tracking-wider text-ink font-semibold flex items-center justify-between hover:text-stone-600"
+                  >
+                    <span>{evt.societyName.split(" ")[0]} Wing</span>
+                    <span>&rarr;</span>
+                  </Link>
                 </div>
-              </Link>
+              </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Chapter 05: Visual Archives & Gallery Preview */}
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div className="border-b border-stone-300 pb-4 mb-16 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
+          <span>CHAPTER 05 // VISUAL REPOSITORIES</span>
+          <span>CAMPUS ARCHIVES</span>
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div>
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-ink">
+              Visual Artifacts &amp; Moments
+            </h2>
+            <p className="text-ink-muted text-sm sm:text-base mt-2">
+              Curated high-definition records captured by student photojournalists.
+            </p>
+          </div>
+
+          <Link
+            href="/gallery"
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-ink hover:text-stone-600 transition-colors mt-4 md:mt-0"
+          >
+            <span>Explore All Albums</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {/* Exhibition Photo Mount Style Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            {
+              title: "Effervescence Pro-Nights",
+              sub: "Live Concert Record",
+              count: "120 PLATES",
+              year: "2025",
+            },
+            {
+              title: "Footloose Dance Arena",
+              sub: "Choreography Finals",
+              count: "84 PLATES",
+              year: "2025",
+            },
+            {
+              title: "Nukkad Natak Street Drama",
+              sub: "Amphitheatre Sessions",
+              count: "96 PLATES",
+              year: "2024",
+            },
+            {
+              title: "Incandescence Band Clash",
+              sub: "Rock Ensemble",
+              count: "112 PLATES",
+              year: "2024",
+            },
+          ].map((album, idx) => (
+            <Link
+              key={idx}
+              href="/gallery"
+              className="group bg-[#FAF8F5] p-5 rounded-lg border border-stone-300 shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col justify-between h-72"
+            >
+              <div className="w-full h-32 bg-stone-200/60 rounded border border-stone-300/80 flex items-center justify-center font-mono text-[10px] uppercase tracking-widest text-stone-500 group-hover:bg-stone-300/50 transition-colors">
+                <span>PHOTO ARCHIVE [{album.year}]</span>
+              </div>
+
+              <div className="pt-4">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-ink-faint block">
+                  {album.count} • {album.sub}
+                </span>
+                <h3 className="font-serif text-lg font-bold text-ink group-hover:text-stone-700 transition-colors mt-1">
+                  {album.title}
+                </h3>
+              </div>
+
+              <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-widest text-ink pt-2 border-t border-stone-200">
+                <span>Inspect</span>
+                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. Inductions / Join the Council Banner */}
+      <section className="pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div className="bg-ink text-canvas rounded-2xl p-8 sm:p-14 border border-stone-800 flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-xl">
+          <div className="max-w-2xl space-y-4">
+            <div className="inline-flex items-center gap-2 text-amber-300 font-mono text-xs uppercase tracking-widest">
+              <Sparkles className="w-4 h-4" />
+              <span>COLLEGE AUDITIONS &amp; TALENT RECRUITMENT</span>
+            </div>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+              Join the Cultural Council
+            </h2>
+            <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
+              Are you passionate about music, acting, dance, literature, photography, or fine arts? Auditions open every semester across all 6 student societies. No prior professional experience required—just raw creative passion.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/about#join"
+              className="px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-ink font-mono text-xs uppercase tracking-widest font-bold transition-all text-center rounded"
+            >
+              Audition Guidelines
+            </Link>
+            <Link
+              href="/societies"
+              className="px-6 py-3.5 border border-stone-500 hover:border-canvas text-canvas font-mono text-xs uppercase tracking-widest transition-all text-center rounded"
+            >
+              Explore 6 Wings
+            </Link>
           </div>
         </div>
       </section>
