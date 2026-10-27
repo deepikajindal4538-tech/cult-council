@@ -59,6 +59,15 @@ const featuredAlbums = [
     coverTag: "Traditional & Avant-Garde Runway",
     society: "Nirmiti & Cultural Council",
   },
+  {
+    id: "sarasva-kavya",
+    title: "Sarasva: Kavya Sandhya & Literary Salon",
+    coverImage: "/images/gallery/band-night.jpg",
+    date: "February 2025",
+    category: "Literature",
+    coverTag: "Spoken Word, Mushaira & Ghazals",
+    society: "Sarasva Society",
+  },
 ];
 
 export default async function GalleryPage() {
