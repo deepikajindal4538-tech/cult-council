@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, Sparkles } from "lucide-react";
+import { Menu, X, ChevronDown, Sparkles, Home } from "lucide-react";
 
 const navItems = [
+  { label: "HOME", href: "/", icon: true },
   { label: "ABOUT", href: "/about" },
   {
     label: "SOCIETIES",
@@ -52,7 +53,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-7 font-mono text-xs tracking-widest">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-7 font-mono text-xs tracking-widest">
           {navItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
 
@@ -110,13 +111,14 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`py-1 transition-colors duration-150 relative ${
+                className={`py-1 inline-flex items-center gap-1.5 transition-colors duration-150 relative ${
                   isActive
                     ? "text-ink font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-ink"
                     : "text-ink-muted hover:text-ink"
                 }`}
               >
-                {item.label}
+                {item.icon && <Home className="w-3.5 h-3.5" />}
+                <span>{item.label}</span>
               </Link>
             );
           })}
@@ -155,9 +157,12 @@ export function Navbar() {
               <Link
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block py-2 text-ink hover:text-stone-600 border-b border-stone-200/60 font-semibold"
+                className={`flex items-center gap-2 py-2 text-ink hover:text-stone-600 border-b border-stone-200/60 font-semibold ${
+                  pathname === item.href ? "text-amber-800 font-bold" : ""
+                }`}
               >
-                {item.label}
+                {item.icon && <Home className="w-4 h-4" />}
+                <span>{item.label}</span>
               </Link>
               {item.subItems && (
                 <div className="pl-4 py-1.5 space-y-2 border-b border-stone-200/60">
