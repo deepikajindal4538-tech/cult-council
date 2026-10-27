@@ -67,9 +67,17 @@ export function A24SmoothHeroStage({
 
       const s = stateRef.current;
 
-      // Smooth damped lerp toward target progress
+      // Smooth damped lerp toward target progress (respecting prefers-reduced-motion)
+      const prefersReduced =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
       const diff = s.targetProgress - s.currentProgress;
-      s.currentProgress += diff * 0.085;
+      if (prefersReduced) {
+        s.currentProgress = s.targetProgress;
+      } else {
+        s.currentProgress += diff * 0.085;
+      }
 
       // Update render state when difference is visible
       if (Math.abs(diff) > 0.0001 || s.isDragging) {
