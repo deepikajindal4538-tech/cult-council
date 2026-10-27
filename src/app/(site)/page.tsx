@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getAllSocieties } from "@/lib/societies";
 import { initialFests, initialEvents, councilTeam } from "@/lib/seedData";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
-import { HeroPhotoStrip } from "@/components/hero/HeroPhotoStrip";
+import { HeroSlider } from "@/components/hero/HeroSlider";
 import {
   ArrowUpRight,
   Disc,
@@ -29,85 +29,8 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAF8F5] text-ink selection:bg-stone-300">
-      {/* 0. Cultural Council Header Title Section (Compact, Editorial, Balanced Whitespace) */}
-      <section
-        id="hero-title"
-        className="relative flex flex-col justify-between py-10 sm:py-14 px-4 sm:px-6 lg:px-8 bg-[#FAF8F5] overflow-hidden select-none"
-      >
-        {/* Subtle Paper Noise Texture */}
-        <div
-          className="absolute inset-0 opacity-[0.035] pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(#1C1917 1px, transparent 1px)`,
-            backgroundSize: "20px 20px",
-          }}
-        />
-
-        {/* Top Ledger Ribbon */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full flex items-center justify-between border-b border-stone-300/80 pb-3 font-mono text-[11px] uppercase tracking-widest text-ink-faint">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
-            <span className="text-ink font-semibold">INSTITUTE OF NATIONAL IMPORTANCE</span>
-            <span className="hidden sm:inline">// ESTD. 1999</span>
-          </div>
-          <div className="text-[10px] tracking-wider text-amber-800 font-semibold">
-            APEX ARTS &amp; CULTURE BODY
-          </div>
-        </div>
-
-        {/* Authentic Campus Cultural Photo Reel (Placed Directly Before Cultural Council Title) */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full pt-5 pb-3">
-          <HeroPhotoStrip />
-        </div>
-
-        {/* Compact Monumental Editorial Title */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full text-center space-y-3.5 py-6 sm:py-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-stone-200/60 border border-stone-300/90 font-mono text-[11px] uppercase tracking-widest text-ink shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>OFFICIAL CULTURAL PORTAL</span>
-          </div>
-
-          <div className="space-y-0.5">
-            <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-[-0.03em] text-ink uppercase leading-[0.93]">
-              CULTURAL COUNCIL
-            </h1>
-            <p className="font-serif italic text-xl sm:text-3xl md:text-4xl text-stone-600 tracking-tight">
-              IIIT Allahabad
-            </p>
-          </div>
-
-          <p className="max-w-2xl mx-auto font-serif text-sm sm:text-base md:text-lg text-ink-muted leading-relaxed pt-0.5">
-            Where technical precision yields to unfiltered artistic fervor. The statutory body governing music, dramatics, choreography, fine arts, literature, and visual storytelling.
-          </p>
-
-          {/* Six Autonomous Societies Interactive Pills */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-2 font-mono text-xs">
-            {societies.map((soc) => (
-              <Link
-                key={soc.slug}
-                href={`/societies/${soc.slug}`}
-                className="group px-3 py-1.5 rounded-full bg-[#FAF8F5] border border-stone-300 text-ink-muted text-xs font-mono hover:border-ink hover:text-ink hover:-translate-y-0.5 hover:shadow-xs transition-all duration-200"
-              >
-                <strong style={{ color: soc.accentColor }} className="group-hover:underline">
-                  {soc.name}
-                </strong>{" "}
-                • {soc.category?.split(" ")[0]}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Subtle Minimal Scroll Cue (Seamlessly connects to the Pinned Crate Stage) */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full flex items-center justify-center font-mono text-[11px] uppercase tracking-widest text-ink-muted pt-2">
-          <a
-            href="#societies-stage"
-            className="group inline-flex items-center gap-2 text-ink/70 hover:text-ink transition-colors py-1"
-          >
-            <span>SCROLL DOWN TO EXPLORE SOCIETIES LADDER</span>
-            <ArrowDown className="w-3.5 h-3.5 animate-bounce group-hover:translate-y-0.5 transition-transform" />
-          </a>
-        </div>
-      </section>
+      {/* 0. Sliding Hero Showcase with Cultural Council Title written on it */}
+      <HeroSlider societies={societies} />
 
       {/* 1. Hero Pinned Physical 3D Crate Showcase with Societies Ladder */}
       <A24HeroPinned societies={societies} />
