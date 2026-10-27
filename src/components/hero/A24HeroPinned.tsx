@@ -17,15 +17,15 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedTargetIndex, setSelectedTargetIndex] = useState<number | undefined>(undefined);
 
-  // Monitor document scroll
+  // Monitor document scroll with optimized responsive spring
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 85,
-    damping: 20,
+    stiffness: 95,
+    damping: 22,
     restDelta: 0.001,
   });
 
@@ -57,26 +57,26 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
       id="societies-stage"
       ref={containerRef}
       className="relative w-full"
-      style={{ height: `${Math.max(250, n * 85)}vh` }}
+      style={{ height: `${Math.max(200, n * 65)}vh` }}
     >
-      {/* Pinned Sticky Stage */}
+      {/* 100% Full-Window Sticky Viewport with Warm Wash */}
       <section
         aria-label="A24-Style Full Window 3D Cultural Objects Showcase"
-        className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden transition-colors duration-700 ease-out select-none border-b border-stone-300"
+        className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden transition-colors duration-700 ease-out select-none border-b border-stone-300/80"
         style={{
-          backgroundColor: activeSociety?.washColor || "#F4F1EA",
+          backgroundColor: scrollProgress < 0.04 ? "#FAF8F5" : (activeSociety?.washColor || "#FAF8F5"),
         }}
       >
         {/* Subtle Paper Noise Background */}
         <div
-          className="absolute inset-0 opacity-[0.035] pointer-events-none z-10"
+          className="absolute inset-0 opacity-[0.03] pointer-events-none z-10"
           style={{
             backgroundImage: `radial-gradient(#1C1917 1px, transparent 1px)`,
             backgroundSize: "20px 20px",
           }}
         />
 
-        {/* 1. Full-Window Ultra-Smooth GPU Trajectory Stage (Top-Right -> Center -> Bottom-Left Dissolve) */}
+        {/* 1. Full-Window Ultra-Smooth GPU Trajectory Stage */}
         <A24SmoothHeroStage
           societies={societies}
           targetIndex={selectedTargetIndex}
