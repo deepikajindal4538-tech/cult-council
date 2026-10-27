@@ -14,9 +14,9 @@ export function SocietyObject({
 
   return (
     <div className="relative w-full h-full flex items-center justify-center select-none">
-      {/* 1. Subtle Museum Watermark Monogram */}
+      {/* 1. Darker Editorial Watermark Typography */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-20">
-        <span className="font-serif text-[180px] sm:text-[280px] lg:text-[340px] font-bold text-stone-900/[0.03] select-none tracking-tighter">
+        <span className="font-serif text-[180px] sm:text-[280px] lg:text-[340px] font-bold text-stone-900/[0.09] select-none tracking-tighter transition-colors duration-500">
           {society.slug?.toUpperCase() || "IIITA"}
         </span>
       </div>
