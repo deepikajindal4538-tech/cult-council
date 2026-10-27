@@ -21,7 +21,7 @@ export function A24HeroOverlay({
   const society = societies[activeIndex] || societies[0];
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 pt-20 sm:pt-24 overflow-hidden select-none">
+    <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 sm:p-10 lg:p-12 pt-6 sm:pt-8 overflow-hidden select-none">
       {/* 1. TOP HEADER (Society Details Only) */}
       <header className="w-full flex items-start justify-between">
         {/* Top-Left: Active Society Title & Hairline Metadata Table */}

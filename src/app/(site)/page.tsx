@@ -19,6 +19,7 @@ import {
   MapPin,
   Sparkles,
   ArrowRight,
+  ArrowDown,
 } from "lucide-react";
 
 export default async function HomePage() {
@@ -27,6 +28,96 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAF8F5] text-ink selection:bg-stone-300">
+      {/* 0. Main Landing Title: Cultural Council, IIIT Allahabad */}
+      <section
+        id="hero-title"
+        className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-between py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b border-stone-300 overflow-hidden bg-[#FAF8F5]"
+      >
+        {/* Subtle decorative background watermark */}
+        <div
+          className="absolute inset-0 opacity-[0.035] pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(#1C1917 1.5px, transparent 1.5px)`,
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* Top Ledger Ribbon */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-300 pb-5 font-mono text-xs uppercase tracking-widest text-ink-faint">
+          <div className="flex items-center gap-3">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-600 animate-pulse" />
+            <span className="font-semibold text-ink">INSTITUTE OF NATIONAL IMPORTANCE</span>
+            <span>//</span>
+            <span>ESTD. 1999</span>
+          </div>
+          <div className="flex items-center gap-4 text-[11px]">
+            <span>DEVGHAT, JHALWA, PRAYAGRAJ</span>
+            <span>•</span>
+            <span className="text-amber-800 font-bold">APEX ARTS &amp; CULTURE BODY</span>
+          </div>
+        </div>
+
+        {/* Massive Center Title & Monogram */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full my-auto py-12 sm:py-20 flex flex-col items-center text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F4F1EA] border border-stone-300 font-mono text-xs uppercase tracking-widest text-ink shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span>OFFICIAL CULTURAL PORTAL</span>
+          </div>
+
+          <div className="space-y-3">
+            <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-ink uppercase leading-[0.92]">
+              CULTURAL COUNCIL
+            </h1>
+            <p className="font-serif italic text-2xl sm:text-4xl md:text-5xl text-stone-700 tracking-tight">
+              IIIT Allahabad
+            </p>
+          </div>
+
+          <p className="max-w-2xl font-serif text-base sm:text-xl text-ink-muted leading-relaxed pt-2">
+            The statutory student-faculty body governing music, choreography, theatrics, literature, fine arts, and media storytelling across the campus community.
+          </p>
+
+          {/* Six Autonomous Societies Pill Row */}
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3 font-mono text-xs">
+            {[
+              { name: "AMS", category: "Photography & Film", color: "#D97706" },
+              { name: "GENETICX", category: "Dance Crew", color: "#E11D48" },
+              { name: "SARASVA", category: "Literature & Debate", color: "#4F46E5" },
+              { name: "NIRMITI", category: "Fine Arts & Design", color: "#EA580C" },
+              { name: "RANGTARANGINI", category: "Dramatics & Street Play", color: "#B91C1C" },
+              { name: "VIRTUOSI", category: "Music & Live Band", color: "#0D9488" },
+            ].map((soc) => (
+              <span
+                key={soc.name}
+                className="px-3.5 py-1.5 rounded-lg bg-[#F4F1EA] border border-stone-300 text-ink-muted font-medium hover:border-ink hover:text-ink transition-all shadow-sm"
+              >
+                <strong style={{ color: soc.color }}>{soc.name}</strong> • {soc.category}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Scroll Prompt Bar to Enter 3D Showcase & Societies Ladder */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full pt-6 border-t border-stone-300 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs uppercase tracking-widest text-ink-muted">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-ink" />
+            <span>SCROLL DOWN TO REVOLVE THE 3D SOCIETIES LADDER</span>
+          </div>
+
+          <a
+            href="#societies-stage"
+            className="group flex items-center gap-2 px-6 py-2.5 rounded-full bg-ink text-canvas hover:bg-stone-800 transition-all font-semibold shadow-soft"
+          >
+            <span>SCROLL TO SOCIETIES LADDER</span>
+            <ArrowDown className="w-3.5 h-3.5 animate-bounce group-hover:translate-y-0.5 transition-transform" />
+          </a>
+
+          <div className="hidden sm:block text-[11px] text-ink-faint">
+            DISC SHOWCASE // 06 SOCIETIES
+          </div>
+        </div>
+      </section>
+
       {/* 1. Hero Pinned Physical 3D Crate Showcase */}
       <A24HeroPinned societies={societies} />
 
