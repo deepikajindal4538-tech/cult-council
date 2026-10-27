@@ -3,7 +3,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SocietyObjectProps } from "./types";
-import { InkRing } from "./InkRing";
 
 export function Society3DVectorObject({
   society,
@@ -15,25 +14,14 @@ export function Society3DVectorObject({
 
   return (
     <div className="relative w-full h-full flex items-center justify-center select-none">
-      {/* 1. Dynamic Ambient Color Glow */}
-      <motion.div
-        animate={{
-          scale: isActive ? [1, 1.12, 1] : 0.85,
-          opacity: isActive ? 0.38 : 0.12,
-        }}
-        transition={{
-          duration: 3.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute w-[460px] h-[460px] sm:w-[580px] sm:h-[580px] rounded-full blur-3xl pointer-events-none -z-20"
-        style={{ backgroundColor: society.accentColor }}
-      />
+      {/* 1. Ultra-Faint Museum Watermark in the background */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-20">
+        <span className="font-serif text-[180px] sm:text-[280px] lg:text-[340px] font-bold text-stone-900/[0.03] select-none tracking-tighter">
+          {society.slug?.toUpperCase() || "IIITA"}
+        </span>
+      </div>
 
-      {/* 2. Hand-Drawn Ink Ring drawn around the centerpiece */}
-      <InkRing color={society.accentColor} isActive={isActive} />
-
-      {/* 3. The 3D Vector Drawn Physical Object */}
+      {/* 2. The 3D Vector Drawn Physical Exhibition Object */}
       <div className="relative z-10 flex items-center justify-center">
         {objectType === "camera" && (
           <VectorCamera3D isActive={isActive} isReducedMotion={isReducedMotion} />
@@ -63,14 +51,14 @@ export function Society3DVectorObject({
         )}
       </div>
 
-      {/* 4. Realistic Multi-Layer Contact Shadow */}
+      {/* 3. Realistic Soft Studio Floor Contact Shadow */}
       <motion.div
         animate={{
-          scaleX: isActive ? [1, 1.08, 1] : 0.85,
-          opacity: isActive ? 0.35 : 0.15,
+          scaleX: isActive ? [1, 1.05, 1] : 0.85,
+          opacity: isActive ? 0.22 : 0.08,
         }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -bottom-10 w-72 sm:w-[440px] md:w-[540px] h-7 rounded-full bg-ink/25 blur-xl pointer-events-none -z-10"
+        className="absolute -bottom-8 w-64 sm:w-[420px] md:w-[500px] h-8 rounded-full bg-stone-950/40 blur-2xl pointer-events-none -z-10"
       />
     </div>
   );

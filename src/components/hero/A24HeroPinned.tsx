@@ -57,22 +57,22 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
       id="societies-stage"
       ref={containerRef}
       className="relative w-full"
-      style={{ height: `${Math.max(200, n * 65)}vh` }}
+      style={{ height: `${Math.max(250, n * 75)}vh` }}
     >
-      {/* 100% Full-Window Sticky Viewport with Warm Wash */}
+      {/* 100% Full-Viewport Pinned Stage */}
       <section
-        aria-label="A24-Style Full Window 3D Cultural Objects Showcase"
-        className="sticky top-16 h-[calc(100vh-4rem)] w-full overflow-hidden transition-colors duration-700 ease-out select-none border-b border-stone-300/80"
+        aria-label="A24 Cultural Objects Exhibition"
+        className="sticky top-0 h-screen w-full overflow-hidden transition-colors duration-700 ease-out select-none border-b border-stone-300/80"
         style={{
-          backgroundColor: scrollProgress < 0.04 ? "#FAF8F5" : (activeSociety?.washColor || "#FAF8F5"),
+          backgroundColor: scrollProgress < 0.03 ? "#FAF8F5" : (activeSociety?.washColor || "#FAF8F5"),
         }}
       >
-        {/* Subtle Paper Noise Background */}
+        {/* Subtle Paper Noise Watermark */}
         <div
-          className="absolute inset-0 opacity-[0.03] pointer-events-none z-10"
+          className="absolute inset-0 opacity-[0.025] pointer-events-none z-10"
           style={{
             backgroundImage: `radial-gradient(#1C1917 1px, transparent 1px)`,
-            backgroundSize: "20px 20px",
+            backgroundSize: "24px 24px",
           }}
         />
 

@@ -1,27 +1,20 @@
 import Link from "next/link";
 import { getAllSocieties } from "@/lib/societies";
-import { initialFests, initialEvents, councilTeam } from "@/lib/seedData";
+import { initialFests, initialEvents } from "@/lib/seedData";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
-import { HeroSlider } from "@/components/hero/HeroSlider";
 import {
   ArrowUpRight,
-  Disc,
-  Calendar,
-  Camera,
-  Music,
-  Flame,
-  Palette,
-  Mic,
-  Award,
-  Users,
-  ShieldCheck,
-  Building2,
-  Clock,
-  MapPin,
-  Sparkles,
   ArrowRight,
-  ArrowDown,
+  Calendar,
+  MapPin,
+  Camera,
 } from "lucide-react";
+
+export const metadata = {
+  title: "Cultural Council | IIIT Allahabad",
+  description:
+    "Official website of the Cultural Council, Indian Institute of Information Technology Allahabad. Governing AMS, Geneticx, Sarasva, Nirmiti, Rangtarangini, and Virtuosi.",
+};
 
 export default async function HomePage() {
   const societies = await getAllSocieties();
@@ -29,185 +22,133 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAF8F5] text-ink selection:bg-stone-300">
-      {/* 0. Sliding Hero Showcase with Cultural Council Title written on it */}
-      <HeroSlider societies={societies} />
-
-      {/* 1. Hero Pinned Physical 3D Crate Showcase with Societies Ladder */}
+      {/* 1. Full-Window A24 Editorial Hero Stage */}
       <A24HeroPinned societies={societies} />
 
-      {/* 2. Chapter 01: Prologue / About the Council & College */}
+      {/* 2. Chapter 01: The Cultural Charter & Governance */}
       <section
         id="about-section"
-        className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
+        className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto w-full"
       >
-        <div className="border-b border-stone-300/80 pb-3 mb-12 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
-          <span>CHAPTER 01 // PROLOGUE</span>
-          <span>CAMPUS MANDATE &amp; GOVERNANCE</span>
+        <div className="border-b border-stone-300/70 pb-3 mb-16 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.25em] text-ink-faint">
+          <span>CHAPTER 01 // THE CHARTER</span>
+          <span>ESTD. 1999 // PRAYAGRAJ</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-          {/* Left Column: Bold Editorial Headline & Council Overview */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-300/80 text-amber-900 font-mono text-xs uppercase tracking-wider">
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-800" />
-              <span>OFFICIAL CULTURAL COUNCIL • IIIT ALLAHABAD</span>
-            </div>
-
-            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink leading-[1.04]">
-              Where technical precision yields to{" "}
-              <span className="italic font-normal text-stone-600">unfiltered artistic fervor</span>.
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+          {/* Left Column: Authentic Institute Mission */}
+          <div className="lg:col-span-7 space-y-8">
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-ink leading-[1.05]">
+              Where technical eminence meets{" "}
+              <span className="italic font-normal text-stone-600">unfiltered creative expression</span>.
             </h2>
 
-            <p className="font-serif italic text-lg sm:text-xl text-ink/85 leading-relaxed pl-5 border-l-2 border-stone-400">
-              &ldquo;An institute of national eminence is shaped not only by its computing
-              architectures, but by the dramas staged in the dust, the midnight guitars, and the
+            <p className="font-serif italic text-xl sm:text-2xl text-ink/80 leading-relaxed pl-6 border-l border-stone-400">
+              &ldquo;An institute of national standing is defined not merely by its computing
+              architectures, but by the dramas staged in twilight, the midnight strings, and the
               words written under campus streetlamps.&rdquo;
             </p>
 
-            <div className="space-y-4 text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl">
+            <div className="space-y-5 text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl font-sans">
               <p>
-                Founded in 1999 as an Institute of National Importance by the Government of India,
-                IIIT Allahabad has cultivated global leaders in science and computational research.
-                Yet alongside terminal lines and algorithms beats our cultural council—the statutory apex
-                student-faculty body coordinating performing arts, dramatics, media storytelling, fine arts, and literary inquiry.
+                Established in 1999 as an Institute of National Importance by the Ministry of Education,
+                IIIT Allahabad has long cultivated international leaders in computational science.
+                Alongside terminal windows and laboratory research thrives our Cultural Council—the statutory
+                apex student-faculty body coordinating performing arts, dramatics, cinema, literature, and fine arts.
               </p>
               <p>
-                Working under the office of the <strong>Dean of Student Affairs (DoSA)</strong>, the Cultural Council
-                unites six autonomous student wings, manages campus cultural auditoriums (including the 1,000-seat Main Audi and 3,500-capacity Open Air Theatre),
-                and hosts North India&apos;s largest collegiate cultural festival, <em>Effervescence</em>.
+                Operating under the office of the Dean of Student Affairs (DoSA), the Council administers
+                six autonomous creative wings, manages campus heritage spaces—including the 1,000-seat Main Auditorium
+                and 3,500-capacity Open Air Theatre—and produces North India&apos;s celebrated cultural festival, <em>Effervescence</em>.
               </p>
             </div>
 
-            {/* Quick Council Jump Links */}
-            <div className="pt-2 flex flex-wrap gap-3">
+            <div className="pt-2 flex flex-wrap gap-4 font-mono text-xs uppercase tracking-[0.2em]">
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-canvas rounded-lg font-mono text-xs uppercase tracking-widest hover:bg-stone-800 transition-all shadow-sm hover:shadow"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-[#FAF8F5] rounded-full hover:bg-stone-800 transition-colors shadow-sm"
               >
-                <span>Read Full Council Charter</span>
+                <span>Read Council Charter</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
               <Link
-                href="/about#team"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#F4F1EA] text-ink border border-stone-300 rounded-lg font-mono text-xs uppercase tracking-widest hover:bg-stone-200 transition-colors"
+                href="/societies"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-stone-300 text-ink rounded-full hover:border-ink transition-colors"
               >
-                <span>Council Office Bearers</span>
-                <Users className="w-3.5 h-3.5" />
+                <span>Guild Register</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* Right Column: Editorial Ledger Box */}
-          <div className="lg:col-span-5 bg-[#F4F1EA] p-6 sm:p-10 rounded-2xl border border-stone-300/80 space-y-6 shadow-soft">
-            <div className="flex items-center justify-between border-b border-stone-300/80 pb-3 font-mono text-[11px] uppercase tracking-wider text-ink-faint">
+          {/* Right Column: Clean Archival Ledger */}
+          <div className="lg:col-span-5 bg-[#F4F1EA] p-8 sm:p-10 rounded-2xl border border-stone-300/70 space-y-8">
+            <div className="flex items-center justify-between border-b border-stone-300/70 pb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-ink-faint">
               <span>COUNCIL LEDGER</span>
-              <span>1999 — 2026</span>
+              <span>DEVGHAT JHALWA</span>
             </div>
 
-            <div className="space-y-5">
-              <div className="flex items-baseline justify-between border-b border-stone-300/60 pb-3">
-                <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">
-                  Guilds Unified
+            <div className="space-y-6">
+              <div className="flex items-baseline justify-between border-b border-stone-200 pb-4">
+                <span className="font-mono text-xs uppercase tracking-widest text-ink-muted">
+                  Autonomous Guilds
                 </span>
-                <span className="font-serif text-3xl font-bold text-ink">06</span>
+                <span className="font-serif text-3xl font-normal text-ink">06</span>
               </div>
 
-              <div className="flex items-baseline justify-between border-b border-stone-300/60 pb-3">
-                <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">
+              <div className="flex items-baseline justify-between border-b border-stone-200 pb-4">
+                <span className="font-mono text-xs uppercase tracking-widest text-ink-muted">
                   Annual Productions
                 </span>
-                <span className="font-serif text-3xl font-bold text-ink">75+</span>
+                <span className="font-serif text-3xl font-normal text-ink">75+</span>
               </div>
 
-              <div className="flex items-baseline justify-between border-b border-stone-300/60 pb-3">
-                <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">
-                  Festival Attendance
+              <div className="flex items-baseline justify-between border-b border-stone-200 pb-4">
+                <span className="font-mono text-xs uppercase tracking-widest text-ink-muted">
+                  Festival Footfall
                 </span>
-                <span className="font-serif text-3xl font-bold text-ink">15,000+</span>
+                <span className="font-serif text-3xl font-normal text-ink">15,000+</span>
               </div>
 
-              <div className="flex items-baseline justify-between border-b border-stone-300/60 pb-3">
-                <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">
-                  Active Student Performers
+              <div className="flex items-baseline justify-between border-b border-stone-200 pb-4">
+                <span className="font-mono text-xs uppercase tracking-widest text-ink-muted">
+                  Performing Artists
                 </span>
-                <span className="font-serif text-3xl font-bold text-ink">320+</span>
+                <span className="font-serif text-3xl font-normal text-ink">320+</span>
               </div>
 
               <div className="flex items-baseline justify-between">
-                <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">
-                  Affiliation
+                <span className="font-mono text-xs uppercase tracking-widest text-ink-muted">
+                  Governance
                 </span>
                 <span className="font-mono text-xs uppercase text-ink font-semibold">
-                  IIIT Allahabad
+                  DoSA Office, IIITA
                 </span>
               </div>
             </div>
 
-            <div className="pt-2 border-t border-stone-300/80">
+            <div className="pt-2 border-t border-stone-300/60">
               <Link
-                href="/societies"
-                className="group flex items-center justify-between text-xs font-mono uppercase tracking-widest text-ink hover:text-stone-600 transition-colors"
+                href="/about#team"
+                className="group flex items-center justify-between text-xs font-mono uppercase tracking-[0.2em] text-ink hover:text-stone-600 transition-colors"
               >
-                <span>Read the Complete Guild Register</span>
+                <span>Council Executive Roster</span>
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
             </div>
           </div>
         </div>
-
-        {/* 4 Pillars of Cultural Council */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-14 pt-14 border-t border-stone-300/80">
-          <div className="p-6 bg-[#FAF8F5] rounded-xl border border-stone-300/80 space-y-2 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
-            <div className="w-7 h-7 rounded bg-amber-100 text-amber-900 flex items-center justify-center font-mono text-xs font-bold">
-              01
-            </div>
-            <h3 className="font-serif text-lg font-bold text-ink">6 Autonomous Guilds</h3>
-            <p className="text-xs text-ink-muted leading-relaxed">
-              Specialized societies covering photography, western dance, Hindi &amp; English literature, fine arts, street theater, and rock &amp; classical music.
-            </p>
-          </div>
-
-          <div className="p-6 bg-[#FAF8F5] rounded-xl border border-stone-300/80 space-y-2 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
-            <div className="w-7 h-7 rounded bg-rose-100 text-rose-900 flex items-center justify-center font-mono text-xs font-bold">
-              02
-            </div>
-            <h3 className="font-serif text-lg font-bold text-ink">Effervescence Fest</h3>
-            <p className="text-xs text-ink-muted leading-relaxed">
-              Organizing North India&apos;s celebrated annual cultural festival with 15,000+ footfall, multi-genre pro-nights, and nationwide college battles.
-            </p>
-          </div>
-
-          <div className="p-6 bg-[#FAF8F5] rounded-xl border border-stone-300/80 space-y-2 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
-            <div className="w-7 h-7 rounded bg-indigo-100 text-indigo-900 flex items-center justify-center font-mono text-xs font-bold">
-              03
-            </div>
-            <h3 className="font-serif text-lg font-bold text-ink">World-Class Venues</h3>
-            <p className="text-xs text-ink-muted leading-relaxed">
-              Administering institute cultural spaces including the 1,000-seat Main Audi, 3,500-capacity Open Air Theatre (OAT), and SAC production labs.
-            </p>
-          </div>
-
-          <div className="p-6 bg-[#FAF8F5] rounded-xl border border-stone-300/80 space-y-2 hover:-translate-y-1 hover:shadow-md transition-all duration-300">
-            <div className="w-7 h-7 rounded bg-teal-100 text-teal-900 flex items-center justify-center font-mono text-xs font-bold">
-              04
-            </div>
-            <h3 className="font-serif text-lg font-bold text-ink">National Accolades</h3>
-            <p className="text-xs text-ink-muted leading-relaxed">
-              Leading campus delegations with frequent podium honors at IIT Bombay Mood Indigo, IIT Kanpur Antaragni, and IIT BHU Kashiyatra.
-            </p>
-          </div>
-        </div>
       </section>
 
-      {/* 3. Chapter 02: Society Cards (The Disciplines - Editorial Cards with Hover Micro-Interactions) */}
-      <section className="bg-[#F4F1EA] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-stone-300/80">
+      {/* 3. Chapter 02: The Six Autonomous Guilds */}
+      <section className="bg-[#F4F1EA] py-24 sm:py-32 px-6 sm:px-10 lg:px-16 border-y border-stone-300/70">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="border-b border-stone-300/80 pb-3 mb-12 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
+          <div className="border-b border-stone-300/70 pb-3 mb-16 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.25em] text-ink-faint">
             <span>CHAPTER 02 // THE DISCIPLINES</span>
-            <span>SIX CREATIVE WINGS</span>
+            <span>06 AUTONOMOUS WINGS</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 num: "01",
@@ -216,9 +157,7 @@ export default async function HomePage() {
                 tagline: "Freezing fleeting moments into timeless frames.",
                 description:
                   "From 35mm analogue nostalgia to 4K cinematic festival docuseries. AMS preserves campus memory through masterclass optics.",
-                society: "AMS Guild",
-                color: "#D97706",
-                members: "45+",
+                society: "AMS",
                 founded: 2005,
               },
               {
@@ -227,10 +166,8 @@ export default async function HomePage() {
                 discipline: "Contemporary & Street Dance",
                 tagline: "Syncing heartbeats to electrifying rhythm.",
                 description:
-                  "Kinetic electricity, popping, break battles, and lyrical fusion on national stages across northern India.",
-                society: "Geneticx Crew",
-                color: "#E11D48",
-                members: "60+",
+                  "Kinetic choreography, b-boy cyphers, popping, and lyrical contemporary battles on collegiate stages nationwide.",
+                society: "Geneticx",
                 founded: 2004,
               },
               {
@@ -239,10 +176,8 @@ export default async function HomePage() {
                 discipline: "Literature, Debate & Verse",
                 tagline: "Where ink meets thought and words ignite revolutions.",
                 description:
-                  "Publishing campus anthologies, philosophical salon debates, bilingual open-mics, and timeless poetry.",
-                society: "Sarasva Society",
-                color: "#4F46E5",
-                members: "40+",
+                  "Publishing campus literary anthologies, philosophical salon debates, bilingual open-mics, and timeless poetry.",
+                society: "Sarasva",
                 founded: 2003,
               },
               {
@@ -252,9 +187,7 @@ export default async function HomePage() {
                 tagline: "Transforming empty canvases into vibrant realities.",
                 description:
                   "Gigantic acrylic wall installations, fest stagecraft decor, charcoal portraiture, and vector design archives.",
-                society: "Nirmiti Arts",
-                color: "#EA580C",
-                members: "38+",
+                society: "Nirmiti",
                 founded: 2004,
               },
               {
@@ -263,10 +196,8 @@ export default async function HomePage() {
                 discipline: "Street Theatre & Proscenium Drama",
                 tagline: "Living a thousand lives under the stage spotlight.",
                 description:
-                  "Voice, grit, and hard-hitting Nukkad Nataks staging social truth before audiences of thousands.",
-                society: "Rangtarangini Troupe",
-                color: "#B91C1C",
-                members: "52+",
+                  "Voice, grit, and hard-hitting Nukkad Nataks staging social truths before amphitheatre audiences of thousands.",
+                society: "Rangtarangini",
                 founded: 2003,
               },
               {
@@ -275,57 +206,45 @@ export default async function HomePage() {
                 discipline: "Live Band & Acoustic Performance",
                 tagline: "Harmonies that resonate long after the chords fade.",
                 description:
-                  "Electric rock anthems, Indian classical jugalbandis, starlit unplugged circles, and audio production.",
-                society: "Virtuosi Collective",
-                color: "#0D9488",
-                members: "48+",
+                  "Electric rock anthems, Indian classical jugalbandis, starlit unplugged circles, and multi-track audio engineering.",
+                society: "Virtuosi",
                 founded: 2002,
               },
             ].map((item) => (
               <Link
                 key={item.num}
                 href={`/societies/${item.slug}`}
-                className="group relative bg-[#FAF8F5] p-7 rounded-2xl border border-stone-300/80 shadow-soft hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+                className="group bg-[#FAF8F5] p-8 rounded-2xl border border-stone-300/70 hover:border-stone-400 transition-all duration-300 flex flex-col justify-between"
               >
-                {/* Top Colored Accent Stripe */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-1 transition-all duration-300 group-hover:h-1.5"
-                  style={{ backgroundColor: item.color }}
-                />
-
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between font-mono text-[11px] text-ink-faint border-b border-stone-200/80 pb-2.5">
-                    <span>SECTOR [{item.num}]</span>
-                    <span
-                      className="px-2.5 py-0.5 rounded-full font-semibold uppercase tracking-wider text-[10px]"
-                      style={{ color: item.color, backgroundColor: `${item.color}15` }}
-                    >
-                      {item.society}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between font-mono text-[10px] text-ink-faint border-b border-stone-200 pb-3">
+                    <span className="uppercase tracking-[0.25em]">WING {item.num}</span>
+                    <span className="uppercase tracking-widest text-ink font-semibold">
+                      EST. {item.founded}
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="font-serif text-2xl sm:text-3xl font-bold text-ink group-hover:text-stone-700 transition-colors leading-tight">
+                    <h3 className="font-serif text-2xl sm:text-3xl font-normal text-ink group-hover:text-stone-700 transition-colors leading-tight">
                       {item.discipline}
                     </h3>
-                    <p className="font-serif italic text-xs text-stone-600 mt-1">
+                    <p className="font-serif italic text-xs text-stone-600 mt-1.5">
                       &ldquo;{item.tagline}&rdquo;
                     </p>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-ink-muted leading-relaxed line-clamp-3">
+                  <p className="font-sans text-xs sm:text-sm text-ink-muted leading-relaxed line-clamp-3">
                     {item.description}
                   </p>
                 </div>
 
-                <div className="pt-5 mt-5 border-t border-stone-200/80 flex items-center justify-between font-mono text-xs">
-                  <span className="text-[10px] text-ink-faint uppercase tracking-wider">
-                    {item.members} Artists • Estd. {item.founded}
+                <div className="pt-6 mt-6 border-t border-stone-200 flex items-center justify-between font-mono text-xs">
+                  <span className="text-[11px] font-semibold text-ink uppercase tracking-wider">
+                    {item.society}
                   </span>
-
-                  <span className="inline-flex items-center gap-1 text-ink group-hover:text-stone-700 font-semibold uppercase tracking-wider text-[11px]">
-                    <span>Open Dossier</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <span className="inline-flex items-center gap-1 text-ink group-hover:translate-x-1 transition-transform">
+                    <span className="text-[10px] uppercase tracking-widest">Examine</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
               </Link>
@@ -335,236 +254,175 @@ export default async function HomePage() {
       </section>
 
       {/* 4. Chapter 03: Flagship Exhibition (Effervescence '26) */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="border-b border-stone-300/80 pb-3 mb-12 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
+      <section className="py-24 sm:py-32 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto w-full">
+        <div className="border-b border-stone-300/70 pb-3 mb-16 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.25em] text-ink-faint">
           <span>CHAPTER 03 // THE FESTIVALS</span>
-          <span>FLAGSHIP CALENDAR</span>
+          <span>ANNUAL FLAGSHIP MONOGRAPH</span>
         </div>
 
-        {/* Cinematic Film-Poster Style Fest Banner */}
-        <div className="relative rounded-3xl bg-ink text-canvas overflow-hidden p-8 sm:p-14 lg:p-16 shadow-soft-xl border border-stone-800">
-          <div className="relative z-10 max-w-3xl space-y-7">
-            <div className="inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-widest text-amber-300 border-b border-amber-300/30 pb-2">
-              <Disc className="w-4 h-4 animate-spin text-amber-300" style={{ animationDuration: "10s" }} />
-              <span>NORTH INDIA&apos;S PREMIER CULTURAL EXTRAVAGANZA</span>
+        {/* Cinematic Archival Fest Monograph */}
+        <div className="relative rounded-3xl bg-stone-900 text-stone-100 overflow-hidden p-8 sm:p-14 lg:p-16 border border-stone-800">
+          <div className="relative z-10 max-w-3xl space-y-8">
+            <div className="font-mono text-xs uppercase tracking-[0.25em] text-amber-300/90 border-b border-white/10 pb-3">
+              NORTH INDIA&apos;S PREMIER CULTURAL EXTRAVAGANZA
             </div>
 
-            <div className="space-y-1">
-              <h2 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-canvas leading-[0.95]">
+            <div className="space-y-2">
+              <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-white leading-[0.96]">
                 {nextFest.name}
               </h2>
-              <p className="font-mono text-xs uppercase tracking-widest text-amber-300 pt-1">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-stone-400 pt-1">
                 EDITION {nextFest.edition} // &ldquo;{nextFest.theme.toUpperCase()}&rdquo;
               </p>
             </div>
 
-            <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-stone-300 text-sm sm:text-base leading-relaxed font-sans">
               {nextFest.description}
             </p>
 
-            {/* Bill / Schedule Highlights */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-y border-stone-800 text-xs font-mono">
+            {/* Schedule Highlights */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 py-6 border-y border-white/10 text-xs font-mono">
               {nextFest.highlights.map((h, i) => (
                 <div key={i} className="space-y-1">
-                  <span className="text-stone-400 block text-[10px]">ACT [0{i + 1}]</span>
-                  <span className="font-serif text-sm font-semibold text-canvas">{h}</span>
+                  <span className="text-stone-500 block text-[10px] tracking-widest">ACT 0{i + 1}</span>
+                  <span className="font-serif text-sm font-medium text-white">{h}</span>
                 </div>
               ))}
             </div>
 
-            <div className="pt-2 flex flex-wrap gap-4">
+            <div className="pt-2 flex flex-wrap gap-4 font-mono text-xs uppercase tracking-[0.2em]">
               <Link
                 href="/fests"
-                className="px-6 py-3 bg-canvas text-ink font-mono text-xs uppercase tracking-widest font-bold hover:bg-stone-200 transition-colors rounded-lg shadow-sm"
+                className="px-6 py-3 bg-white text-stone-950 font-semibold hover:bg-stone-200 transition-colors rounded-full"
               >
-                Explore Festival Dossier
+                Festival Dossier
               </Link>
               <Link
                 href="/events"
-                className="px-6 py-3 border border-stone-600 text-canvas font-mono text-xs uppercase tracking-widest hover:border-canvas transition-colors rounded-lg"
+                className="px-6 py-3 border border-white/20 text-white hover:border-white transition-colors rounded-full"
               >
-                View Complete Event Ledger
+                Production Ledger
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Chapter 04: Upcoming Cultural Productions */}
-      <section className="bg-[#F4F1EA] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-t border-stone-300/80">
+      {/* 5. Chapter 04: Visual Record & Photographic Gallery Preview */}
+      <section className="bg-[#F4F1EA] py-24 sm:py-32 px-6 sm:px-10 lg:px-16 border-t border-stone-300/70">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
+          <div className="border-b border-stone-300/70 pb-3 mb-16 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.25em] text-ink-faint">
+            <span>CHAPTER 04 // THE PHOTOGRAPHIC RECORD</span>
+            <span>AMS CURATORIAL ARCHIVE</span>
+          </div>
+
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
-              <div className="font-mono text-xs uppercase tracking-widest text-ink-faint mb-1.5">
-                CHAPTER 04 // UPCOMING CALENDAR
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-ink">
-                Live Campus Productions &amp; Acts
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-ink">
+                Photographic Ledger of IIIT Allahabad
               </h2>
+              <p className="text-ink-muted text-sm sm:text-base mt-2 font-serif italic">
+                Preserved exhibition plates from pro-nights, street drama choruses, and quiet rehearsals.
+              </p>
             </div>
+
             <Link
-              href="/events"
-              className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-ink hover:text-stone-600 font-semibold mt-3 md:mt-0"
+              href="/gallery"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-ink hover:text-stone-600 transition-colors font-semibold"
             >
-              <span>View Full Schedule &rarr;</span>
+              <span>Explore Photographic Catalog</span>
+              <ArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {initialEvents.slice(0, 3).map((evt) => (
-              <div
-                key={evt.id}
-                className="bg-[#FAF8F5] p-6 sm:p-7 rounded-2xl border border-stone-300/80 shadow-soft hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+          {/* Exhibition Photo Mount Style Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            {[
+              {
+                id: "72177720315482910",
+                title: "Effervescence '25: Pro-Nights",
+                sub: "Live Concert Record",
+                count: "8 HIGH-RES PLATES",
+                year: "2025",
+              },
+              {
+                id: "72177720315482911",
+                title: "Rangtarangini Nukkad Natak",
+                sub: "Street Drama Chronicle",
+                count: "6 HIGH-RES PLATES",
+                year: "2025",
+              },
+              {
+                id: "72177720315482912",
+                title: "Virtuosi Unplugged Session",
+                sub: "Acoustic Courtyard",
+                count: "6 HIGH-RES PLATES",
+                year: "2025",
+              },
+              {
+                id: "72177720315482913",
+                title: "Geneticx Street Cypher",
+                sub: "Break & Popping Battles",
+                count: "6 HIGH-RES PLATES",
+                year: "2025",
+              },
+            ].map((album) => (
+              <Link
+                key={album.id}
+                href={`/gallery/${album.id}`}
+                className="group bg-[#FAF8F5] p-6 rounded-2xl border border-stone-300/70 hover:border-stone-400 transition-all duration-300 flex flex-col justify-between h-72"
               >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between font-mono text-xs">
-                    <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-semibold text-[10px] uppercase">
-                      {evt.category}
-                    </span>
-                    <span className="text-ink-faint text-[10px]">{evt.status.toUpperCase()}</span>
-                  </div>
-                  <h3 className="font-serif text-xl font-bold text-ink leading-snug">
-                    {evt.title}
-                  </h3>
-                  <p className="text-xs text-ink-muted leading-relaxed line-clamp-2">
-                    {evt.description}
-                  </p>
-                  <div className="pt-2 font-mono text-xs text-stone-600 space-y-1">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-ink-muted" />
-                      <span>{evt.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-ink-muted" />
-                      <span>{evt.venue}</span>
-                    </div>
-                  </div>
+                <div className="w-full h-32 bg-stone-200/50 rounded-xl border border-stone-300/60 flex flex-col items-center justify-center font-mono text-[10px] uppercase tracking-[0.2em] text-stone-500 group-hover:bg-stone-200 transition-colors">
+                  <Camera className="w-5 h-5 text-stone-400 mb-1" />
+                  <span>PL-{album.year}</span>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-stone-200/80">
-                  <Link
-                    href={`/societies/${evt.societySlug}`}
-                    className="font-mono text-xs uppercase tracking-wider text-ink font-semibold flex items-center justify-between hover:text-stone-600"
-                  >
-                    <span>{evt.societyName.split(" ")[0]} Wing</span>
-                    <span>&rarr;</span>
-                  </Link>
+                <div className="pt-3">
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-ink-faint block">
+                    {album.count} • {album.sub}
+                  </span>
+                  <h3 className="font-serif text-lg font-normal text-ink group-hover:text-stone-700 transition-colors mt-1 leading-snug">
+                    {album.title}
+                  </h3>
                 </div>
-              </div>
+
+                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-ink pt-3 border-t border-stone-200">
+                  <span>View Plates</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 6. Chapter 05: Visual Archives & Gallery Preview */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="border-b border-stone-300/80 pb-3 mb-10 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
-          <span>CHAPTER 05 // VISUAL REPOSITORIES</span>
-          <span>CAMPUS ARCHIVES</span>
-        </div>
-
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
-          <div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-ink">
-              Visual Artifacts &amp; Moments
-            </h2>
-            <p className="text-ink-muted text-sm sm:text-base mt-1.5">
-              Curated high-definition records captured by student photojournalists.
-            </p>
-          </div>
-
-          <Link
-            href="/gallery"
-            className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-ink hover:text-stone-600 transition-colors mt-3 md:mt-0 font-semibold"
-          >
-            <span>Explore All Albums</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        {/* Exhibition Photo Mount Style Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {[
-            {
-              title: "Effervescence Pro-Nights",
-              sub: "Live Concert Record",
-              count: "120 PLATES",
-              year: "2025",
-            },
-            {
-              title: "Footloose Dance Arena",
-              sub: "Choreography Finals",
-              count: "84 PLATES",
-              year: "2025",
-            },
-            {
-              title: "Nukkad Natak Street Drama",
-              sub: "Amphitheatre Sessions",
-              count: "96 PLATES",
-              year: "2024",
-            },
-            {
-              title: "Incandescence Band Clash",
-              sub: "Rock Ensemble",
-              count: "112 PLATES",
-              year: "2024",
-            },
-          ].map((album, idx) => (
-            <Link
-              key={idx}
-              href="/gallery"
-              className="group bg-[#FAF8F5] p-5 rounded-2xl border border-stone-300/80 shadow-soft hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-72"
-            >
-              <div className="w-full h-32 bg-stone-200/60 rounded-xl border border-stone-300/80 flex items-center justify-center font-mono text-[10px] uppercase tracking-widest text-stone-500 group-hover:bg-stone-300/50 transition-colors">
-                <span>PHOTO ARCHIVE [{album.year}]</span>
-              </div>
-
-              <div className="pt-3">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-ink-faint block">
-                  {album.count} • {album.sub}
-                </span>
-                <h3 className="font-serif text-base sm:text-lg font-bold text-ink group-hover:text-stone-700 transition-colors mt-1">
-                  {album.title}
-                </h3>
-              </div>
-
-              <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-widest text-ink pt-2 border-t border-stone-200/80">
-                <span>Inspect</span>
-                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* 7. Inductions / Join the Council Banner */}
-      <section className="pb-20 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="bg-ink text-canvas rounded-3xl p-8 sm:p-12 lg:p-14 border border-stone-800 flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-xl">
+      {/* 6. Chapter 05: Council Membership & Inquiries */}
+      <section className="py-24 sm:py-28 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto w-full">
+        <div className="bg-stone-900 text-stone-100 rounded-3xl p-8 sm:p-14 border border-stone-800 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 text-amber-300 font-mono text-xs uppercase tracking-widest">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>COLLEGE AUDITIONS &amp; TALENT RECRUITMENT</span>
+            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-amber-300/90">
+              CAMPUS AUDITIONS &amp; TALENT RECRUITMENT
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
-              Join the Cultural Council
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight text-white">
+              Participate in the Cultural Council
             </h2>
-            <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
-              Are you passionate about music, acting, dance, literature, photography, or fine arts? Auditions open every semester across all 6 student societies. No prior professional experience required—just raw creative passion.
+            <p className="text-stone-300 text-sm sm:text-base leading-relaxed font-sans">
+              Auditions and workshop enrollments open at the beginning of each academic semester across all six societies. Open to all registered students of IIIT Allahabad.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-[0.2em]">
             <Link
-              href="/about#join"
-              className="px-6 py-3 bg-amber-400 hover:bg-amber-300 text-ink font-mono text-xs uppercase tracking-widest font-bold transition-all text-center rounded-lg shadow-sm"
+              href="/about"
+              className="px-6 py-3 bg-white text-stone-950 font-semibold rounded-full hover:bg-stone-200 transition-colors text-center"
             >
-              Audition Guidelines
+              Council Details
             </Link>
             <Link
               href="/societies"
-              className="px-6 py-3 border border-stone-600 hover:border-canvas text-canvas font-mono text-xs uppercase tracking-widest transition-all text-center rounded-lg"
+              className="px-6 py-3 border border-white/20 text-white rounded-full hover:border-white transition-colors text-center"
             >
-              Explore 6 Wings
+              The 6 Guilds
             </Link>
           </div>
         </div>
