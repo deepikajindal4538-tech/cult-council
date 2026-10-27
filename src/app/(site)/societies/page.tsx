@@ -47,10 +47,7 @@ export default async function SocietiesPage() {
           {societies.map((society, idx) => (
             <div
               key={society.slug}
-              className="group relative bg-[#F4F1EA] rounded-2xl border border-stone-300 overflow-hidden shadow-soft hover:shadow-soft-xl transition-all duration-500 flex flex-col justify-between"
-              style={{
-                backgroundColor: society.washColor ? society.washColor : "#F4F1EA",
-              }}
+              className="group relative bg-[#F4F1EA] rounded-2xl border border-stone-300/80 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
             >
               {/* Top Hairline Header */}
               <div className="p-8 sm:p-10 pb-4 border-b border-stone-300/80 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-muted">

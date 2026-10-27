@@ -2,17 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-  ArrowDown,
-  Pause,
-  Play,
-  Camera,
-} from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import type { ISociety } from "@/models/Society";
 
 const SLIDES = [
@@ -54,52 +45,40 @@ const SLIDES = [
 ];
 
 interface HeroSliderProps {
-  societies: (ISociety | any)[];
+  societies?: (ISociety | any)[];
 }
 
-export function HeroSlider({ societies }: HeroSliderProps) {
+export function HeroSlider({}: HeroSliderProps) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
-  const [isPaused, setIsPaused] = useState(false);
 
   const nextSlide = useCallback(() => {
     setDirection(1);
     setCurrent((prev) => (prev + 1) % SLIDES.length);
   }, []);
 
-  const prevSlide = useCallback(() => {
-    setDirection(-1);
-    setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-  }, []);
-
-  const goToSlide = (index: number) => {
-    setDirection(index > current ? 1 : -1);
-    setCurrent(index);
-  };
-
-  // Autoplay timer
+  // Smooth background autoplay
   useEffect(() => {
-    if (isPaused) return;
     const timer = setInterval(() => {
       nextSlide();
-    }, 5000);
+    }, 6000);
     return () => clearInterval(timer);
-  }, [isPaused, nextSlide]);
+  }, [nextSlide]);
 
   const slideVariants = {
     enter: (dir: number) => ({
       x: dir > 0 ? "100%" : "-100%",
       opacity: 0,
-      scale: 1.08,
+      scale: 1.06,
     }),
     center: {
       x: "0%",
       opacity: 1,
       scale: 1,
       transition: {
-        x: { type: "spring", stiffness: 280, damping: 32 },
-        opacity: { duration: 0.6 },
-        scale: { duration: 6, ease: "easeOut" },
+        x: { type: "spring", stiffness: 260, damping: 30 },
+        opacity: { duration: 0.7 },
+        scale: { duration: 7, ease: "easeOut" },
       },
     },
     exit: (dir: number) => ({
@@ -107,7 +86,7 @@ export function HeroSlider({ societies }: HeroSliderProps) {
       opacity: 0,
       scale: 0.98,
       transition: {
-        x: { type: "spring", stiffness: 280, damping: 32 },
+        x: { type: "spring", stiffness: 260, damping: 30 },
         opacity: { duration: 0.5 },
       },
     }),
@@ -117,11 +96,9 @@ export function HeroSlider({ societies }: HeroSliderProps) {
     <section
       id="hero-title"
       className="relative w-full min-h-[85vh] lg:min-h-[92vh] flex flex-col justify-between overflow-hidden bg-[#FAF8F5] select-none"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      aria-label="Cultural Council Hero Slider"
+      aria-label="Cultural Council Hero Showcase"
     >
-      {/* 1. SLIDING BACKGROUND PHOTOS & SEAMLESS MULTI-STOP DISSOLVE */}
+      {/* 1. SLIDING BACKGROUND PHOTOS & SEAMLESS DISSOLVE */}
       <div className="absolute inset-0 z-0 overflow-hidden bg-black">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
@@ -145,28 +122,28 @@ export function HeroSlider({ societies }: HeroSliderProps) {
           </motion.div>
         </AnimatePresence>
 
-        {/* High-Legibility Top & Center Scrim */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/55 to-black/30 z-10 pointer-events-none" />
+        {/* Ambient Contrast Scrim */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/30 z-10 pointer-events-none" />
 
-        {/* Radial Center Vignette for focal clarity */}
+        {/* Center Vignette for focal clarity */}
         <div
           className="absolute inset-0 z-10 pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.75) 100%)",
+              "radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 100%)",
           }}
         />
 
         {/* Subtle dot mesh texture */}
         <div
-          className="absolute inset-0 opacity-[0.06] z-10 pointer-events-none"
+          className="absolute inset-0 opacity-[0.05] z-10 pointer-events-none"
           style={{
             backgroundImage: `radial-gradient(#FAF8F5 1px, transparent 1px)`,
             backgroundSize: "24px 24px",
           }}
         />
 
-        {/* 🌟 ULTRA-SMOOTH LIQUID GRADIENT DISSOLVE (Fades dark image directly into #FAF8F5) */}
+        {/* Seamless Liquid Gradient Dissolve into #FAF8F5 */}
         <div
           className="absolute -bottom-1 inset-x-0 h-48 sm:h-72 pointer-events-none z-10"
           style={{
@@ -176,142 +153,35 @@ export function HeroSlider({ societies }: HeroSliderProps) {
         />
       </div>
 
-      {/* 2. TOP LEDGER BAR (OVERLAYED) */}
-      <header className="relative z-20 max-w-7xl mx-auto w-full pt-6 sm:pt-8 px-4 sm:px-6 lg:px-8 flex items-center justify-between border-b border-white/15 pb-4 font-mono text-[11px] uppercase tracking-widest text-stone-300">
-        <div className="flex items-center gap-2.5">
-          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-          <span className="text-white font-semibold tracking-wider">
-            INSTITUTE OF NATIONAL IMPORTANCE
-          </span>
-          <span className="hidden sm:inline text-stone-400">// ESTD. 1999</span>
-        </div>
+      {/* Top spacing buffer for fixed navbar */}
+      <div className="h-16 sm:h-20" />
 
-        <div className="flex items-center gap-4 text-[10px]">
-          <div className="hidden sm:flex items-center gap-1.5 text-amber-300 font-medium">
-            <Camera className="w-3.5 h-3.5" />
-            <span>AMS VAULT: 0{current + 1} / 0{SLIDES.length}</span>
-          </div>
-          <span className="px-2 py-0.5 rounded bg-white/10 text-stone-200 border border-white/15">
-            APEX ARTS BODY
-          </span>
-        </div>
-      </header>
-
-      {/* 3. CENTER MONUMENTAL CULTURAL COUNCIL TITLE (WRITTEN ON THE SLIDER) */}
-      <div className="relative z-20 max-w-5xl mx-auto w-full text-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 my-auto space-y-4 sm:space-y-5">
-        {/* Official Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 font-mono text-[11px] uppercase tracking-widest text-amber-300 shadow-md">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>OFFICIAL CULTURAL PORTAL</span>
-        </div>
-
+      {/* 2. CENTER MONUMENTAL CULTURAL COUNCIL TITLE */}
+      <div className="relative z-20 max-w-5xl mx-auto w-full text-center px-4 sm:px-6 lg:px-8 py-12 sm:py-20 my-auto space-y-5">
         {/* The Hero Title */}
         <div className="space-y-1">
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight text-white uppercase leading-[0.92] drop-shadow-lg">
+          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight text-white uppercase leading-[0.92] drop-shadow-2xl">
             CULTURAL COUNCIL
           </h1>
-          <p className="font-serif italic text-2xl sm:text-4xl md:text-5xl text-amber-200/90 tracking-tight drop-shadow-md">
+          <p className="font-serif italic text-2xl sm:text-4xl md:text-5xl text-amber-200/90 tracking-tight drop-shadow-lg">
             IIIT Allahabad
           </p>
         </div>
 
-        {/* Narrative Description */}
-        <p className="max-w-2xl mx-auto font-serif text-sm sm:text-lg md:text-xl text-stone-200 leading-relaxed pt-1 drop-shadow">
+        {/* Narrative Subtitle */}
+        <p className="max-w-2xl mx-auto font-serif text-sm sm:text-lg md:text-xl text-stone-200 leading-relaxed pt-2 drop-shadow">
           Where technical precision yields to unfiltered artistic fervor. The statutory apex body governing music, dramatics, choreography, fine arts, literature, and visual storytelling.
         </p>
-
-        {/* 6 Autonomous Societies Quick Pills */}
-        <div className="pt-2 flex flex-wrap items-center justify-center gap-2 font-mono text-xs">
-          {societies.map((soc) => (
-            <Link
-              key={soc.slug}
-              href={`/societies/${soc.slug}`}
-              className="group px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-stone-200 text-xs font-mono hover:bg-white hover:text-black hover:border-white transition-all duration-200 shadow-sm hover:scale-105"
-            >
-              <strong style={{ color: soc.accentColor }} className="group-hover:text-black">
-                {soc.name}
-              </strong>{" "}
-              <span className="text-stone-300 group-hover:text-stone-700">
-                • {soc.category?.split(" ")[0]}
-              </span>
-            </Link>
-          ))}
-        </div>
       </div>
 
-      {/* 4. BOTTOM BAR: FLOATING FROSTED GLASS CAPSULE & LIQUID SCROLL CUE */}
-      <footer className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 flex flex-col items-center gap-3.5">
-        {/* Floating Capsule Bar (Sits over the soft fade) */}
-        <div className="w-full max-w-4xl bg-stone-950/80 backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-full px-5 sm:px-7 py-2.5 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-white">
-          {/* Active Slide Info */}
-          <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
-            <div className="flex items-center gap-2 overflow-hidden">
-              <span className="font-bold text-white uppercase tracking-wider text-[11px] truncate">
-                {SLIDES[current].title}
-              </span>
-              <span className="hidden md:inline text-stone-400 text-[10px]">
-                // {SLIDES[current].caption}
-              </span>
-            </div>
-          </div>
-
-          {/* Slider Controls: Dots + Prev/Next + Pause/Play */}
-          <div className="flex items-center gap-3 shrink-0">
-            {/* Slide Dots / Indicators */}
-            <div className="flex items-center gap-1.5">
-              {SLIDES.map((slide, idx) => (
-                <button
-                  key={slide.id}
-                  type="button"
-                  onClick={() => goToSlide(idx)}
-                  aria-label={`Go to slide ${idx + 1}: ${slide.title}`}
-                  className={`transition-all duration-300 rounded-full h-1.5 ${
-                    idx === current
-                      ? "w-6 bg-amber-400"
-                      : "w-1.5 bg-white/35 hover:bg-white/60"
-                  }`}
-                />
-              ))}
-            </div>
-
-            {/* Navigation Arrows */}
-            <div className="flex items-center gap-1 pl-2 border-l border-white/20">
-              <button
-                type="button"
-                onClick={prevSlide}
-                aria-label="Previous slide"
-                className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
-              >
-                <ChevronLeft className="w-3.5 h-3.5" />
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsPaused(!isPaused)}
-                aria-label={isPaused ? "Play slider" : "Pause slider"}
-                className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/25 text-stone-300 hover:text-white flex items-center justify-center transition-colors"
-              >
-                {isPaused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
-              </button>
-              <button
-                type="button"
-                onClick={nextSlide}
-                aria-label="Next slide"
-                className="w-6 h-6 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
-              >
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Cue (Transitioning directly onto the #FAF8F5 stage tone) */}
+      {/* 3. BOTTOM SCROLL CUE */}
+      <footer className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-8 sm:pb-12 flex justify-center">
         <a
           href="#societies-stage"
-          className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-ink/75 hover:text-ink transition-colors py-1"
+          className="group inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/75 hover:text-ink transition-colors py-2 px-5 rounded-full bg-white/70 backdrop-blur-md border border-stone-300/80 shadow-sm"
         >
           <span>EXPLORE SOCIETIES LADDER</span>
-          <ArrowDown className="w-3.5 h-3.5 text-amber-700 animate-bounce group-hover:translate-y-0.5 transition-transform" />
+          <ArrowDown className="w-3.5 h-3.5 text-amber-800 animate-bounce group-hover:translate-y-0.5 transition-transform" />
         </a>
       </footer>
     </section>

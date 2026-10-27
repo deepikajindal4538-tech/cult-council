@@ -35,7 +35,7 @@ export function Navbar() {
     <header
       className={`z-50 w-full transition-colors duration-300 ${
         isHome
-          ? "absolute top-0 left-0 right-0 border-b border-stone-300/40 bg-transparent"
+          ? "absolute top-0 left-0 right-0 border-b border-white/15 bg-transparent"
           : "sticky top-0 backdrop-blur-md bg-[#FAF8F5]/90 border-b border-stone-300/80 shadow-sm"
       }`}
     >
@@ -50,10 +50,18 @@ export function Navbar() {
             <span className="text-[6px] text-amber-300 tracking-normal font-sans">IIITA</span>
           </div>
           <div className="flex flex-col">
-            <span className="font-serif font-medium text-base sm:text-lg tracking-tight text-ink leading-none">
+            <span
+              className={`font-serif font-medium text-base sm:text-lg tracking-tight leading-none ${
+                isHome ? "text-white" : "text-ink"
+              }`}
+            >
               Cultural Council
             </span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-ink-faint pt-0.5">
+            <span
+              className={`font-mono text-[9px] uppercase tracking-[0.25em] pt-0.5 ${
+                isHome ? "text-stone-300" : "text-ink-faint"
+              }`}
+            >
               IIIT Allahabad
             </span>
           </div>
@@ -77,18 +85,26 @@ export function Navbar() {
                   <Link
                     href={item.href}
                     className={`inline-flex items-center gap-1.5 transition-colors duration-150 ${
-                      isActive
+                      isHome
+                        ? isActive
+                          ? "text-white font-semibold"
+                          : "text-stone-300 hover:text-white"
+                        : isActive
                         ? "text-ink font-semibold"
                         : "text-ink-muted hover:text-ink"
                     }`}
                   >
                     <span>{item.label}</span>
-                    <ChevronDown className="w-3 h-3 text-stone-400 group-hover:text-ink transition-transform group-hover:rotate-180 duration-200" />
+                    <ChevronDown
+                      className={`w-3 h-3 transition-transform group-hover:rotate-180 duration-200 ${
+                        isHome ? "text-stone-400 group-hover:text-white" : "text-stone-400 group-hover:text-ink"
+                      }`}
+                    />
                   </Link>
 
                   {/* Minimalist Dropdown */}
                   <div className="absolute top-full -left-4 pt-2 w-72 hidden group-hover:block transition-all duration-200">
-                    <div className="bg-[#FAF8F5] border border-stone-300/80 rounded-xl shadow-lg p-2 space-y-0.5">
+                    <div className="bg-[#FAF8F5] border border-stone-300/80 rounded-xl shadow-lg p-2 space-y-0.5 text-ink">
                       <div className="px-3 py-1.5 text-[9px] uppercase tracking-[0.25em] text-ink-faint border-b border-stone-200 font-semibold">
                         The Six Autonomous Guilds
                       </div>
@@ -121,7 +137,11 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={`py-2 transition-colors duration-150 relative ${
-                  isActive
+                  isHome
+                    ? isActive
+                      ? "text-white font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1px] after:bg-white"
+                      : "text-stone-300 hover:text-white"
+                    : isActive
                     ? "text-ink font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1px] after:bg-ink"
                     : "text-ink-muted hover:text-ink"
                 }`}
@@ -133,7 +153,11 @@ export function Navbar() {
 
           <Link
             href="/fests"
-            className="inline-flex items-center gap-2 px-4 py-2 border border-ink text-ink hover:bg-ink hover:text-[#FAF8F5] transition-all font-mono text-[10px] uppercase tracking-[0.2em] rounded-full"
+            className={`inline-flex items-center gap-2 px-4 py-2 border transition-all font-mono text-[10px] uppercase tracking-[0.2em] rounded-full ${
+              isHome
+                ? "border-white/30 text-white hover:bg-white hover:text-black"
+                : "border-ink text-ink hover:bg-ink hover:text-[#FAF8F5]"
+            }`}
           >
             <span>Effervescence &apos;26</span>
             <ArrowUpRight className="w-3 h-3" />
@@ -145,7 +169,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 text-ink focus:outline-none"
+            className={`p-1.5 focus:outline-none ${isHome ? "text-white" : "text-ink"}`}
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle Navigation Menu"
           >
@@ -156,7 +180,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-stone-300 bg-[#FAF8F5] px-6 pt-4 pb-8 space-y-3 font-mono text-xs uppercase tracking-widest animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden border-b border-stone-300 bg-[#FAF8F5] px-6 pt-4 pb-8 space-y-3 font-mono text-xs uppercase tracking-widest text-ink animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="pb-2 border-b border-stone-200 text-[10px] text-ink-faint">
             IIIT Allahabad • Cultural Council
           </div>

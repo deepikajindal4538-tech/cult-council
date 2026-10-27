@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { getAllSocieties } from "@/lib/societies";
-import { initialFests, initialEvents } from "@/lib/seedData";
+import { initialFests } from "@/lib/seedData";
+import { HeroSlider } from "@/components/hero/HeroSlider";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
 import {
   ArrowUpRight,
   ArrowRight,
-  Calendar,
-  MapPin,
   Camera,
 } from "lucide-react";
 
@@ -22,7 +21,10 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAF8F5] text-ink selection:bg-stone-300">
-      {/* 1. Full-Window A24 Editorial Hero Stage */}
+      {/* 0. Hero Image Showcase Section with Cultural Council Title */}
+      <HeroSlider societies={societies} />
+
+      {/* 1. Full-Window A24 Editorial 3D Hero Stage */}
       <A24HeroPinned societies={societies} />
 
       {/* 2. Chapter 01: The Cultural Charter & Governance */}
