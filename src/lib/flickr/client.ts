@@ -8,6 +8,11 @@ import {
 } from "./schemas";
 import { transformAlbumsList, transformAlbumPhotos } from "./transform";
 import { cache } from "../cache";
+import {
+  getFallbackAlbumsResponse,
+  getFallbackAlbumPhotosResponse,
+  FALLBACK_ALBUMS,
+} from "./fallbackData";
 
 const FLICKR_REST_ENDPOINT = "https://www.flickr.com/services/rest/";
 
@@ -164,4 +169,88 @@ export async function getAlbumPhotos(
     cacheKey,
     (json) => transformAlbumPhotos(validatedId, json)
   );
+}
+
+export interface GalleryAlbumsResult extends TrimmedAlbumsResponse {
+  isLiveFlickr: boolean;
+}
+
+export interface GalleryAlbumPhotosResult extends TrimmedAlbumPhotosResponse {
+  isLiveFlickr: boolean;
+  curator?: string;
+  category?: string;
+  description?: string;
+}
+
+/**
+ * Resilient gallery fetchers that seamlessly switch between live Flickr and curated fallbacks
+ */
+export async function getAlbumsWithFallback(
+  query: { page?: number; per_page?: number } = {}
+): Promise<GalleryAlbumsResult> {
+  const apiKey = process.env.FLICKR_API_KEY;
+  const userId = process.env.FLICKR_USER_ID;
+
+  if (!apiKey || !userId || apiKey.includes("mock") || userId.includes("mock")) {
+    const fallback = getFallbackAlbumsResponse(query.page || 1, query.per_page || 20);
+    return { ...fallback, isLiveFlickr: false };
+  }
+
+  try {
+    const live = await getAlbums(query);
+    return { ...live, isLiveFlickr: true };
+  } catch (err) {
+    console.warn(
+      "[FlickrClient] Upstream fetch failed, serving curated fallback albums:",
+      err instanceof Error ? err.message : err
+    );
+    const fallback = getFallbackAlbumsResponse(query.page || 1, query.per_page || 20);
+    return { ...fallback, isLiveFlickr: false };
+  }
+}
+
+export async function getAlbumPhotosWithFallback(
+  albumId: string,
+  query: { page?: number; per_page?: number } = {}
+): Promise<GalleryAlbumPhotosResult | null> {
+  const apiKey = process.env.FLICKR_API_KEY;
+  const userId = process.env.FLICKR_USER_ID;
+  const enriched = FALLBACK_ALBUMS.find((a) => a.id === albumId);
+
+  if (!apiKey || !userId || apiKey.includes("mock") || userId.includes("mock")) {
+    const fallback = getFallbackAlbumPhotosResponse(albumId, query.page || 1, query.per_page || 20);
+    if (!fallback) return null;
+    return {
+      ...fallback,
+      isLiveFlickr: false,
+      curator: enriched?.curator,
+      category: enriched?.category,
+      description: enriched?.description,
+    };
+  }
+
+  try {
+    const live = await getAlbumPhotos(albumId, query);
+    return {
+      ...live,
+      isLiveFlickr: true,
+      curator: enriched?.curator || "Acoustics & Media Society (AMS)",
+      category: enriched?.category || "Cultural Archive",
+      description: enriched?.description || "",
+    };
+  } catch (err) {
+    console.warn(
+      `[FlickrClient] Upstream fetch for album ${albumId} failed, serving curated fallback:`,
+      err instanceof Error ? err.message : err
+    );
+    const fallback = getFallbackAlbumPhotosResponse(albumId, query.page || 1, query.per_page || 20);
+    if (!fallback) return null;
+    return {
+      ...fallback,
+      isLiveFlickr: false,
+      curator: enriched?.curator,
+      category: enriched?.category,
+      description: enriched?.description,
+    };
+  }
 }

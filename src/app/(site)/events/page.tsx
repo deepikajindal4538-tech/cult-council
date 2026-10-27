@@ -1,108 +1,167 @@
 import React from "react";
 import Link from "next/link";
-import { Calendar, MapPin, Clock, Sparkles, ArrowRight, Filter } from "lucide-react";
-import { initialEvents, initialSocieties } from "@/lib/seedData";
+import { getAllEvents, getAllSocieties } from "@/lib/societies";
+import { Calendar, MapPin, Clock, ArrowUpRight, Sparkles } from "lucide-react";
 
 export const metadata = {
   title: "Events & Production Ledger | Cultural Council IIIT Allahabad",
   description:
-    "Official schedule and calendar of cultural productions, auditions, concerts, open-mics, and theatrical plays at IIIT Allahabad.",
+    "Explore upcoming collegiate cultural competitions, street plays, acoustic jam nights, dance battles, and art exhibitions at IIIT Allahabad.",
 };
 
-export default function EventsPage() {
-  return (
-    <div className="flex flex-col min-h-screen bg-[#FAF8F5] text-ink selection:bg-stone-300">
-      {/* Header */}
-      <section className="border-b border-stone-300 bg-[#F4F1EA] pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-ink-faint mb-4">
-            <Link href="/" className="hover:text-ink transition-colors">
-              HOME
-            </Link>
-            <span>/</span>
-            <span className="text-ink font-semibold">EVENTS &amp; PRODUCTIONS</span>
-          </div>
+export default async function EventsPage({
+  searchParams,
+}: {
+  searchParams?: { society?: string };
+}) {
+  const allEvents = await getAllEvents();
+  const societies = await getAllSocieties();
 
-          <div className="max-w-4xl space-y-4">
-            <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-ink">
-              Cultural Council Production Ledger
-            </h1>
-            <p className="font-serif italic text-xl sm:text-2xl text-ink-muted">
-              Live acoustic evenings, high-octane street battles, proscenium theatre, poetry salons, and photography masterclasses across the campus calendar.
-            </p>
-          </div>
+  const selectedSociety = searchParams?.society;
+  const filteredEvents = selectedSociety
+    ? allEvents.filter((e: any) => (e.societySlug || e.society?.slug) === selectedSociety)
+    : allEvents;
+
+  return (
+    <div className="min-h-screen bg-[#FAF8F5] text-ink pb-32">
+      {/* 1. Page Header */}
+      <section className="pt-24 sm:pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-stone-300">
+        <div className="flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint mb-6">
+          <span>COUNCIL CALENDAR // LEDGER</span>
+          <span>{allEvents.length} RECORDED PRODUCTIONS</span>
+        </div>
+
+        <div className="max-w-4xl space-y-6">
+          <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[1.02]">
+            Annual Production <br />
+            <span className="italic font-normal text-stone-600">Ledger & Calendar</span>
+          </h1>
+
+          <p className="font-serif italic text-xl sm:text-2xl text-ink-muted leading-relaxed pl-6 border-l-2 border-stone-400">
+            &ldquo;From twilight open-mics and acoustic lawns to amphitheatre street clashes and live graffiti marathons.&rdquo;
+          </p>
+
+          <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl">
+            Every semester features a continuous series of open-entry student competitions,
+            workshops, and festival showcases organized by the six societies.
+          </p>
+        </div>
+
+        {/* 2. Society Filter Ticker */}
+        <div className="flex flex-wrap items-center gap-2 pt-10 font-mono text-xs uppercase tracking-wider">
+          <Link
+            href="/events"
+            className={`px-4 py-2 rounded-full border transition-all ${
+              !selectedSociety
+                ? "bg-ink text-canvas border-ink font-semibold shadow-sm"
+                : "bg-[#F4F1EA] text-ink border-stone-300 hover:border-ink"
+            }`}
+          >
+            All Guilds ({allEvents.length})
+          </Link>
+
+          {societies.map((soc) => {
+            const count = allEvents.filter(
+              (e: any) => (e.societySlug || e.society?.slug) === soc.slug
+            ).length;
+            const isSelected = selectedSociety === soc.slug;
+
+            return (
+              <Link
+                key={soc.slug}
+                href={`/events?society=${soc.slug}`}
+                className={`px-4 py-2 rounded-full border transition-all ${
+                  isSelected
+                    ? "bg-ink text-canvas border-ink font-semibold shadow-sm"
+                    : "bg-[#F4F1EA] text-ink border-stone-300 hover:border-ink"
+                }`}
+              >
+                <span>{soc.slug.toUpperCase()}</span>
+                <span className="ml-1.5 opacity-60">({count})</span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      {/* Events List */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="space-y-6">
-          <div className="flex items-center justify-between border-b border-stone-300 pb-4 font-mono text-xs uppercase tracking-widest text-ink-faint">
-            <span>UPCOMING CALENDAR 2026</span>
-            <span>CAMPUS VENUES</span>
-          </div>
+      {/* 3. Events Timeline Grid */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredEvents.map((evt: any, i: number) => {
+            const socSlug = evt.societySlug || evt.society?.slug;
+            const matchingSociety = societies.find((s) => s.slug === socSlug);
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {initialEvents.map((evt) => (
+            return (
               <div
-                key={evt.id}
-                className="bg-[#FAF8F5] p-6 sm:p-8 rounded-2xl border border-stone-300 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
+                key={evt.id || evt._id || i}
+                className="group relative bg-[#F4F1EA] rounded-2xl border border-stone-300 p-8 shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between border-b border-stone-200 pb-3 font-mono text-xs">
-                    <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-semibold text-[10px] uppercase">
-                      {evt.category}
+                <div>
+                  {/* Top Metadata */}
+                  <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-ink-faint pb-3 border-b border-stone-300/80 mb-4">
+                    <span className="font-bold text-ink">
+                      ACT [{String(i + 1).padStart(2, "0")}]
                     </span>
-                    <span className="text-ink-faint text-[11px]">
-                      {evt.status.toUpperCase()}
-                    </span>
-                  </div>
-
-                  <div>
-                    <h3 className="font-serif text-2xl font-bold text-ink leading-snug">
-                      {evt.title}
-                    </h3>
-                    <Link
-                      href={`/societies/${evt.societySlug}`}
-                      className="font-mono text-xs text-amber-800 hover:underline block mt-1 uppercase tracking-wider"
+                    <span
+                      className="px-2.5 py-0.5 rounded-full font-semibold"
+                      style={{
+                        backgroundColor: matchingSociety?.accentColor
+                          ? `${matchingSociety.accentColor}18`
+                          : "#1C191715",
+                        color: matchingSociety?.accentColor || "#1C1917",
+                      }}
                     >
-                      {evt.societyName}
-                    </Link>
+                      {evt.societyName || socSlug?.toUpperCase() || "COUNCIL"}
+                    </span>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
+                  <h3 className="font-serif text-2xl font-bold text-ink group-hover:text-stone-700 transition-colors leading-tight mb-3">
+                    {evt.title}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-ink-muted leading-relaxed line-clamp-3 mb-6">
                     {evt.description}
                   </p>
+                </div>
 
-                  <div className="pt-2 space-y-1.5 font-mono text-xs text-stone-600">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-3.5 h-3.5 text-ink-muted" />
-                      <span>{evt.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-3.5 h-3.5 text-ink-muted" />
-                      <span>{evt.time}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-ink-muted" />
-                      <span>{evt.venue}</span>
-                    </div>
+                {/* Event Schedule Footer */}
+                <div className="pt-4 border-t border-stone-300/80 space-y-2 font-mono text-xs text-ink-muted">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-3.5 h-3.5 text-ink-faint shrink-0" />
+                    <span className="text-ink font-medium">{evt.date}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-3.5 h-3.5 text-ink-faint shrink-0" />
+                    <span>{evt.time || "6:00 PM IST"}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-3.5 h-3.5 text-ink-faint shrink-0" />
+                    <span className="text-[11px] text-ink-muted truncate">
+                      {evt.venue || "Main Auditorium"}
+                    </span>
+                  </div>
+
+                  <div className="pt-3 flex items-center justify-between">
+                    <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      OPEN ENTRY
+                    </span>
+
+                    {socSlug && (
+                      <Link
+                        href={`/societies/${socSlug}`}
+                        className="inline-flex items-center gap-1 text-[11px] font-semibold text-ink hover:text-stone-600 transition-colors"
+                      >
+                        <span>Host Guild</span>
+                        <ArrowUpRight className="w-3 h-3" />
+                      </Link>
+                    )}
                   </div>
                 </div>
-
-                <div className="pt-6 mt-6 border-t border-stone-200 flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-ink-faint">Open to all students</span>
-                  <Link
-                    href={`/societies/${evt.societySlug}`}
-                    className="font-mono text-xs uppercase tracking-wider text-ink font-semibold flex items-center gap-1 hover:text-stone-600"
-                  >
-                    <span>Society Details</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </section>
     </div>

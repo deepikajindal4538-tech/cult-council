@@ -4,7 +4,7 @@ export interface SocietyObjectProps {
   society: ISociety | any;
   isActive: boolean;
   progress: number; // 0 to 1 progress within this society's slice
-  globalProgress: number; // 0 to 1 across entire hero scroll
+  globalProgress?: number; // 0 to 1 across entire hero scroll
   isReducedMotion?: boolean;
 }
 
