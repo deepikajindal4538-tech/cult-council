@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllSocieties } from "@/lib/societies";
 import { initialFests, initialEvents, councilTeam } from "@/lib/seedData";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
+import { HeroPhotoStrip } from "@/components/hero/HeroPhotoStrip";
 import {
   ArrowUpRight,
   Disc,
@@ -52,6 +53,11 @@ export default async function HomePage() {
           <div className="text-[10px] tracking-wider text-amber-800 font-semibold">
             APEX ARTS &amp; CULTURE BODY
           </div>
+        </div>
+
+        {/* Authentic Campus Cultural Photo Reel (Placed Directly Before Cultural Council Title) */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full pt-5 pb-3">
+          <HeroPhotoStrip />
         </div>
 
         {/* Compact Monumental Editorial Title */}
