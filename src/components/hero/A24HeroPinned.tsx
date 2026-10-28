@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { useScroll, useSpring } from "framer-motion";
+import { useScroll, useSpring, useTransform, motion } from "framer-motion";
 import { ISociety } from "@/models/Society";
 import { A24SmoothHeroStage } from "./A24SmoothHeroStage";
 import { A24HeroOverlay } from "./A24HeroOverlay";
@@ -17,13 +17,29 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedTargetIndex, setSelectedTargetIndex] = useState<number | undefined>(undefined);
 
-  // Monitor document scroll with optimized responsive spring
-  const { scrollYProgress } = useScroll({
+  // 1. Entry scroll monitor: smoothly crossfades the A24 stage when entering the viewport
+  const { scrollYProgress: entryProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "start start"],
+  });
+
+  const smoothEntry = useSpring(entryProgress, {
+    stiffness: 120,
+    damping: 24,
+    restDelta: 0.001,
+  });
+
+  // Crossfade opacity & scale so the stage smoothly emerges without any direct cut
+  const stageOpacity = useTransform(smoothEntry, [0.15, 0.88], [0, 1]);
+  const stageScale = useTransform(smoothEntry, [0.15, 0.88], [0.97, 1]);
+
+  // 2. Internal pin scroll progress across all 6 societies
+  const { scrollYProgress: stageScrollProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
+  const smoothProgress = useSpring(stageScrollProgress, {
     stiffness: 95,
     damping: 22,
     restDelta: 0.001,
@@ -76,20 +92,29 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
           }}
         />
 
-        {/* 1. Full-Window Ultra-Smooth GPU Trajectory Stage */}
-        <A24SmoothHeroStage
-          societies={societies}
-          targetIndex={selectedTargetIndex}
-          externalProgress={scrollProgress}
-          onIndexChange={(idx) => setActiveIndex(idx)}
-        />
+        {/* Soft top gradient dissolve transitioning seamlessly from hero section */}
+        <div className="absolute top-0 inset-x-0 h-28 sm:h-36 pointer-events-none z-30 bg-gradient-to-b from-[#FAF8F5] via-[#FAF8F5]/70 to-transparent" />
 
-        {/* 2. Full-Window A24 Editorial Overlay */}
-        <A24HeroOverlay
-          societies={societies}
-          activeIndex={activeIndex}
-          onSelectIndex={handleSelectIndex}
-        />
+        {/* Smooth Crossfade Stage Wrapper: Eliminates direct cut from previous section */}
+        <motion.div
+          style={{ opacity: stageOpacity, scale: stageScale }}
+          className="relative w-full h-full"
+        >
+          {/* 1. Full-Window Ultra-Smooth GPU Trajectory Stage */}
+          <A24SmoothHeroStage
+            societies={societies}
+            targetIndex={selectedTargetIndex}
+            externalProgress={scrollProgress}
+            onIndexChange={(idx) => setActiveIndex(idx)}
+          />
+
+          {/* 2. Full-Window A24 Editorial Overlay */}
+          <A24HeroOverlay
+            societies={societies}
+            activeIndex={activeIndex}
+            onSelectIndex={handleSelectIndex}
+          />
+        </motion.div>
       </section>
     </div>
   );

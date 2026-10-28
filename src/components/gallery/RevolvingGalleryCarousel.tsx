@@ -20,10 +20,10 @@ export interface CarouselPlate {
 const ROW_1: CarouselPlate[] = [
   {
     id: "r1-1",
-    title: "Virtuosi Lead Guitar Solo under Amber Backlight",
+    title: "Virtuosi Stage & Live Concert",
     discipline: "Virtuosi // Music",
     category: "Pro-Night",
-    url: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=85",
+    url: "/images/gallery/band-night.jpg",
     width: 2400,
     height: 1600,
   },
@@ -47,10 +47,10 @@ const ROW_1: CarouselPlate[] = [
   },
   {
     id: "r1-4",
-    title: "Front Row Hands in Silhouette Against Fog",
+    title: "Effervescence Arena Arena Crowd",
     discipline: "AMS // Media",
     category: "Crowd",
-    url: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?auto=format&fit=crop&w=1200&q=85",
+    url: "/images/gallery/pronite-crowd.jpg",
     width: 2400,
     height: 1600,
   },
@@ -95,10 +95,10 @@ const ROW_1: CarouselPlate[] = [
 const ROW_2: CarouselPlate[] = [
   {
     id: "r2-1",
-    title: "B-Boy One-Hand Freeze on Concrete Arena",
+    title: "Geneticx Choreography Showcase",
     discipline: "Geneticx // Dance",
     category: "Break Battle",
-    url: "https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=1200&q=85",
+    url: "/images/gallery/geneticx-dance.jpg",
     width: 2400,
     height: 1600,
   },
@@ -113,19 +113,19 @@ const ROW_2: CarouselPlate[] = [
   },
   {
     id: "r2-3",
-    title: "Synchronized Urban Choreography in Strobe",
+    title: "B-Boy Freezes and Cypher Battles",
     discipline: "Geneticx // Hip-Hop",
     category: "Stage Routine",
-    url: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=1200&q=85",
+    url: "https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=1200&q=85",
     width: 2400,
     height: 1600,
   },
   {
     id: "r2-4",
-    title: "Choral Formation in Red Kurta Uniform",
+    title: "Rangtarangini Face Art and Thespian Prep",
     discipline: "Rangtarangini // Thespians",
     category: "Social Truth",
-    url: "https://images.unsplash.com/photo-1514306191717-452ec28c7814?auto=format&fit=crop&w=1200&q=85",
+    url: "/images/gallery/theatre-prep.jpg",
     width: 2400,
     height: 1600,
   },
@@ -140,10 +140,10 @@ const ROW_2: CarouselPlate[] = [
   },
   {
     id: "r2-6",
-    title: "Climactic Soliloquy on Corporate Conformity",
+    title: "Choral Formation in Red Kurta Uniform",
     discipline: "Rangtarangini // Drama",
     category: "Street Act",
-    url: "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1200&q=85",
+    url: "https://images.unsplash.com/photo-1514306191717-452ec28c7814?auto=format&fit=crop&w=1200&q=85",
     width: 2400,
     height: 1600,
   },
@@ -191,7 +191,7 @@ const ROW_3: CarouselPlate[] = [
     title: "Artist on Scaffolding Painting Surrealist Eye",
     discipline: "Nirmiti // Murals",
     category: "Installation",
-    url: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1200&q=85",
+    url: "/images/gallery/ramp-walk.jpg",
     width: 2400,
     height: 1600,
   },
@@ -218,16 +218,16 @@ const ROW_3: CarouselPlate[] = [
     title: "Handwritten Verse and Ink Pen on Deckle Edge",
     discipline: "Sarasva // Verse",
     category: "Gazette",
-    url: "https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&w=1200&q=85",
+    url: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
     width: 2400,
     height: 1600,
   },
   {
     id: "r3-7",
-    title: "Color Gradient Blending with Natural Sponges",
+    title: "Campus Couture Cultural Runway",
     discipline: "Nirmiti // Scenography",
     category: "Wall Decor",
-    url: "https://images.unsplash.com/photo-1578925518470-4def7a0f08bb?auto=format&fit=crop&w=1200&q=85",
+    url: "/images/gallery/ramp-walk.jpg",
     width: 2400,
     height: 1600,
   },
@@ -424,6 +424,7 @@ export default function RevolvingGalleryCarousel({
 
 /**
  * Single Plate Component with Museum Mat Mount Frame
+ * Pure photography plate: No info, no tags, only the high-res image and the expand option.
  */
 function CarouselCard({
   plate,
@@ -435,42 +436,23 @@ function CarouselCard({
   return (
     <div
       onClick={onInspect}
-      className="group relative cursor-pointer w-72 sm:w-80 md:w-96 aspect-[16/10] shrink-0 rounded-2xl bg-[#F4F1EA] p-3 border border-stone-300/80 shadow-sm hover:shadow-xl hover:border-stone-400 transition-all duration-300 overflow-hidden"
+      className="group relative cursor-pointer w-72 sm:w-80 md:w-96 aspect-[16/10] shrink-0 rounded-2xl bg-[#F4F1EA] p-2.5 sm:p-3 border border-stone-300/80 shadow-sm hover:shadow-xl hover:border-stone-400 transition-all duration-300 overflow-hidden"
     >
       <div className="relative w-full h-full rounded-xl overflow-hidden bg-stone-200">
         <Image
           src={plate.url}
-          alt={plate.title}
+          alt=""
           fill
+          unoptimized
           sizes="(max-width: 768px) 280px, 384px"
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
 
-        {/* Gradient shadow overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 text-white" />
-
-        {/* Top badging */}
-        <div className="absolute top-3 left-3 z-10">
-          <span className="px-2.5 py-1 rounded-md bg-stone-900/80 backdrop-blur-sm text-stone-200 font-mono text-[10px] uppercase tracking-wider font-semibold border border-white/10">
-            {plate.category}
-          </span>
-        </div>
-
-        {/* Top-Right Inspect icon */}
-        <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span className="p-2 rounded-full bg-white text-stone-950 shadow-md flex items-center justify-center">
+        {/* Expand / Maximize Option ONLY — Pure minimal icon */}
+        <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <span className="p-2.5 rounded-full bg-stone-900/85 backdrop-blur-md text-white shadow-lg flex items-center justify-center hover:bg-black hover:scale-110 transition-all">
             <Maximize2 className="w-3.5 h-3.5" />
           </span>
-        </div>
-
-        {/* Bottom Title on hover */}
-        <div className="absolute bottom-3 inset-x-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <span className="block font-mono text-[10px] uppercase tracking-widest text-amber-300">
-            {plate.discipline}
-          </span>
-          <h4 className="font-serif text-sm sm:text-base font-medium text-white line-clamp-1 leading-snug">
-            {plate.title}
-          </h4>
         </div>
       </div>
     </div>

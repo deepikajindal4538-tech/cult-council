@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { SocietyObjectProps } from "./types";
+import { InkRing } from "./InkRing";
 export function SocietyObject({
   society,
   isActive,
@@ -21,7 +22,10 @@ export function SocietyObject({
         </span>
       </div>
 
-      {/* 2. The 3D Physical Studio Rendered Object */}
+      {/* 2. Hand-Drawn Light Black Ink Ring */}
+      <InkRing isActive={isActive} />
+
+      {/* 3. The 3D Physical Studio Rendered Object */}
       <div className="relative z-10 flex items-center justify-center">
         {objectType === "camera" && (
           <ThreeDImageObject

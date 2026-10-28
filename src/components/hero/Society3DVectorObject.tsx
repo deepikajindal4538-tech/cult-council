@@ -3,6 +3,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SocietyObjectProps } from "./types";
+import { InkRing } from "./InkRing";
 
 export function Society3DVectorObject({
   society,
@@ -21,7 +22,10 @@ export function Society3DVectorObject({
         </span>
       </div>
 
-      {/* 2. The 3D Vector Drawn Physical Exhibition Object */}
+      {/* 2. Hand-Drawn Light Black Ink Ring */}
+      <InkRing isActive={isActive} />
+
+      {/* 3. The 3D Vector Drawn Physical Exhibition Object */}
       <div className="relative z-10 flex items-center justify-center">
         {objectType === "camera" && (
           <VectorCamera3D isActive={isActive} isReducedMotion={isReducedMotion} />
