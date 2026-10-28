@@ -41,18 +41,24 @@ export default function AboutPage() {
           </div>
 
           <div className="max-w-4xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-900 font-mono text-xs uppercase tracking-wider">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>APEX STATUTORY STUDENT BODY • ESTABLISHED 1999</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-900 font-mono text-xs uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>APEX STATUTORY STUDENT BODY • ESTABLISHED 1999</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200/80 border border-stone-300 font-mono text-xs uppercase tracking-wider text-ink font-semibold">
+                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                <span>MANY FORMS. ONE SPIRIT.</span>
+              </div>
             </div>
 
-            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[1.05]">
-              Fostering Art, Passion &amp; Community at{" "}
-              <span className="italic font-normal text-stone-700">IIIT Allahabad</span>.
+            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[1.02]">
+              Where Culture{" "}
+              <span className="italic font-normal text-stone-700">Finds Its Voice</span>.
             </h1>
 
             <p className="font-serif italic text-xl sm:text-2xl text-ink-muted leading-relaxed">
-              &ldquo;The Cultural Council is the artistic heartbeat of the institute, uniting six autonomous guilds to nurture student creativity, stage national-level spectacles, and preserve campus heritage.&rdquo;
+              &ldquo;In an institute renowned for algorithmic precision, the Cultural Council breathes life into midnight strings, spontaneous cyphers, thespian confrontations, and visual truth. Many Forms. One Spirit.&rdquo;
             </p>
           </div>
 
