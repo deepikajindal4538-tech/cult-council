@@ -242,21 +242,41 @@ const ROW_3: CarouselPlate[] = [
   },
 ];
 
-const ALL_PLATES = [...ROW_1, ...ROW_2, ...ROW_3];
+export interface RevolvingGalleryCarouselProps {
+  chapterLabel?: string;
+  curatorLabel?: string;
+  title?: string;
+  subtitle?: string;
+  showCatalogLink?: boolean;
+  row1?: CarouselPlate[];
+  row2?: CarouselPlate[];
+  row3?: CarouselPlate[];
+}
 
-export default function RevolvingGalleryCarousel() {
+export default function RevolvingGalleryCarousel({
+  chapterLabel = "CHAPTER 04 // THE PHOTOGRAPHIC RECORD",
+  curatorLabel = "CURATED BY ACOUSTICS & MEDIA SOCIETY",
+  title = "Living Chronicle of the Arts",
+  subtitle = "Three revolving streams of performance plates, pro-night symphonies, street plays, and quiet midnight canvases.",
+  showCatalogLink = true,
+  row1 = ROW_1,
+  row2 = ROW_2,
+  row3 = ROW_3,
+}: RevolvingGalleryCarouselProps) {
   const [isPaused, setIsPaused] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
+  const allPlates = [...row1, ...row2, ...row3];
+
   const openLightboxForPlate = (plate: CarouselPlate) => {
-    const idx = ALL_PLATES.findIndex((p) => p.id === plate.id);
+    const idx = allPlates.findIndex((p) => p.id === plate.id);
     setActivePhotoIndex(idx >= 0 ? idx : 0);
     setLightboxOpen(true);
   };
 
   // Convert CarouselPlates to TrimmedPhoto schema for Lightbox
-  const lightboxPhotos: TrimmedPhoto[] = ALL_PLATES.map((p) => ({
+  const lightboxPhotos: TrimmedPhoto[] = allPlates.map((p) => ({
     id: p.id,
     title: `${p.title} (${p.discipline})`,
     thumbnailUrl: p.url,
@@ -281,17 +301,17 @@ export default function RevolvingGalleryCarousel() {
       {/* Editorial Header */}
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 mb-12 sm:mb-16">
         <div className="border-b border-stone-300/70 pb-3 mb-6 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.25em] text-ink-faint">
-          <span>CHAPTER 04 // THE PHOTOGRAPHIC RECORD</span>
-          <span>CURATED BY ACOUSTICS &amp; MEDIA SOCIETY</span>
+          <span>{chapterLabel}</span>
+          <span>{curatorLabel}</span>
         </div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl space-y-2">
             <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-ink leading-[1.04]">
-              Living Chronicle of the Arts
+              {title}
             </h2>
             <p className="font-serif italic text-base sm:text-xl text-ink-muted leading-relaxed">
-              Three revolving streams of performance plates, pro-night symphonies, street plays, and quiet midnight canvases.
+              {subtitle}
             </p>
           </div>
 
@@ -306,13 +326,15 @@ export default function RevolvingGalleryCarousel() {
               <span>{isPaused ? "Resume Stream" : "Pause Stream"}</span>
             </button>
 
-            <Link
-              href="/gallery"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-ink text-[#FAF8F5] hover:bg-stone-800 transition-colors shadow-sm"
-            >
-              <span>Flickr Catalog</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
+            {showCatalogLink && (
+              <Link
+                href="/gallery"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-ink text-[#FAF8F5] hover:bg-stone-800 transition-colors shadow-sm"
+              >
+                <span>Flickr Catalog</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -331,7 +353,7 @@ export default function RevolvingGalleryCarousel() {
             } hover:[animation-play-state:paused]`}
             style={{ width: "max-content" }}
           >
-            {[...ROW_1, ...ROW_1].map((plate, index) => (
+            {[...row1, ...row1].map((plate, index) => (
               <CarouselCard
                 key={`r1-${plate.id}-${index}`}
                 plate={plate}
@@ -349,7 +371,7 @@ export default function RevolvingGalleryCarousel() {
             } hover:[animation-play-state:paused]`}
             style={{ width: "max-content" }}
           >
-            {[...ROW_2, ...ROW_2].map((plate, index) => (
+            {[...row2, ...row2].map((plate, index) => (
               <CarouselCard
                 key={`r2-${plate.id}-${index}`}
                 plate={plate}
@@ -367,7 +389,7 @@ export default function RevolvingGalleryCarousel() {
             } hover:[animation-play-state:paused]`}
             style={{ width: "max-content" }}
           >
-            {[...ROW_3, ...ROW_3].map((plate, index) => (
+            {[...row3, ...row3].map((plate, index) => (
               <CarouselCard
                 key={`r3-${plate.id}-${index}`}
                 plate={plate}
@@ -386,10 +408,14 @@ export default function RevolvingGalleryCarousel() {
         </div>
         <div className="flex items-center gap-4">
           <span>Click any plate to inspect in Lightbox</span>
-          <span>•</span>
-          <Link href="/gallery" className="text-ink hover:underline font-semibold">
-            View All 6 Guild Collections &rarr;
-          </Link>
+          {showCatalogLink && (
+            <>
+              <span>•</span>
+              <Link href="/gallery" className="text-ink hover:underline font-semibold">
+                View All 6 Guild Collections &rarr;
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </section>

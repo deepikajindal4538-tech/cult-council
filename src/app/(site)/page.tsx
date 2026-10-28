@@ -3,6 +3,7 @@ import { getAllSocieties } from "@/lib/societies";
 import { initialFests } from "@/lib/seedData";
 import { HeroSlider } from "@/components/hero/HeroSlider";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
+import RevolvingGalleryCarousel from "@/components/gallery/RevolvingGalleryCarousel";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -311,92 +312,7 @@ export default async function HomePage() {
       </section>
 
       {/* 5. Chapter 04: Visual Record & Photographic Gallery Preview */}
-      <section className="bg-[#F4F1EA] py-24 sm:py-32 px-6 sm:px-10 lg:px-16 border-t border-stone-300/70">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="border-b border-stone-300/70 pb-3 mb-16 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.25em] text-ink-faint">
-            <span>CHAPTER 04 // THE PHOTOGRAPHIC RECORD</span>
-            <span>AMS CURATORIAL ARCHIVE</span>
-          </div>
-
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-ink">
-                Photographic Ledger of IIIT Allahabad
-              </h2>
-              <p className="text-ink-muted text-sm sm:text-base mt-2 font-serif italic">
-                Preserved exhibition plates from pro-nights, street drama choruses, and quiet rehearsals.
-              </p>
-            </div>
-
-            <Link
-              href="/gallery"
-              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-ink hover:text-stone-600 transition-colors font-semibold"
-            >
-              <span>Explore Photographic Catalog</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          {/* Exhibition Photo Mount Style Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {[
-              {
-                id: "72177720315482910",
-                title: "Effervescence '25: Pro-Nights",
-                sub: "Live Concert Record",
-                count: "8 HIGH-RES PLATES",
-                year: "2025",
-              },
-              {
-                id: "72177720315482911",
-                title: "Rangtarangini Nukkad Natak",
-                sub: "Street Drama Chronicle",
-                count: "6 HIGH-RES PLATES",
-                year: "2025",
-              },
-              {
-                id: "72177720315482912",
-                title: "Virtuosi Unplugged Session",
-                sub: "Acoustic Courtyard",
-                count: "6 HIGH-RES PLATES",
-                year: "2025",
-              },
-              {
-                id: "72177720315482913",
-                title: "Geneticx Street Cypher",
-                sub: "Break & Popping Battles",
-                count: "6 HIGH-RES PLATES",
-                year: "2025",
-              },
-            ].map((album) => (
-              <Link
-                key={album.id}
-                href={`/gallery/${album.id}`}
-                className="group bg-[#FAF8F5] p-6 rounded-2xl border border-stone-300/70 hover:border-stone-400 transition-all duration-300 flex flex-col justify-between h-72"
-              >
-                <div className="w-full h-32 bg-stone-200/50 rounded-xl border border-stone-300/60 flex flex-col items-center justify-center font-mono text-[10px] uppercase tracking-[0.2em] text-stone-500 group-hover:bg-stone-200 transition-colors">
-                  <Camera className="w-5 h-5 text-stone-400 mb-1" />
-                  <span>PL-{album.year}</span>
-                </div>
-
-                <div className="pt-3">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-ink-faint block">
-                    {album.count} • {album.sub}
-                  </span>
-                  <h3 className="font-serif text-lg font-normal text-ink group-hover:text-stone-700 transition-colors mt-1 leading-snug">
-                    {album.title}
-                  </h3>
-                </div>
-
-                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-ink pt-3 border-t border-stone-200">
-                  <span>View Plates</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <RevolvingGalleryCarousel />
 
       {/* 6. Chapter 05: Council Membership & Inquiries */}
       <section className="py-24 sm:py-28 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto w-full">
