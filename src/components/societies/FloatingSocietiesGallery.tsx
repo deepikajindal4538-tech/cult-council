@@ -157,7 +157,7 @@ function FloatingPosterCard({
   };
 
   // Mock society object for 3D vector illustration if full model isn't passed
-  const fallbackSociety: Partial<ISociety> = {
+  const fallbackSociety: any = {
     slug: data.slug,
     name: data.discipline,
     accentColor: data.color,
@@ -174,8 +174,8 @@ function FloatingPosterCard({
           : data.slug === "rangtarangini"
           ? "masks"
           : "guitar",
-      roughness: 0.25,
-      metalness: 0.5,
+      imageUrl: "",
+      fallbackColor: data.color,
     },
   };
 
@@ -344,7 +344,7 @@ function FloatingPosterCard({
 }
 
 interface FloatingSocietiesGalleryProps {
-  societies?: ISociety[];
+  societies?: (ISociety | any)[];
 }
 
 export function FloatingSocietiesGallery({

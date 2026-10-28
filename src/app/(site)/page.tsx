@@ -3,6 +3,7 @@ import { getAllSocieties } from "@/lib/societies";
 import { initialFests, initialEvents, councilTeam } from "@/lib/seedData";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
 import { HeroSlider } from "@/components/hero/HeroSlider";
+import { FloatingSocietiesGallery } from "@/components/societies/FloatingSocietiesGallery";
 import {
   ArrowUpRight,
   Disc,
@@ -199,138 +200,19 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. Chapter 02: Society Cards (The Disciplines - Editorial Cards with Hover Micro-Interactions) */}
-      <section className="bg-[#F4F1EA] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-stone-300/80">
+      {/* 3. Chapter 02: Oversized Floating Poster Cards (Organic Overlapping A24 Layout) */}
+      <section className="bg-[#F4F1EA] py-20 sm:py-28 px-4 sm:px-6 lg:px-8 border-y border-stone-300/80 overflow-hidden">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="border-b border-stone-300/80 pb-3 mb-12 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
-            <span>CHAPTER 02 // THE DISCIPLINES</span>
-            <span>SIX CREATIVE WINGS</span>
+          <div className="border-b border-stone-300/80 pb-3 mb-10 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-ink" />
+              <span>CHAPTER 02 // THE DISCIPLINES</span>
+            </div>
+            <span>SIX CREATIVE WINGS • A24 ARCHIVAL EXHIBITION</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {[
-              {
-                num: "01",
-                slug: "ams",
-                discipline: "Photography & Cinematography",
-                tagline: "Freezing fleeting moments into timeless frames.",
-                description:
-                  "From 35mm analogue nostalgia to 4K cinematic festival docuseries. AMS preserves campus memory through masterclass optics.",
-                society: "AMS Guild",
-                color: "#D97706",
-                members: "45+",
-                founded: 2005,
-              },
-              {
-                num: "02",
-                slug: "geneticx",
-                discipline: "Contemporary & Street Dance",
-                tagline: "Syncing heartbeats to electrifying rhythm.",
-                description:
-                  "Kinetic electricity, popping, break battles, and lyrical fusion on national stages across northern India.",
-                society: "Geneticx Crew",
-                color: "#E11D48",
-                members: "60+",
-                founded: 2004,
-              },
-              {
-                num: "03",
-                slug: "sarasva",
-                discipline: "Literature, Debate & Verse",
-                tagline: "Where ink meets thought and words ignite revolutions.",
-                description:
-                  "Publishing campus anthologies, philosophical salon debates, bilingual open-mics, and timeless poetry.",
-                society: "Sarasva Society",
-                color: "#4F46E5",
-                members: "40+",
-                founded: 2003,
-              },
-              {
-                num: "04",
-                slug: "nirmiti",
-                discipline: "Fine Arts, Murals & Scenography",
-                tagline: "Transforming empty canvases into vibrant realities.",
-                description:
-                  "Gigantic acrylic wall installations, fest stagecraft decor, charcoal portraiture, and vector design archives.",
-                society: "Nirmiti Arts",
-                color: "#EA580C",
-                members: "38+",
-                founded: 2004,
-              },
-              {
-                num: "05",
-                slug: "rangtarangini",
-                discipline: "Street Theatre & Proscenium Drama",
-                tagline: "Living a thousand lives under the stage spotlight.",
-                description:
-                  "Voice, grit, and hard-hitting Nukkad Nataks staging social truth before audiences of thousands.",
-                society: "Rangtarangini Troupe",
-                color: "#B91C1C",
-                members: "52+",
-                founded: 2003,
-              },
-              {
-                num: "06",
-                slug: "virtuosi",
-                discipline: "Live Band & Acoustic Performance",
-                tagline: "Harmonies that resonate long after the chords fade.",
-                description:
-                  "Electric rock anthems, Indian classical jugalbandis, starlit unplugged circles, and audio production.",
-                society: "Virtuosi Collective",
-                color: "#0D9488",
-                members: "48+",
-                founded: 2002,
-              },
-            ].map((item) => (
-              <Link
-                key={item.num}
-                href={`/societies/${item.slug}`}
-                className="group relative bg-[#FAF8F5] p-7 rounded-2xl border border-stone-300/80 shadow-soft hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden"
-              >
-                {/* Top Colored Accent Stripe */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-1 transition-all duration-300 group-hover:h-1.5"
-                  style={{ backgroundColor: item.color }}
-                />
-
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between font-mono text-[11px] text-ink-faint border-b border-stone-200/80 pb-2.5">
-                    <span>SECTOR [{item.num}]</span>
-                    <span
-                      className="px-2.5 py-0.5 rounded-full font-semibold uppercase tracking-wider text-[10px]"
-                      style={{ color: item.color, backgroundColor: `${item.color}15` }}
-                    >
-                      {item.society}
-                    </span>
-                  </div>
-
-                  <div>
-                    <h3 className="font-serif text-2xl sm:text-3xl font-bold text-ink group-hover:text-stone-700 transition-colors leading-tight">
-                      {item.discipline}
-                    </h3>
-                    <p className="font-serif italic text-xs text-stone-600 mt-1">
-                      &ldquo;{item.tagline}&rdquo;
-                    </p>
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-ink-muted leading-relaxed line-clamp-3">
-                    {item.description}
-                  </p>
-                </div>
-
-                <div className="pt-5 mt-5 border-t border-stone-200/80 flex items-center justify-between font-mono text-xs">
-                  <span className="text-[10px] text-ink-faint uppercase tracking-wider">
-                    {item.members} Artists • Estd. {item.founded}
-                  </span>
-
-                  <span className="inline-flex items-center gap-1 text-ink group-hover:text-stone-700 font-semibold uppercase tracking-wider text-[11px]">
-                    <span>Open Dossier</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {/* Oversized Floating Poster Cards with Organic Overlap, Varied Rotations & 3D Depth */}
+          <FloatingSocietiesGallery societies={societies} />
         </div>
       </section>
 
