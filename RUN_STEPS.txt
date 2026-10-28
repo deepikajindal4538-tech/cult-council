@@ -1,0 +1,23 @@
+Steps to run the IIIT Allahabad Cultural Council website locally
+
+1. Open a terminal and go to the project folder:
+   cd "/Users/deepikajindal/areyy bass karr bhayiiii/cult-council"
+
+2. Install the project dependencies if they are not installed yet:
+   npm install
+
+3. Check that the local environment file is configured:
+   .env.local
+   Keep API keys and other secrets in this file; do not share or commit them.
+
+4. Start the development server:
+   npm run dev
+
+5. Open the website in a browser:
+   http://localhost:3000
+
+6. To stop the server, return to the terminal and press Ctrl+C.
+
+Optional production check:
+   npm run build
+   npm run start
