@@ -52,7 +52,8 @@ export function CouncilLeadershipSection() {
                 alt={`${person.name} - ${person.designation}`}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover object-top hover:scale-105 transition-transform duration-500 ease-out"
+                className="object-cover hover:scale-105 transition-transform duration-500 ease-out"
+                style={{ objectPosition: person.objectPosition || "center top" }}
                 onError={() => handleImageError(person.id)}
                 priority={person.order <= 5}
               />
