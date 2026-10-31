@@ -4,64 +4,84 @@ import React from "react";
 import { motion } from "framer-motion";
 
 interface InkRingProps {
+  /**
+   * Stroke color for the hand-drawn ink ring.
+   * Defaults to an editorial "light black" / soft charcoal tone.
+   */
   color?: string;
   isActive: boolean;
+  className?: string;
 }
 
 /**
  * Hand-drawn loose ink ring inspired by Ravi Klaassens' A24 catalog interaction.
- * Dynamically draws an imperfect brush/ink circle around the active centerpiece object.
+ * Dynamically sketches an imperfect, organic ink circle around the active 3D exhibition centerpiece.
+ * Styled in an authentic light black / charcoal sumi-e aesthetic.
  */
-export function InkRing({ color = "#1C1917", isActive }: InkRingProps) {
+export function InkRing({
+  color = "rgba(41, 37, 36, 0.42)",
+  isActive,
+  className = "",
+}: InkRingProps) {
   return (
-    <div className="absolute inset-0 pointer-events-none flex items-center justify-center -z-10">
+    <div
+      className={`absolute inset-0 pointer-events-none flex items-center justify-center -z-10 ${className}`}
+      aria-hidden="true"
+    >
       <svg
-        viewBox="0 0 320 320"
-        className="w-[130%] h-[130%] max-w-[640px] max-h-[640px] sm:max-w-[720px] sm:max-h-[720px] overflow-visible"
+        viewBox="0 0 340 340"
+        className="w-[125%] h-[125%] max-w-[620px] max-h-[620px] sm:max-w-[720px] sm:max-h-[720px] overflow-visible select-none"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Imperfect hand-drawn circle path */}
+        {/* Primary imperfect hand-drawn circle path in light black */}
         <motion.path
-          d="M 160 25 
-             C 240 22, 298 78, 298 158 
-             C 298 238, 235 295, 155 296 
-             C 75 297, 24 236, 25 156 
-             C 26 76, 82 23, 168 25
-             C 200 26, 255 45, 275 75"
+          d="M 170 28
+             C 255 25, 315 82, 315 168
+             C 315 252, 248 312, 165 313
+             C 80 314, 25 250, 26 165
+             C 27 80, 86 25, 178 28
+             C 212 29, 270 48, 292 80"
           stroke={color}
-          strokeWidth="2.2"
+          strokeWidth="1.8"
           strokeLinecap="round"
           strokeLinejoin="round"
-          opacity={isActive ? 0.85 : 0}
-          initial={{ pathLength: 0, rotate: -15 }}
+          initial={{ pathLength: 0, rotate: -15, opacity: 0 }}
           animate={{
             pathLength: isActive ? 1 : 0,
             rotate: isActive ? 0 : -20,
-            scale: isActive ? 1 : 0.9,
+            scale: isActive ? 1 : 0.92,
+            opacity: isActive ? 1 : 0,
           }}
           transition={{
-            pathLength: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
-            rotate: { duration: 1.2, ease: "easeOut" },
-            opacity: { duration: 0.4 },
+            pathLength: { duration: 1.0, ease: [0.16, 1, 0.3, 1] },
+            rotate: { duration: 1.4, ease: "easeOut" },
+            scale: { duration: 0.8, ease: "easeOut" },
+            opacity: { duration: 0.35 },
           }}
         />
 
-        {/* Secondary subtle sketched over-stroke */}
+        {/* Secondary subtle sketched charcoal over-stroke */}
         <motion.path
-          d="M 152 30 
-             C 225 28, 290 85, 292 162 
-             C 294 230, 240 290, 160 291 
-             C 80 292, 30 230, 31 160 
-             C 32 90, 88 32, 165 30"
+          d="M 162 33
+             C 238 31, 306 90, 308 172
+             C 310 244, 254 306, 170 307
+             C 85 308, 32 244, 33 170
+             C 34 96, 94 34, 175 32"
           stroke={color}
-          strokeWidth="1"
-          strokeDasharray="4 6"
+          strokeWidth="0.9"
+          strokeDasharray="5 7"
           strokeLinecap="round"
-          opacity={isActive ? 0.35 : 0}
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: isActive ? 1 : 0 }}
-          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{
+            pathLength: isActive ? 1 : 0,
+            opacity: isActive ? 0.55 : 0,
+          }}
+          transition={{
+            duration: 1.2,
+            ease: [0.16, 1, 0.3, 1],
+            delay: 0.12,
+          }}
         />
       </svg>
     </div>

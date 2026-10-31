@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ArrowUpRight, X, Sparkles } from "lucide-react";
+import { ChevronDown, ArrowDown, ArrowUpRight, X } from "lucide-react";
 import { ISociety } from "@/models/Society";
 import { SocietyIndex } from "./SocietyIndex";
 
@@ -95,6 +95,10 @@ export function A24HeroOverlay({
 
         {/* Top-Right: A24 Centered Pill Navigation with Index Button */}
         <div className="pointer-events-auto flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-ink">
+          <div className="hidden flex-col items-end text-right text-[10px] tracking-[0.2em] text-ink-faint sm:flex">
+            <span className="font-semibold text-ink">IIIT ALLAHABAD</span>
+            <span>APEX CULTURAL BODY</span>
+          </div>
           {/* Index Dropdown Toggle (Matching A24 Television Navigation) */}
           <div className="relative">
             <button
@@ -189,11 +193,11 @@ export function A24HeroOverlay({
       <footer className="w-full flex flex-col md:flex-row items-center justify-between gap-4 pt-4">
         {/* Left Indicator / Drag Cue */}
         <div className="pointer-events-auto hidden lg:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-ink-faint w-48">
-          <span className="w-1.5 h-1.5 rounded-full bg-ink" />
+          <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
           <span>SCROLL TO ADVANCE</span>
         </div>
 
-        {/* Center: A24 Testimonial Review (.testimonial_wrap) */}
+        {/* Center: Society Artistic Manifesto */}
         <div className="pointer-events-auto flex flex-col items-center justify-center text-center max-w-md mx-auto">
           <AnimatePresence mode="wait">
             <motion.div
@@ -204,29 +208,10 @@ export function A24HeroOverlay({
               transition={{ duration: 0.35, ease: "easeOut" }}
               className="space-y-1"
             >
-              {/* 5 Golden Stars */}
-              <div className="flex items-center justify-center gap-1 text-amber-600">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    viewBox="0 0 11 10"
-                    fill="currentColor"
-                    className="w-2.5 h-2.5"
-                  >
-                    <path d="M5.24862 0L6.68508 3.53591L10.4972 3.81215L7.62431 6.29834L8.50829 10L5.24862 8.01105L1.98895 10L2.87293 6.29834L0 3.81215L3.81215 3.53591L5.24862 0Z" />
-                  </svg>
-                ))}
-              </div>
-
-              {/* Publication / Record Source */}
               <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-ink-faint font-semibold">
-                CAMPUS RECORD // COUNCIL ARCHIVE
+                ARTISTIC MANIFESTO
               </div>
 
-              {/* Testimonial Headline Quote */}
               <p className="font-serif italic text-sm sm:text-base text-ink leading-tight max-w-xs sm:max-w-sm">
                 &ldquo;{society.tagline || society.description}&rdquo;
               </p>

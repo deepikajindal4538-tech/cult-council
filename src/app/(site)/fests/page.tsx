@@ -44,9 +44,8 @@ export default async function FestsPage() {
           <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-rose-500/15 blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-4xl space-y-8">
-            <div className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-amber-300 border-b border-amber-300/40 pb-2">
-              <Disc className="w-4 h-4 animate-spin text-amber-300" style={{ animationDuration: "10s" }} />
-              <span>NORTH INDIA&apos;S PREMIER CULTURAL EXTRAVAGANZA</span>
+            <div className="font-mono text-xs uppercase tracking-[0.25em] text-amber-300/90 border-b border-amber-300/30 pb-2">
+              NORTH INDIA&apos;S PREMIER CULTURAL EXTRAVAGANZA
             </div>
 
             <div>

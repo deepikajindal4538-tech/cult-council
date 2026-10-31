@@ -4,6 +4,7 @@ import { initialFests, initialEvents, councilTeam } from "@/lib/seedData";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
 import { HeroSlider } from "@/components/hero/HeroSlider";
 import { CinematicAboutSection } from "@/components/home/CinematicAboutSection";
+import RevolvingGalleryCarousel from "@/components/gallery/RevolvingGalleryCarousel";
 import {
   ArrowUpRight,
   Disc,
@@ -296,86 +297,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 6. Chapter 05: Visual Archives & Gallery Preview */}
-      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="border-b border-stone-300/80 pb-3 mb-10 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
-          <span>CHAPTER 05 // VISUAL REPOSITORIES</span>
-          <span>CAMPUS ARCHIVES</span>
-        </div>
-
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
-          <div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-ink">
-              Visual Artifacts &amp; Moments
-            </h2>
-            <p className="text-ink-muted text-sm sm:text-base mt-1.5">
-              Curated high-definition records captured by student photojournalists.
-            </p>
-          </div>
-
-          <Link
-            href="/gallery"
-            className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-ink hover:text-stone-600 transition-colors mt-3 md:mt-0 font-semibold"
-          >
-            <span>Explore All Albums</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        {/* Exhibition Photo Mount Style Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {[
-            {
-              title: "Effervescence Pro-Nights",
-              sub: "Live Concert Record",
-              count: "120 PLATES",
-              year: "2025",
-            },
-            {
-              title: "Footloose Dance Arena",
-              sub: "Choreography Finals",
-              count: "84 PLATES",
-              year: "2025",
-            },
-            {
-              title: "Nukkad Natak Street Drama",
-              sub: "Amphitheatre Sessions",
-              count: "96 PLATES",
-              year: "2024",
-            },
-            {
-              title: "Incandescence Band Clash",
-              sub: "Rock Ensemble",
-              count: "112 PLATES",
-              year: "2024",
-            },
-          ].map((album, idx) => (
-            <Link
-              key={idx}
-              href="/gallery"
-              className="group bg-[#FAF8F5] p-5 rounded-2xl border border-stone-300/80 shadow-soft hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-72"
-            >
-              <div className="w-full h-32 bg-stone-200/60 rounded-xl border border-stone-300/80 flex items-center justify-center font-mono text-[10px] uppercase tracking-widest text-stone-500 group-hover:bg-stone-300/50 transition-colors">
-                <span>PHOTO ARCHIVE [{album.year}]</span>
-              </div>
-
-              <div className="pt-3">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-ink-faint block">
-                  {album.count} • {album.sub}
-                </span>
-                <h3 className="font-serif text-base sm:text-lg font-bold text-ink group-hover:text-stone-700 transition-colors mt-1">
-                  {album.title}
-                </h3>
-              </div>
-
-              <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-widest text-ink pt-2 border-t border-stone-200/80">
-                <span>Inspect</span>
-                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <RevolvingGalleryCarousel
+        chapterLabel="CHAPTER 05 // VISUAL REPOSITORIES"
+        curatorLabel="CAMPUS ARCHIVES"
+        title="Visual Artifacts & Moments"
+        subtitle="Curated high-definition records captured by student photojournalists."
+      />
 
       {/* 7. Inductions / Join the Council Banner */}
       <section className="pb-20 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">

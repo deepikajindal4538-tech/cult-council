@@ -3,25 +3,25 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown, Sparkles, Home } from "lucide-react";
+import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
 
 const navItems = [
-  { label: "HOME", href: "/", icon: true },
+  { label: "INDEX", href: "/" },
   { label: "ABOUT", href: "/about" },
   {
     label: "SOCIETIES",
     href: "/societies",
     subItems: [
-      { name: "AMS (Photography & Film)", href: "/societies/ams" },
-      { name: "Geneticx (Dance Crew)", href: "/societies/geneticx" },
-      { name: "Sarasva (Literature & Debate)", href: "/societies/sarasva" },
-      { name: "Nirmiti (Fine Arts & Design)", href: "/societies/nirmiti" },
-      { name: "Rangtarangini (Dramatics & Theatre)", href: "/societies/rangtarangini" },
-      { name: "Virtuosi (Music & Band)", href: "/societies/virtuosi" },
+      { name: "AMS — Photography & Film", href: "/societies/ams" },
+      { name: "Geneticx — Dance Crew", href: "/societies/geneticx" },
+      { name: "Sarasva — Literature & Debate", href: "/societies/sarasva" },
+      { name: "Nirmiti — Fine Arts & Scenography", href: "/societies/nirmiti" },
+      { name: "Rangtarangini — Theatrics", href: "/societies/rangtarangini" },
+      { name: "Virtuosi — Live Band & Acoustics", href: "/societies/virtuosi" },
     ],
   },
   { label: "EVENTS", href: "/events" },
-  { label: "FESTS", href: "/fests" },
+  { label: "FESTIVALS", href: "/fests" },
   { label: "GALLERY", href: "/gallery" },
 ];
 
@@ -29,65 +29,90 @@ export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [societiesDropdownOpen, setSocietiesDropdownOpen] = useState(false);
+  const isHome = pathname === "/";
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-[#FAF8F5]/95 border-b border-stone-300 shadow-sm transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header
+      className={`z-50 w-full transition-colors duration-300 ${
+        isHome
+          ? "absolute top-0 left-0 right-0 border-b border-white/15 bg-transparent"
+          : "sticky top-0 backdrop-blur-md bg-[#FAF8F5]/90 border-b border-stone-300/80 shadow-sm"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
         {/* College & Council Brand Identity */}
         <Link
           href="/"
-          className="flex items-center gap-3 group focus:outline-none focus:ring-1 focus:ring-ink"
+          className="flex items-center gap-3.5 group focus:outline-none"
         >
-          <div className="w-8 h-8 rounded bg-ink text-[#FAF8F5] flex flex-col items-center justify-center font-mono font-bold text-xs tracking-tighter shadow-sm group-hover:bg-stone-800 transition-colors">
-            <span className="leading-none text-[10px]">CC</span>
-            <span className="text-[7px] text-amber-300 tracking-normal font-sans">IIITA</span>
+          <div className="w-7 h-7 rounded bg-ink text-[#FAF8F5] flex flex-col items-center justify-center font-mono font-bold text-xs tracking-tighter shadow-sm group-hover:bg-stone-800 transition-colors">
+            <span className="leading-none text-[9px]">CC</span>
+            <span className="text-[6px] text-amber-300 tracking-normal font-sans">IIITA</span>
           </div>
           <div className="flex flex-col">
-            <span className="font-serif font-bold text-base sm:text-lg tracking-tight text-ink leading-tight">
+            <span
+              className={`font-serif font-medium text-base sm:text-lg tracking-tight leading-none ${
+                isHome ? "text-white" : "text-ink"
+              }`}
+            >
               Cultural Council
             </span>
-            <span className="font-mono text-[9px] uppercase tracking-widest text-ink-muted">
-              IIIT Allahabad • Apex Arts Body
+            <span
+              className={`font-mono text-[9px] uppercase tracking-[0.25em] pt-0.5 ${
+                isHome ? "text-stone-300" : "text-ink-faint"
+              }`}
+            >
+              IIIT Allahabad
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-7 font-mono text-xs tracking-widest">
+        <nav className="hidden md:flex items-center gap-7 lg:gap-8 font-mono text-[11px] uppercase tracking-[0.2em]">
           {navItems.map((item) => {
-            const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+            const isActive =
+              pathname === item.href ||
+              (item.href !== "/" && pathname.startsWith(item.href));
 
             if (item.subItems) {
               return (
                 <div
                   key={item.href}
-                  className="relative group"
+                  className="relative group py-2"
                   onMouseEnter={() => setSocietiesDropdownOpen(true)}
                   onMouseLeave={() => setSocietiesDropdownOpen(false)}
                 >
                   <Link
                     href={item.href}
-                    className={`py-1 inline-flex items-center gap-1 transition-colors duration-150 relative ${
-                      isActive
-                        ? "text-ink font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-ink"
+                    className={`inline-flex items-center gap-1.5 transition-colors duration-150 ${
+                      isHome
+                        ? isActive
+                          ? "text-white font-semibold"
+                          : "text-stone-300 hover:text-white"
+                        : isActive
+                        ? "text-ink font-semibold"
                         : "text-ink-muted hover:text-ink"
                     }`}
                   >
                     <span>{item.label}</span>
-                    <ChevronDown className="w-3 h-3 text-ink-muted group-hover:text-ink transition-transform group-hover:rotate-180 duration-200" />
+                    <ChevronDown
+                      className={`w-3 h-3 transition-transform group-hover:rotate-180 duration-200 ${
+                        isHome ? "text-stone-400 group-hover:text-white" : "text-stone-400 group-hover:text-ink"
+                      }`}
+                    />
                   </Link>
 
-                  {/* Dropdown Menu */}
-                  <div className="absolute top-full -left-2 pt-2 w-64 hidden group-hover:block transition-all duration-200">
-                    <div className="bg-[#FAF8F5] border border-stone-300 rounded-lg shadow-lg p-2 space-y-1">
-                      <div className="px-3 py-1 text-[10px] uppercase tracking-widest text-ink-faint border-b border-stone-200 font-bold">
-                        The Six Wings
+                  {/* Minimalist Dropdown */}
+                  <div className="absolute top-full -left-4 pt-2 w-72 hidden group-hover:block transition-all duration-200">
+                    <div className="bg-[#FAF8F5] border border-stone-300/80 rounded-xl shadow-lg p-2 space-y-0.5 text-ink">
+                      <div className="px-3 py-1.5 text-[9px] uppercase tracking-[0.25em] text-ink-faint border-b border-stone-200 font-semibold">
+                        The Six Autonomous Guilds
                       </div>
                       {item.subItems.map((sub) => (
                         <Link
                           key={sub.href}
                           href={sub.href}
-                          className="block px-3 py-2 text-xs text-ink-muted hover:text-ink hover:bg-stone-200/50 rounded transition-colors"
+                          className="block px-3 py-2 text-xs text-ink-muted hover:text-ink hover:bg-stone-200/50 rounded-lg transition-colors"
                         >
                           {sub.name}
                         </Link>
@@ -95,9 +120,9 @@ export function Navbar() {
                       <div className="border-t border-stone-200 pt-1 mt-1">
                         <Link
                           href="/societies"
-                          className="block px-3 py-1.5 text-[11px] font-semibold text-ink hover:bg-stone-200/50 rounded flex items-center justify-between"
+                          className="px-3 py-1.5 text-[11px] font-semibold text-ink hover:bg-stone-200/50 rounded-lg flex items-center justify-between"
                         >
-                          <span>View All Societies</span>
+                          <span>Guild Register</span>
                           <span>&rarr;</span>
                         </Link>
                       </div>
@@ -111,13 +136,16 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`py-1 inline-flex items-center gap-1.5 transition-colors duration-150 relative ${
-                  isActive
-                    ? "text-ink font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-ink"
+                className={`py-2 transition-colors duration-150 relative ${
+                  isHome
+                    ? isActive
+                      ? "text-white font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1px] after:bg-white"
+                      : "text-stone-300 hover:text-white"
+                    : isActive
+                    ? "text-ink font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1px] after:bg-ink"
                     : "text-ink-muted hover:text-ink"
                 }`}
               >
-                {item.icon && <Home className="w-3.5 h-3.5" />}
                 <span>{item.label}</span>
               </Link>
             );
@@ -125,10 +153,14 @@ export function Navbar() {
 
           <Link
             href="/fests"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 border border-ink text-ink hover:bg-ink hover:text-canvas transition-all font-mono text-[11px] uppercase tracking-widest rounded-sm"
+            className={`inline-flex items-center gap-2 px-4 py-2 border transition-all font-mono text-[10px] uppercase tracking-[0.2em] rounded-full ${
+              isHome
+                ? "border-white/30 text-white hover:bg-white hover:text-black"
+                : "border-ink text-ink hover:bg-ink hover:text-[#FAF8F5]"
+            }`}
           >
-            <Sparkles className="w-3 h-3 text-amber-600" />
-            <span>EFFERVESCENCE &apos;26</span>
+            <span>Effervescence &apos;26</span>
+            <ArrowUpRight className="w-3 h-3" />
           </Link>
         </nav>
 
@@ -137,7 +169,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 text-ink focus:outline-none"
+            className={`p-1.5 focus:outline-none ${isHome ? "text-white" : "text-ink"}`}
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle Navigation Menu"
           >
@@ -148,7 +180,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-stone-300 bg-[#FAF8F5] px-6 pt-4 pb-8 space-y-3 font-mono text-xs uppercase tracking-widest animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden border-b border-stone-300 bg-[#FAF8F5] px-6 pt-4 pb-8 space-y-3 font-mono text-xs uppercase tracking-widest text-ink animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="pb-2 border-b border-stone-200 text-[10px] text-ink-faint">
             IIIT Allahabad • Cultural Council
           </div>
@@ -161,7 +193,6 @@ export function Navbar() {
                   pathname === item.href ? "text-amber-800 font-bold" : ""
                 }`}
               >
-                {item.icon && <Home className="w-4 h-4" />}
                 <span>{item.label}</span>
               </Link>
               {item.subItems && (
@@ -184,10 +215,9 @@ export function Navbar() {
             <Link
               href="/fests"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 w-full text-center py-2.5 bg-ink text-canvas font-semibold rounded"
+              className="flex items-center justify-center gap-2 w-full text-center py-2.5 bg-ink text-[#FAF8F5] font-semibold rounded-full"
             >
-              <Sparkles className="w-4 h-4 text-amber-300" />
-              <span>EFFERVESCENCE &apos;26</span>
+              <span>EFFERVESCENCE &apos;26 →</span>
             </Link>
           </div>
         </div>

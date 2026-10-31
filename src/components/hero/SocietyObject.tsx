@@ -5,7 +5,6 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { SocietyObjectProps } from "./types";
 import { InkRing } from "./InkRing";
-
 export function SocietyObject({
   society,
   isActive,
@@ -16,23 +15,15 @@ export function SocietyObject({
 
   return (
     <div className="relative w-full h-full flex items-center justify-center select-none">
-      {/* 1. Dynamic Ambient Color Glow */}
-      <motion.div
-        animate={{
-          scale: isActive ? [1, 1.1, 1] : 0.85,
-          opacity: isActive ? 0.35 : 0.1,
-        }}
-        transition={{
-          duration: 3.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute w-[440px] h-[440px] sm:w-[560px] sm:h-[560px] rounded-full blur-3xl pointer-events-none -z-20"
-        style={{ backgroundColor: society.accentColor }}
-      />
+      {/* 1. Darker Editorial Watermark Typography */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-20">
+        <span className="font-serif text-[180px] sm:text-[280px] lg:text-[340px] font-bold text-stone-900/[0.09] select-none tracking-tighter transition-colors duration-500">
+          {society.slug?.toUpperCase() || "IIITA"}
+        </span>
+      </div>
 
-      {/* 2. Hand-Drawn Ink Ring drawn around the centerpiece */}
-      <InkRing color={society.accentColor} isActive={isActive} />
+      {/* 2. Hand-Drawn Light Black Ink Ring */}
+      <InkRing isActive={isActive} />
 
       {/* 3. The 3D Physical Studio Rendered Object */}
       <div className="relative z-10 flex items-center justify-center">
