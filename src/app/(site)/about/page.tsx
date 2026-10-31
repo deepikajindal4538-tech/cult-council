@@ -155,7 +155,7 @@ export default function AboutPage() {
               </div>
               <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Council Strength</span>
-                <span className="font-serif font-semibold text-amber-700 text-sm">12 Council Members</span>
+                <span className="font-serif font-semibold text-amber-700 text-sm">9 Council Members</span>
               </div>
               <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Council Headquarters</span>
@@ -248,7 +248,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. Council Leadership & Executive Team (Dean SA, Faculty Coordinator, President, General Secretary, Treasurer, 12 Council Members) */}
+      {/* 4. Council Leadership & Executive Team (Dean SA, Faculty Coordinator, President, General Secretary, Treasurer, 9 Council Members) */}
       <CouncilLeadershipSection />
 
       {/* 5. Campus Performance Venues & Infrastructure */}

@@ -69,7 +69,7 @@ export function CouncilLeadershipSection() {
 
   // Highlighted 5 core officials
   const coreLeadership = councilRoster.filter((p) => p.tier !== "council");
-  // 12 Council members
+  // 9 Council members
   const councilMembers = councilRoster.filter((p) => p.tier === "council");
 
   const getBadgeColor = (category: CouncilPerson["category"]) => {
@@ -121,7 +121,7 @@ export function CouncilLeadershipSection() {
               Council Leadership &amp; Members
             </h2>
             <p className="text-ink-muted text-sm sm:text-base leading-relaxed">
-              Entrusted with institutional governance, creative direction, and festival management. Comprising the <strong>Dean SA</strong>, <strong>Faculty Coordinator</strong>, <strong>President</strong>, <strong>General Secretary</strong>, <strong>Treasurer</strong>, and <strong>12 Council Members</strong> across autonomous society wings.
+              Entrusted with institutional governance, creative direction, and festival management. Comprising the <strong>Dean SA</strong>, <strong>Faculty Coordinator</strong>, <strong>President</strong>, <strong>General Secretary</strong>, <strong>Treasurer</strong>, and <strong>9 Council Members</strong> across autonomous society wings.
             </p>
           </div>
 
@@ -143,7 +143,7 @@ export function CouncilLeadershipSection() {
               <span className="text-emerald-800 font-bold">01</span> Treasurer
             </div>
             <div className="px-3 py-1.5 bg-amber-500 text-ink font-bold rounded-lg border border-amber-600 shadow-2xs">
-              12 Council Members
+              09 Council Members
             </div>
           </div>
         </div>
@@ -189,7 +189,7 @@ export function CouncilLeadershipSection() {
                   : "bg-white text-stone-600 hover:text-ink border border-stone-300"
               }`}
             >
-              12 Council Members ({councilMembers.length})
+              9 Council Members ({councilMembers.length})
             </button>
           </div>
 
@@ -337,17 +337,17 @@ export function CouncilLeadershipSection() {
         </div>
       )}
 
-      {/* 4. SECTION B: THE 12 COUNCIL MEMBERS */}
+      {/* 4. SECTION B: THE 9 COUNCIL MEMBERS */}
       {(activeTab === "all" || activeTab === "council_members") && (
         <div>
           <div className="flex items-center gap-3 mb-8">
             <span className="font-mono text-xs uppercase tracking-widest text-ink-faint font-semibold">
-              PART II // THE 12 COUNCIL MEMBERS (AUTONOMOUS WINGS &amp; OPERATIONS)
+              PART II // THE 9 COUNCIL MEMBERS (AUTONOMOUS WINGS &amp; OPERATIONS)
             </span>
             <div className="h-px bg-stone-300 flex-1" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {councilMembers
               .filter((person) => {
                 return (
