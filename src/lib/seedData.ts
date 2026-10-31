@@ -233,44 +233,47 @@ export const councilDetails = {
   ],
 };
 
+import { councilRoster } from "./councilData";
+export { councilRoster };
+
 export const councilTeam = [
   {
-    role: "President / Faculty In-Charge",
+    role: "Dean (Student Affairs) / Dean SA",
+    name: "Prof. Vijender Singh",
+    type: "Patron / Faculty",
+    email: "dean.sa@iiita.ac.in",
+    avatar: "VS",
+  },
+  {
+    role: "Faculty Coordinator (Cultural Affairs)",
     name: "Dr. Pragya Singh",
-    type: "Faculty",
+    type: "Faculty Coordinator",
+    department: "Department of Management & Humanities",
     email: "pragya@iiita.ac.in",
     avatar: "PS",
+  },
+  {
+    role: "President, Cultural Council",
+    name: "Aman Tripathi",
+    type: "Student Executive",
+    department: "Student Gymkhana • Final Year B.Tech",
+    email: "president.cult@iiita.ac.in",
+    avatar: "AT",
   },
   {
     role: "General Secretary (Cultural)",
     name: "Aryan Deshmukh",
     type: "Student Executive",
-    department: "B.Tech IT, 4th Year",
+    department: "Student Gymkhana • B.Tech IT, 4th Year",
     email: "cultsec@iiita.ac.in",
     avatar: "AD",
   },
   {
-    role: "Joint Secretary (Events & Logistics)",
-    name: "Riya Kapoor",
-    type: "Student Executive",
-    department: "B.Tech ECE, 3rd Year",
-    email: "riya.events@iiita.ac.in",
-    avatar: "RK",
-  },
-  {
-    role: "Joint Secretary (Media & Brand)",
-    name: "Tushar Bansal",
-    type: "Student Executive",
-    department: "B.Tech IT, 3rd Year",
-    email: "tushar.media@iiita.ac.in",
-    avatar: "TB",
-  },
-  {
-    role: "Treasurer & Sponsorship Coordinator",
+    role: "Treasurer (Cultural Council)",
     name: "Harshita Sengupta",
     type: "Student Executive",
-    department: "B.Tech IT-BI, 3rd Year",
-    email: "harshita.finance@iiita.ac.in",
+    department: "Student Gymkhana • B.Tech IT-BI, 3rd Year",
+    email: "treasurer.cult@iiita.ac.in",
     avatar: "HS",
   },
 ];
