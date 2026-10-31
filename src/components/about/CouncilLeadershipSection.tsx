@@ -112,7 +112,7 @@ export function CouncilLeadershipSection() {
       person.name.toLowerCase().includes(q) ||
       person.rollNumber.toLowerCase().includes(q) ||
       person.designation.toLowerCase().includes(q) ||
-      person.portfolio.toLowerCase().includes(q) ||
+      (person.portfolio ? person.portfolio.toLowerCase().includes(q) : false) ||
       person.department.toLowerCase().includes(q)
     );
   };
