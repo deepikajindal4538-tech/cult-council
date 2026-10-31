@@ -97,26 +97,23 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-ink-muted text-base sm:text-lg leading-relaxed">
               <p>
-                Operating under the office of the <strong>Dean of Student Affairs (DoSA)</strong>, the Cultural Council serves as the supreme planning, coordination, and resource-allocation council for all cultural and artistic dimensions of campus life at IIIT Allahabad.
+                The cultural societies operate within the Cultural Council of the Students&apos; Body. They are student-led, but function under guidance of the Officer-In-Charge (Cultural Council) and institutional oversight through the Dean (Student Affairs).
               </p>
               <p>
-                From dramatic street theater addressing pressing socio-cultural realities to acoustic rock concerts under open night skies, the Council ensures that every student with a creative spark finds mentorship, professional equipment, and a grand stage.
-              </p>
-              <p>
-                Beyond internal activities, the Council coordinates delegations to national cultural festivals across India (including IIT Bombay Mood Indigo, IIT Kanpur Antaragni, and IIT BHU Kashiyatra), regularly bringing home premier trophies and national recognition.
+                The cultural societies function through a collaborative model. Society Coordinators lead genre-specific initiatives, Senior Members and Members execute cultural events and artistic activities, while Volunteers participate in performances, workshops, fests, and outreach, ensuring broad student involvement.
               </p>
             </div>
 
             <div className="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 bg-[#F4F1EA] rounded-lg border border-stone-300 space-y-1">
                 <CheckCircle2 className="w-5 h-5 text-amber-700" />
-                <h4 className="font-serif font-bold text-ink text-base">Autonomy &amp; Inclusivity</h4>
-                <p className="text-xs text-ink-muted">Each society operates independently under student leadership with faculty guidance.</p>
+                <h4 className="font-serif font-bold text-ink text-base">Collaborative Model</h4>
+                <p className="text-xs text-ink-muted">Coordinators lead genre-specific initiatives, while members and volunteers execute events.</p>
               </div>
               <div className="p-4 bg-[#F4F1EA] rounded-lg border border-stone-300 space-y-1">
                 <CheckCircle2 className="w-5 h-5 text-amber-700" />
-                <h4 className="font-serif font-bold text-ink text-base">Open Auditions &amp; Training</h4>
-                <p className="text-xs text-ink-muted">Every semester, beginners to advanced performers receive masterclasses and mentorship.</p>
+                <h4 className="font-serif font-bold text-ink text-base">Institutional Oversight</h4>
+                <p className="text-xs text-ink-muted">Guided by the Officer-In-Charge with oversight from the Dean (Student Affairs).</p>
               </div>
             </div>
           </div>
