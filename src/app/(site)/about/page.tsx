@@ -131,27 +131,27 @@ export default function AboutPage() {
             <div className="space-y-3.5 text-xs font-mono">
               <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Statutory Framework</span>
-                <span className="font-serif font-semibold text-ink text-sm">Student Gymkhana</span>
+                <span className="font-serif font-semibold text-ink text-sm">OIC Cultural</span>
               </div>
               <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Dean (Student Affairs)</span>
-                <span className="font-serif font-semibold text-ink text-sm">Prof. Vijender Singh</span>
+                <span className="font-serif font-semibold text-ink text-sm">Dr. KP Singh</span>
               </div>
               <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Faculty Coordinator</span>
-                <span className="font-serif font-semibold text-ink text-sm">Dr. Pragya Singh</span>
+                <span className="font-serif font-semibold text-ink text-sm">Dr. Sunny Sharma</span>
               </div>
               <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">President</span>
-                <span className="font-serif font-semibold text-ink text-sm">Aman Tripathi</span>
+                <span className="font-serif font-semibold text-ink text-sm">Aditya Anil Halwai</span>
               </div>
               <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">General Secretary</span>
-                <span className="font-serif font-semibold text-ink text-sm">Aryan Deshmukh</span>
+                <span className="font-serif font-semibold text-ink text-sm">Chinmay Raheja</span>
               </div>
               <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Treasurer</span>
-                <span className="font-serif font-semibold text-ink text-sm">Harshita Sengupta</span>
+                <span className="font-serif font-semibold text-ink text-sm">Aryan Pandey</span>
               </div>
               <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Council Strength</span>
