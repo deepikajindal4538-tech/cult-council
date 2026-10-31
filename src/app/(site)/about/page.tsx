@@ -18,7 +18,8 @@ import {
   Flame,
   CheckCircle2,
 } from "lucide-react";
-import { councilDetails, councilTeam, initialSocieties } from "@/lib/seedData";
+import { councilDetails, initialSocieties } from "@/lib/seedData";
+import { CouncilLeadershipSection } from "@/components/about/CouncilLeadershipSection";
 
 export const metadata = {
   title: "About Cultural Council | IIIT Allahabad",
@@ -127,24 +128,40 @@ export default function AboutPage() {
               <span>IIIT ALLAHABAD</span>
             </div>
 
-            <div className="space-y-4 text-xs font-mono">
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
+            <div className="space-y-3.5 text-xs font-mono">
+              <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Statutory Framework</span>
                 <span className="font-serif font-semibold text-ink text-sm">Student Gymkhana</span>
               </div>
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
-                <span className="text-ink-muted uppercase">Faculty In-Charge</span>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">Dean (Student Affairs)</span>
+                <span className="font-serif font-semibold text-ink text-sm">Prof. Vijender Singh</span>
+              </div>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">Faculty Coordinator</span>
                 <span className="font-serif font-semibold text-ink text-sm">Dr. Pragya Singh</span>
               </div>
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
-                <span className="text-ink-muted uppercase">Student Secretary</span>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">President</span>
+                <span className="font-serif font-semibold text-ink text-sm">Aman Tripathi</span>
+              </div>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">General Secretary</span>
                 <span className="font-serif font-semibold text-ink text-sm">Aryan Deshmukh</span>
               </div>
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">Treasurer</span>
+                <span className="font-serif font-semibold text-ink text-sm">Harshita Sengupta</span>
+              </div>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">Council Strength</span>
+                <span className="font-serif font-semibold text-amber-700 text-sm">12 Council Members</span>
+              </div>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Council Headquarters</span>
                 <span className="text-ink font-semibold text-right">SAC, Ground Floor</span>
               </div>
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
+              <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Flagship Festival</span>
                 <span className="text-amber-700 font-bold">Effervescence</span>
               </div>
@@ -231,58 +248,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. Council Leadership & Executive Team */}
-      <section id="team" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <div className="font-mono text-xs uppercase tracking-widest text-ink-faint">
-            03 // GOVERNANCE &amp; HIERARCHY
-          </div>
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ink">
-            Council Leadership Team (2025–2026)
-          </h2>
-          <p className="text-ink-muted text-sm sm:text-base">
-            Meet the faculty advisors and student representatives entrusted with directing the institute&apos;s cultural affairs.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          {councilTeam.map((member, idx) => (
-            <div
-              key={idx}
-              className="bg-[#F4F1EA] p-6 rounded-xl border border-stone-300 text-center space-y-4 shadow-sm"
-            >
-              <div className="w-16 h-16 mx-auto rounded-full bg-ink text-canvas font-mono font-bold text-lg flex items-center justify-center shadow-inner">
-                {member.avatar}
-              </div>
-
-              <div>
-                <span className="font-mono text-[9px] uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full inline-block mb-1">
-                  {member.type}
-                </span>
-                <h3 className="font-serif text-lg font-bold text-ink leading-snug">
-                  {member.name}
-                </h3>
-                <p className="font-mono text-[11px] uppercase tracking-wider text-ink-muted mt-1">
-                  {member.role}
-                </p>
-                {member.department && (
-                  <p className="text-xs text-ink-faint mt-0.5">{member.department}</p>
-                )}
-              </div>
-
-              <div className="pt-2 border-t border-stone-300 text-xs font-mono">
-                <a
-                  href={`mailto:${member.email}`}
-                  className="text-stone-600 hover:text-ink underline inline-flex items-center gap-1"
-                >
-                  <Mail className="w-3 h-3" />
-                  <span>{member.email}</span>
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* 4. Council Leadership & Executive Team (Dean SA, Faculty Coordinator, President, General Secretary, Treasurer, 12 Council Members) */}
+      <CouncilLeadershipSection />
 
       {/* 5. Campus Performance Venues & Infrastructure */}
       <section className="bg-[#F4F1EA] py-20 px-4 sm:px-6 lg:px-8 border-y border-stone-300">
