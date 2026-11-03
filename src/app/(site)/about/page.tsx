@@ -292,39 +292,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      {/* 6. Inductions / How to Join Callout */}
-      <section id="join" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="bg-ink text-canvas rounded-2xl p-8 sm:p-14 border border-stone-800 flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-xl">
-          <div className="max-w-2xl space-y-4">
-            <div className="inline-flex items-center gap-2 text-amber-300 font-mono text-xs uppercase tracking-widest">
-              <Sparkles className="w-4 h-4" />
-              <span>ANNUAL INDUCTIONS &amp; AUDITIONS</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
-              Ready to create something unforgettable?
-            </h2>
-            <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
-              Whether you are an aspiring guitarist, actor, dancer, photographer, writer, or artist, the Cultural Council conducts auditions every autumn and spring semester for freshers and senior students alike.
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/societies"
-              className="px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-ink font-mono text-xs uppercase tracking-widest font-bold transition-all text-center rounded"
-            >
-              Explore Society Auditions
-            </Link>
-            <Link
-              href="/events"
-              className="px-6 py-3.5 border border-stone-500 hover:border-canvas text-canvas font-mono text-xs uppercase tracking-widest transition-all text-center rounded"
-            >
-              View Upcoming Events
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

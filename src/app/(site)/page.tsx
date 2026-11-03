@@ -303,39 +303,6 @@ export default async function HomePage() {
         title="Visual Artifacts & Moments"
         subtitle="Curated high-definition records captured by student photojournalists."
       />
-
-      {/* 7. Inductions / Join the Council Banner */}
-      <section className="pb-20 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="bg-ink text-canvas rounded-3xl p-8 sm:p-12 lg:p-14 border border-stone-800 flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-xl">
-          <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-2 text-amber-300 font-mono text-xs uppercase tracking-widest">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>COLLEGE AUDITIONS &amp; TALENT RECRUITMENT</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
-              Join the Cultural Council
-            </h2>
-            <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
-              Are you passionate about music, acting, dance, literature, photography, or fine arts? Auditions open every semester across all 6 student societies. No prior professional experience required—just raw creative passion.
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link
-              href="/about#join"
-              className="px-6 py-3 bg-amber-400 hover:bg-amber-300 text-ink font-mono text-xs uppercase tracking-widest font-bold transition-all text-center rounded-lg shadow-sm"
-            >
-              Audition Guidelines
-            </Link>
-            <Link
-              href="/societies"
-              className="px-6 py-3 border border-stone-600 hover:border-canvas text-canvas font-mono text-xs uppercase tracking-widest transition-all text-center rounded-lg"
-            >
-              Explore 6 Wings
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

@@ -11,6 +11,8 @@ export interface CouncilPerson {
   photoUrl: string;
   email: string;
   avatarFallback: string;
+  portfolio?: string;
+  objectPosition?: string;
   bio?: string;
   order: number;
 }
@@ -27,7 +29,7 @@ export const councilRoster: CouncilPerson[] = [
     category: "dean_sa",
     tier: "patron",
     department: "Office of the Dean of Student Affairs (DoSA)",
-    photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "",
     email: "dean.sa@iiita.ac.in",
     avatarFallback: "KP",
     bio: "Chief overseer and statutory authority for all student activities, collegiate wellness, and national cultural delegations of IIIT Allahabad.",
@@ -44,7 +46,7 @@ export const councilRoster: CouncilPerson[] = [
     category: "faculty_coordinator",
     tier: "patron",
     department: "Department of Management & Humanities",
-    photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
+    photoUrl: "",
     email: "sunny@iiita.ac.in",
     avatarFallback: "SS",
 
