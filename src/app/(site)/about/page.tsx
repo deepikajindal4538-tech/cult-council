@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Users,
   Award,
@@ -15,6 +16,8 @@ import {
   Theater,
   Flame,
   CheckCircle2,
+  ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 import { councilDetails, initialSocieties } from "@/lib/seedData";
 import { CouncilLeadershipSection } from "@/components/about/CouncilLeadershipSection";
@@ -39,15 +42,39 @@ export default function AboutPage() {
             <span className="text-ink font-semibold">ABOUT CULTURAL COUNCIL</span>
           </div>
 
-          <div className="max-w-4xl space-y-6">
-            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[1.02]">
-              Where Culture{" "}
-              <span className="italic font-normal text-stone-700">Finds Its Voice</span>.
-            </h1>
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-8">
+            <div className="max-w-4xl space-y-6">
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-900 font-mono text-xs uppercase tracking-wider">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>APEX STATUTORY STUDENT BODY • ESTABLISHED 1999</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200/80 border border-stone-300 font-mono text-xs uppercase tracking-wider text-ink font-semibold">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                  <span>MANY FORMS. ONE SPIRIT.</span>
+                </div>
+              </div>
 
-            <p className="font-serif italic text-xl sm:text-2xl text-ink-muted leading-relaxed">
-              &ldquo;In an institute renowned for algorithmic precision, the Cultural Council breathes life into midnight strings, spontaneous cyphers, thespian confrontations, and visual truth. Many Forms. One Spirit.&rdquo;
-            </p>
+              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[1.02]">
+                Where Culture{" "}
+                <span className="italic font-normal text-stone-700">Finds Its Voice</span>.
+              </h1>
+
+              <p className="font-serif italic text-xl sm:text-2xl text-ink-muted leading-relaxed">
+                &ldquo;In an institute renowned for algorithmic precision, the Cultural Council breathes life into midnight strings, spontaneous cyphers, thespian confrontations, and visual truth. Many Forms. One Spirit.&rdquo;
+              </p>
+            </div>
+
+            <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-white shadow-md ring-2 ring-stone-900/10 shrink-0 self-start">
+              <Image
+                src="/images/council-logo.png"
+                alt="Cultural Council Official Emblem"
+                fill
+                sizes="144px"
+                className="object-cover"
+                priority
+              />
+            </div>
           </div>
 
           {/* Quick Metrics Bar */}
@@ -107,9 +134,22 @@ export default function AboutPage() {
 
           {/* Right: Council Factsheet */}
           <div className="lg:col-span-5 bg-[#F4F1EA] p-8 sm:p-10 rounded-2xl border border-stone-300 space-y-6 shadow-sm">
-            <div className="border-b border-stone-300 pb-3 flex items-center justify-between font-mono text-xs uppercase tracking-wider text-ink-faint">
-              <span>COUNCIL CHARTER</span>
-              <span>IIIT ALLAHABAD</span>
+            <div className="flex items-center gap-4 border-b border-stone-300 pb-4">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 shrink-0">
+                <Image
+                  src="/images/council-logo.png"
+                  alt="Cultural Council Crest"
+                  fill
+                  sizes="48px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col">
+                <div className="font-serif font-bold text-lg text-ink leading-tight">Cultural Council</div>
+                <div className="font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+                  SHDC • IIIT ALLAHABAD
+                </div>
+              </div>
             </div>
 
             <div className="space-y-3.5 text-xs font-mono">

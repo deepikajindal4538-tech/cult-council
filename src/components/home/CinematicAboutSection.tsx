@@ -151,9 +151,29 @@ export function CinematicAboutSection() {
 
         {/* Right Column: Institutional Archival Ledger */}
         <div className="lg:col-span-5 bg-white p-6 sm:p-9 rounded-3xl border border-stone-300/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-stone-200 pb-3 font-mono text-[11px] uppercase tracking-wider text-ink-faint">
-            <span className="font-semibold text-ink">CAMPUS COUNCIL LEDGER</span>
-            <span>1999 — PRESENT</span>
+          <div className="flex items-center justify-between border-b border-stone-200 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="relative w-11 h-11 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 shrink-0">
+                <Image
+                  src="/images/council-logo.png"
+                  alt="Cultural Council Official Crest"
+                  fill
+                  sizes="44px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-serif font-bold text-base text-ink leading-tight">
+                  Cultural Council
+                </span>
+                <span className="font-mono text-[9px] uppercase tracking-wider text-ink-faint">
+                  SHDC • IIIT ALLAHABAD
+                </span>
+              </div>
+            </div>
+            <span className="font-mono text-[10px] text-amber-800 font-bold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200/60">
+              ESTD. 1999
+            </span>
           </div>
 
           <div className="space-y-4">

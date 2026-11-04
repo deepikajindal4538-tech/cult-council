@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
@@ -9,13 +10,24 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-stone-300">
           {/* Colophon & Identity */}
           <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="w-6 h-6 bg-ink text-canvas font-mono font-bold text-xs flex items-center justify-center">
-                CC
-              </span>
-              <span className="font-serif font-bold text-xl tracking-tight text-ink">
-                Cultural Council
-              </span>
+            <div className="flex items-center gap-3.5">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 shrink-0">
+                <Image
+                  src="/images/council-logo.png"
+                  alt="Cultural Council IIIT Allahabad Crest"
+                  fill
+                  sizes="48px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-serif font-bold text-xl tracking-tight text-ink leading-tight">
+                  Cultural Council
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-faint">
+                  SHDC • IIIT ALLAHABAD
+                </span>
+              </div>
             </div>
             <p className="font-serif italic text-base text-ink-muted max-w-sm leading-relaxed">
               &ldquo;Autonomous guild union coordinating dramatic productions, acoustics, dance choreography, lens work, and literary discourse at IIIT Allahabad.&rdquo;

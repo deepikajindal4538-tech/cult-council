@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
 
@@ -91,11 +92,17 @@ export function Navbar() {
         {/* College & Council Brand Identity */}
         <Link
           href="/"
-          className="flex items-center gap-3.5 group focus:outline-none"
+          className="flex items-center gap-3 sm:gap-3.5 group focus:outline-none"
         >
-          <div className="w-7 h-7 rounded bg-ink text-[#FAF8F5] flex flex-col items-center justify-center font-mono font-bold text-xs tracking-tighter shadow-sm group-hover:bg-stone-800 transition-colors">
-            <span className="leading-none text-[9px]">CC</span>
-            <span className="text-[6px] text-amber-300 tracking-normal font-sans">IIITA</span>
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 group-hover:scale-105 transition-transform duration-200 shrink-0">
+            <Image
+              src="/images/council-logo.png"
+              alt="Cultural Council IIIT Allahabad Crest"
+              fill
+              sizes="40px"
+              className="object-cover"
+              priority
+            />
           </div>
           <div className="flex flex-col">
             <span
@@ -110,7 +117,7 @@ export function Navbar() {
                 isHome ? "text-stone-300" : "text-ink-faint"
               }`}
             >
-              IIIT Allahabad
+              SHDC • IIIT Allahabad
             </span>
           </div>
         </Link>
@@ -229,8 +236,24 @@ export function Navbar() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-stone-300 bg-[#FAF8F5] px-6 pt-4 pb-8 space-y-3 font-mono text-xs uppercase tracking-widest text-ink animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="pb-2 border-b border-stone-200 text-[10px] text-ink-faint">
-            IIIT Allahabad • Cultural Council
+          <div className="pb-3 border-b border-stone-200 flex items-center gap-3">
+            <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 shrink-0">
+              <Image
+                src="/images/council-logo.png"
+                alt="Cultural Council Logo"
+                fill
+                sizes="32px"
+                className="object-cover"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-serif font-bold text-sm text-ink leading-tight">
+                Cultural Council
+              </span>
+              <span className="font-mono text-[9px] text-ink-faint uppercase tracking-wider">
+                SHDC • IIIT Allahabad
+              </span>
+            </div>
           </div>
           {navItems.map((item) => (
             <div key={item.href}>
