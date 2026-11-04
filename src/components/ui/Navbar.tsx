@@ -88,7 +88,7 @@ export function Navbar() {
             : "backdrop-blur-md bg-[#FAF8F5]/80 border-b border-stone-300/80 text-ink"
         }`}
       >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
+      <div className="w-full px-6 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
         {/* College & Council Brand Identity */}
         <Link
           href="/"
