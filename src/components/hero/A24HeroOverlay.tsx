@@ -10,12 +10,14 @@ import { SocietyIndex } from "./SocietyIndex";
 interface A24HeroOverlayProps {
   societies: (ISociety | any)[];
   activeIndex: number;
+  continuousProgress?: number;
   onSelectIndex: (index: number) => void;
 }
 
 export function A24HeroOverlay({
   societies,
   activeIndex,
+  continuousProgress = 0,
   onSelectIndex,
 }: A24HeroOverlayProps) {
   const [indexMenuOpen, setIndexMenuOpen] = useState(false);
@@ -27,18 +29,18 @@ export function A24HeroOverlay({
       <header className="w-full flex items-start justify-between">
         {/* Top-Left: Active Society Title & Hairline Metadata Table (.experience_info) */}
         <div className="pointer-events-auto max-w-xs sm:max-w-sm lg:max-w-md">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="popLayout" initial={false}>
             <motion.div
               key={society.slug}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             >
               {/* Category Eyebrow */}
               <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted">
                 <span
-                  className="w-2 h-2 rounded-full"
+                  className="w-2 h-2 rounded-full transition-colors duration-300"
                   style={{ backgroundColor: society.accentColor || "#1C1917" }}
                 />
                 <span className="font-semibold text-ink">
@@ -104,7 +106,7 @@ export function A24HeroOverlay({
             <button
               type="button"
               onClick={() => setIndexMenuOpen(!indexMenuOpen)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-stone-300/90 bg-[#FAF8F5]/80 hover:bg-stone-200/60 backdrop-blur-md text-ink text-xs transition-colors duration-200"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-stone-300/90 bg-[#FAF8F5]/80 hover:bg-stone-200/60 backdrop-blur-md text-ink text-xs transition-colors duration-200 cursor-pointer"
               aria-label="Toggle Societies Index"
               aria-expanded={indexMenuOpen}
             >
@@ -133,7 +135,7 @@ export function A24HeroOverlay({
                     <button
                       type="button"
                       onClick={() => setIndexMenuOpen(false)}
-                      className="text-stone-400 hover:text-ink transition-colors"
+                      className="text-stone-400 hover:text-ink transition-colors cursor-pointer"
                       aria-label="Close index"
                     >
                       <X className="w-3.5 h-3.5" />
@@ -151,7 +153,7 @@ export function A24HeroOverlay({
                             onSelectIndex(idx);
                             setIndexMenuOpen(false);
                           }}
-                          className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-mono transition-all duration-200 ${
+                          className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-mono transition-all duration-200 cursor-pointer ${
                             isItemActive
                               ? "bg-stone-900 text-white font-bold shadow-xs"
                               : "text-stone-600 hover:text-ink hover:bg-stone-200/60"
@@ -185,11 +187,12 @@ export function A24HeroOverlay({
         <SocietyIndex
           societies={societies}
           activeIndex={activeIndex}
+          continuousProgress={continuousProgress}
           onSelectIndex={onSelectIndex}
         />
       </div>
 
-      {/* 2. BOTTOM SECTION: CENTER TESTIMONIAL & RIGHT DOSSIER CTA */}
+      {/* 2. BOTTOM SECTION: CENTER TESTIMONIAL, MOBILE LADDER, & RIGHT DOSSIER CTA */}
       <footer className="w-full flex flex-col md:flex-row items-center justify-between gap-4 pt-4">
         {/* Left Indicator / Drag Cue */}
         <div className="pointer-events-auto hidden lg:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-ink-faint w-48">
@@ -197,15 +200,38 @@ export function A24HeroOverlay({
           <span>SCROLL TO ADVANCE</span>
         </div>
 
-        {/* Center: Society Artistic Manifesto */}
-        <div className="pointer-events-auto flex flex-col items-center justify-center text-center max-w-md mx-auto">
-          <AnimatePresence mode="wait">
+        {/* Center: Society Artistic Manifesto & Mobile Mini Ladder */}
+        <div className="pointer-events-auto flex flex-col items-center justify-center text-center max-w-md mx-auto space-y-2">
+          {/* Mobile Mini Societies Ladder Track */}
+          <div className="flex md:hidden items-center justify-center gap-1.5 py-1">
+            {societies.map((soc, idx) => {
+              const isPillActive = idx === activeIndex;
+              return (
+                <button
+                  key={soc.slug || idx}
+                  type="button"
+                  onClick={() => onSelectIndex(idx)}
+                  className="p-1 focus:outline-none cursor-pointer"
+                  aria-label={`Jump to ${soc.name}`}
+                >
+                  <div
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      isPillActive ? "w-6 bg-stone-900" : "w-2 bg-stone-300 hover:bg-stone-400"
+                    }`}
+                    style={isPillActive ? { backgroundColor: soc.accentColor || "#1C1917" } : {}}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          <AnimatePresence mode="popLayout" initial={false}>
             <motion.div
               key={society.slug + "-testimonial"}
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
               className="space-y-1"
             >
               <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-ink-faint font-semibold">
@@ -223,7 +249,7 @@ export function A24HeroOverlay({
         <div className="pointer-events-auto flex justify-end w-48">
           <Link
             href={`/societies/${society.slug}`}
-            className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink text-canvas font-mono text-[11px] uppercase tracking-widest hover:bg-stone-800 transition-all duration-200 shadow-xs hover:shadow"
+            className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink text-canvas font-mono text-[11px] uppercase tracking-widest hover:bg-stone-800 transition-all duration-200 shadow-xs hover:shadow cursor-pointer"
           >
             <span>Explore Dossier</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

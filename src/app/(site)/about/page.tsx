@@ -18,7 +18,8 @@ import {
   Flame,
   CheckCircle2,
 } from "lucide-react";
-import { councilDetails, councilTeam, initialSocieties } from "@/lib/seedData";
+import { councilDetails, initialSocieties } from "@/lib/seedData";
+import { CouncilLeadershipSection } from "@/components/about/CouncilLeadershipSection";
 
 export const metadata = {
   title: "About Cultural Council | IIIT Allahabad",
@@ -96,26 +97,23 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-4 text-ink-muted text-base sm:text-lg leading-relaxed">
               <p>
-                Operating under the office of the <strong>Dean of Student Affairs (DoSA)</strong>, the Cultural Council serves as the supreme planning, coordination, and resource-allocation council for all cultural and artistic dimensions of campus life at IIIT Allahabad.
+                The cultural societies operate within the Cultural Council of the Students&apos; Body. They are student-led, but function under guidance of the Officer-In-Charge (Cultural Council) and institutional oversight through the Dean (Student Affairs).
               </p>
               <p>
-                From dramatic street theater addressing pressing socio-cultural realities to acoustic rock concerts under open night skies, the Council ensures that every student with a creative spark finds mentorship, professional equipment, and a grand stage.
-              </p>
-              <p>
-                Beyond internal activities, the Council coordinates delegations to national cultural festivals across India (including IIT Bombay Mood Indigo, IIT Kanpur Antaragni, and IIT BHU Kashiyatra), regularly bringing home premier trophies and national recognition.
+                The cultural societies function through a collaborative model. Society Coordinators lead genre-specific initiatives, Senior Members and Members execute cultural events and artistic activities, while Volunteers participate in performances, workshops, fests, and outreach, ensuring broad student involvement.
               </p>
             </div>
 
             <div className="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 bg-[#F4F1EA] rounded-lg border border-stone-300 space-y-1">
                 <CheckCircle2 className="w-5 h-5 text-amber-700" />
-                <h4 className="font-serif font-bold text-ink text-base">Autonomy &amp; Inclusivity</h4>
-                <p className="text-xs text-ink-muted">Each society operates independently under student leadership with faculty guidance.</p>
+                <h4 className="font-serif font-bold text-ink text-base">Collaborative Model</h4>
+                <p className="text-xs text-ink-muted">Coordinators lead genre-specific initiatives, while members and volunteers execute events.</p>
               </div>
               <div className="p-4 bg-[#F4F1EA] rounded-lg border border-stone-300 space-y-1">
                 <CheckCircle2 className="w-5 h-5 text-amber-700" />
-                <h4 className="font-serif font-bold text-ink text-base">Open Auditions &amp; Training</h4>
-                <p className="text-xs text-ink-muted">Every semester, beginners to advanced performers receive masterclasses and mentorship.</p>
+                <h4 className="font-serif font-bold text-ink text-base">Institutional Oversight</h4>
+                <p className="text-xs text-ink-muted">Guided by the Officer-In-Charge with oversight from the Dean (Student Affairs).</p>
               </div>
             </div>
           </div>
@@ -127,24 +125,40 @@ export default function AboutPage() {
               <span>IIIT ALLAHABAD</span>
             </div>
 
-            <div className="space-y-4 text-xs font-mono">
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
+            <div className="space-y-3.5 text-xs font-mono">
+              <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Statutory Framework</span>
-                <span className="font-serif font-semibold text-ink text-sm">Student Gymkhana</span>
+                <span className="font-serif font-semibold text-ink text-sm">OIC Cultural</span>
               </div>
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
-                <span className="text-ink-muted uppercase">Faculty In-Charge</span>
-                <span className="font-serif font-semibold text-ink text-sm">Dr. Pragya Singh</span>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">Dean (Student Affairs)</span>
+                <span className="font-serif font-semibold text-ink text-sm">Dr. KP Singh</span>
               </div>
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
-                <span className="text-ink-muted uppercase">Student Secretary</span>
-                <span className="font-serif font-semibold text-ink text-sm">Aryan Deshmukh</span>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">Faculty Coordinator</span>
+                <span className="font-serif font-semibold text-ink text-sm">Dr. Sunny Sharma</span>
               </div>
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">President</span>
+                <span className="font-serif font-semibold text-ink text-sm">Aditya Anil Halwai</span>
+              </div>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">General Secretary</span>
+                <span className="font-serif font-semibold text-ink text-sm">Chinmay Raheja</span>
+              </div>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">Treasurer</span>
+                <span className="font-serif font-semibold text-ink text-sm">Aryan Pandey</span>
+              </div>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
+                <span className="text-ink-muted uppercase">Council Strength</span>
+                <span className="font-serif font-semibold text-amber-700 text-sm">9 Council Members</span>
+              </div>
+              <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Council Headquarters</span>
                 <span className="text-ink font-semibold text-right">SAC, Ground Floor</span>
               </div>
-              <div className="flex justify-between border-b border-stone-200 pb-2.5">
+              <div className="flex justify-between border-b border-stone-200 pb-2">
                 <span className="text-ink-muted uppercase">Flagship Festival</span>
                 <span className="text-amber-700 font-bold">Effervescence</span>
               </div>
@@ -231,58 +245,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. Council Leadership & Executive Team */}
-      <section id="team" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <div className="font-mono text-xs uppercase tracking-widest text-ink-faint">
-            03 // GOVERNANCE &amp; HIERARCHY
-          </div>
-          <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ink">
-            Council Leadership Team (2025–2026)
-          </h2>
-          <p className="text-ink-muted text-sm sm:text-base">
-            Meet the faculty advisors and student representatives entrusted with directing the institute&apos;s cultural affairs.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          {councilTeam.map((member, idx) => (
-            <div
-              key={idx}
-              className="bg-[#F4F1EA] p-6 rounded-xl border border-stone-300 text-center space-y-4 shadow-sm"
-            >
-              <div className="w-16 h-16 mx-auto rounded-full bg-ink text-canvas font-mono font-bold text-lg flex items-center justify-center shadow-inner">
-                {member.avatar}
-              </div>
-
-              <div>
-                <span className="font-mono text-[9px] uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full inline-block mb-1">
-                  {member.type}
-                </span>
-                <h3 className="font-serif text-lg font-bold text-ink leading-snug">
-                  {member.name}
-                </h3>
-                <p className="font-mono text-[11px] uppercase tracking-wider text-ink-muted mt-1">
-                  {member.role}
-                </p>
-                {member.department && (
-                  <p className="text-xs text-ink-faint mt-0.5">{member.department}</p>
-                )}
-              </div>
-
-              <div className="pt-2 border-t border-stone-300 text-xs font-mono">
-                <a
-                  href={`mailto:${member.email}`}
-                  className="text-stone-600 hover:text-ink underline inline-flex items-center gap-1"
-                >
-                  <Mail className="w-3 h-3" />
-                  <span>{member.email}</span>
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* 4. Council Leadership & Executive Team (Dean SA, Faculty Coordinator, President, General Secretary, Treasurer, 9 Council Members) */}
+      <CouncilLeadershipSection />
 
       {/* 5. Campus Performance Venues & Infrastructure */}
       <section className="bg-[#F4F1EA] py-20 px-4 sm:px-6 lg:px-8 border-y border-stone-300">
@@ -325,39 +289,6 @@ export default function AboutPage() {
                 </p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Inductions / How to Join Callout */}
-      <section id="join" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="bg-ink text-canvas rounded-2xl p-8 sm:p-14 border border-stone-800 flex flex-col lg:flex-row lg:items-center justify-between gap-8 shadow-xl">
-          <div className="max-w-2xl space-y-4">
-            <div className="inline-flex items-center gap-2 text-amber-300 font-mono text-xs uppercase tracking-widest">
-              <Sparkles className="w-4 h-4" />
-              <span>ANNUAL INDUCTIONS &amp; AUDITIONS</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
-              Ready to create something unforgettable?
-            </h2>
-            <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
-              Whether you are an aspiring guitarist, actor, dancer, photographer, writer, or artist, the Cultural Council conducts auditions every autumn and spring semester for freshers and senior students alike.
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/societies"
-              className="px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-ink font-mono text-xs uppercase tracking-widest font-bold transition-all text-center rounded"
-            >
-              Explore Society Auditions
-            </Link>
-            <Link
-              href="/events"
-              className="px-6 py-3.5 border border-stone-500 hover:border-canvas text-canvas font-mono text-xs uppercase tracking-widest transition-all text-center rounded"
-            >
-              View Upcoming Events
-            </Link>
           </div>
         </div>
       </section>
