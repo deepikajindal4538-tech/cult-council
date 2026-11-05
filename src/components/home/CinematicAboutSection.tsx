@@ -153,13 +153,13 @@ export function CinematicAboutSection() {
         <div className="lg:col-span-5 bg-white p-6 sm:p-9 rounded-3xl border border-stone-300/90 shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-stone-200 pb-4">
             <div className="flex items-center gap-3">
-              <div className="relative w-11 h-11 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 shrink-0">
+              <div className="relative w-14 h-14 shrink-0">
                 <Image
                   src="/images/council-logo.png"
                   alt="Cultural Council Official Crest"
                   fill
-                  sizes="44px"
-                  className="object-cover"
+                  sizes="56px"
+                  className="object-contain"
                 />
               </div>
               <div className="flex flex-col">

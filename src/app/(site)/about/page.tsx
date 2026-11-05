@@ -65,13 +65,14 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-white shadow-md ring-2 ring-stone-900/10 shrink-0 self-start">
+            {/* Official Cultural Council Circular Crest */}
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden bg-white shadow-md ring-2 ring-stone-900/10 shrink-0 self-start">
               <Image
                 src="/images/council-logo.png"
                 alt="Cultural Council Official Emblem"
                 fill
-                sizes="144px"
-                className="object-cover"
+                sizes="160px"
+                className="object-contain"
                 priority
               />
             </div>
@@ -135,13 +136,13 @@ export default function AboutPage() {
           {/* Right: Council Factsheet */}
           <div className="lg:col-span-5 bg-[#F4F1EA] p-8 sm:p-10 rounded-2xl border border-stone-300 space-y-6 shadow-sm">
             <div className="flex items-center gap-4 border-b border-stone-300 pb-4">
-              <div className="relative w-12 h-12 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 shrink-0">
+              <div className="relative w-14 h-14 shrink-0">
                 <Image
                   src="/images/council-logo.png"
                   alt="Cultural Council Crest"
                   fill
-                  sizes="48px"
-                  className="object-cover"
+                  sizes="56px"
+                  className="object-contain"
                 />
               </div>
               <div className="flex flex-col">

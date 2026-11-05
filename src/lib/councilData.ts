@@ -134,6 +134,7 @@ export const councilRoster: CouncilPerson[] = [
     tier: "council",
     department: "B.Tech IT, 2nd Year • Geneticx Lead",
     photoUrl: "/images/team/deepika.jpg",
+    objectPosition: "center 45%",
     email: "iit2025173@iiita.ac.in",
     avatarFallback: "DJ",
     bio: "Choreographing western hip-hop, street battle relays, and representing the institute at national dance stages.",

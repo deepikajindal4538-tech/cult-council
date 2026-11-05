@@ -11,13 +11,13 @@ export function Footer() {
           {/* Colophon & Identity */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3.5">
-              <div className="relative w-12 h-12 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 shrink-0">
+              <div className="relative w-14 h-14 shrink-0">
                 <Image
                   src="/images/council-logo.png"
                   alt="Cultural Council IIIT Allahabad Crest"
                   fill
-                  sizes="48px"
-                  className="object-cover"
+                  sizes="56px"
+                  className="object-contain"
                 />
               </div>
               <div className="flex flex-col">

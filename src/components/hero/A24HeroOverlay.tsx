@@ -99,13 +99,13 @@ export function A24HeroOverlay({
         {/* Top-Right: A24 Centered Pill Navigation with Index Button */}
         <div className="pointer-events-auto flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-ink">
           <div className="hidden sm:flex items-center gap-2.5">
-            <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white shadow-2xs ring-1 ring-stone-900/10 shrink-0">
+            <div className="relative w-9 h-9 shrink-0">
               <Image
                 src="/images/council-logo.png"
                 alt="Cultural Council Logo"
                 fill
-                sizes="32px"
-                className="object-cover"
+                sizes="36px"
+                className="object-contain"
               />
             </div>
             <div className="flex flex-col items-end text-right text-[10px] tracking-[0.2em] text-ink-faint">

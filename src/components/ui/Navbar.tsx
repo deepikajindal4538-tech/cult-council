@@ -94,13 +94,13 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-3 sm:gap-3.5 group focus:outline-none"
         >
-          <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 group-hover:scale-105 transition-transform duration-200 shrink-0">
+          <div className="relative w-11 h-11 sm:w-12 sm:h-12 shrink-0 group-hover:scale-105 transition-transform duration-200">
             <Image
               src="/images/council-logo.png"
               alt="Cultural Council IIIT Allahabad Crest"
               fill
-              sizes="40px"
-              className="object-cover"
+              sizes="48px"
+              className="object-contain"
               priority
             />
           </div>
@@ -237,13 +237,13 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-stone-300 bg-[#FAF8F5] px-6 pt-4 pb-8 space-y-3 font-mono text-xs uppercase tracking-widest text-ink animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="pb-3 border-b border-stone-200 flex items-center gap-3">
-            <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white shadow-xs ring-1 ring-stone-900/10 shrink-0">
+            <div className="relative w-9 h-9 shrink-0">
               <Image
                 src="/images/council-logo.png"
                 alt="Cultural Council Logo"
                 fill
-                sizes="32px"
-                className="object-cover"
+                sizes="36px"
+                className="object-contain"
               />
             </div>
             <div className="flex flex-col">
