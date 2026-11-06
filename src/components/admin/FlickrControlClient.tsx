@@ -53,10 +53,12 @@ interface FlickrStatusData {
   };
   apiConfig: {
     configured: boolean;
+    secretConfigured?: boolean;
     isMock: boolean;
     mode: string;
     maskedApiKey: string;
     maskedUserId: string;
+    maskedApiSecret?: string;
   };
   cacheStats: {
     size: number;
@@ -790,6 +792,12 @@ export default function FlickrControlClient() {
                 <div>
                   <span className="block text-[10px] text-ink-faint uppercase">API Key</span>
                   <span className="font-bold text-ink">{status?.apiConfig.maskedApiKey}</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] text-ink-faint uppercase">API Secret</span>
+                  <span className="font-bold text-emerald-700">
+                    {status?.apiConfig.maskedApiSecret || "NOT CONFIGURED"}
+                  </span>
                 </div>
                 <div>
                   <span className="block text-[10px] text-ink-faint uppercase">User ID</span>

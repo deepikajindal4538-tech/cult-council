@@ -19,8 +19,9 @@ export async function GET(req: NextRequest) {
   }
 
   const apiKey = process.env.FLICKR_API_KEY;
+  const apiSecret = process.env.FLICKR_API_SECRET;
   const userId = process.env.FLICKR_USER_ID;
-  const isMock = !apiKey || !userId || apiKey.includes("mock") || userId.includes("mock");
+  const isMock = !apiKey || apiKey.includes("mock");
   const controlState = getFlickrControlState();
   const cacheStats = getGalleryCacheStats();
 
@@ -29,11 +30,13 @@ export async function GET(req: NextRequest) {
       authenticated: true,
       killSwitch: controlState,
       apiConfig: {
-        configured: Boolean(apiKey && userId),
+        configured: Boolean(apiKey && !apiKey.includes("mock")),
+        secretConfigured: Boolean(apiSecret),
         isMock,
         mode: isMock ? "Simulated Mock & Verified Fallbacks" : "Live Flickr REST Upstream",
         maskedApiKey: maskString(apiKey),
         maskedUserId: maskString(userId),
+        maskedApiSecret: apiSecret ? "•••••••••••••••• (Server Kept Safe)" : "NOT CONFIGURED",
       },
       cacheStats,
       environment: process.env.NODE_ENV || "development",

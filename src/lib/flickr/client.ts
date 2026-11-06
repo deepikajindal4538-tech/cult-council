@@ -306,15 +306,15 @@ export async function testFlickrConnection(): Promise<{
   const apiKey = process.env.FLICKR_API_KEY;
   const userId = process.env.FLICKR_USER_ID;
 
-  if (!apiKey || !userId) {
+  if (!apiKey) {
     return {
       success: false,
-      message: "Credentials missing in environment variables (FLICKR_API_KEY or FLICKR_USER_ID).",
+      message: "Credentials missing in environment variables (FLICKR_API_KEY).",
       isKilled: false,
     };
   }
 
-  if (apiKey.includes("mock") || userId.includes("mock")) {
+  if (apiKey.includes("mock")) {
     return {
       success: true,
       message: "Simulated ping successful. Running in local mock mode with verified offline fallback dataset.",
@@ -326,13 +326,18 @@ export async function testFlickrConnection(): Promise<{
 
   const start = Date.now();
   try {
+    const hasLiveUserId = Boolean(userId && !userId.includes("mock"));
+    const testMethod = hasLiveUserId ? "flickr.photosets.getList" : "flickr.test.echo";
+
     const url = new URL(FLICKR_REST_ENDPOINT);
-    url.searchParams.set("method", "flickr.photosets.getList");
+    url.searchParams.set("method", testMethod);
     url.searchParams.set("api_key", apiKey);
-    url.searchParams.set("user_id", userId);
+    if (hasLiveUserId) {
+      url.searchParams.set("user_id", userId!);
+      url.searchParams.set("per_page", "1");
+    }
     url.searchParams.set("format", "json");
     url.searchParams.set("nojsoncallback", "1");
-    url.searchParams.set("per_page", "1");
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 6000);
@@ -368,9 +373,13 @@ export async function testFlickrConnection(): Promise<{
       };
     }
 
+    const message = hasLiveUserId
+      ? `Upstream connection verified. Latency: ${latencyMs}ms. Found ${json.photosets?.total || 0} remote albums.`
+      : `Live Flickr API verified active & authenticated via Echo endpoint. Latency: ${latencyMs}ms. (API Key authentic. Note: Set FLICKR_USER_ID when albums are ready; site is serving curated fallbacks).`;
+
     return {
       success: true,
-      message: `Upstream connection verified. Latency: ${latencyMs}ms. Found ${json.photosets?.total || 0} remote albums.`,
+      message,
       latencyMs,
       statusCode: 200,
       isKilled: false,
