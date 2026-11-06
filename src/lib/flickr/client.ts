@@ -14,7 +14,7 @@ import {
   getFallbackAlbumPhotosResponse,
   FALLBACK_ALBUMS,
 } from "./fallbackData";
-import { isFlickrKilled, getReserveOverrides } from "./killSwitch";
+import { isFlickrKilled, getReserveOverrides, getCarouselConfig } from "./killSwitch";
 import { CAROUSEL_RESERVE_50 } from "./carouselReserveData";
 
 function getMergedReservePlates() {
@@ -359,19 +359,41 @@ export async function getLiveCarouselRows(): Promise<{
   row3?: CarouselPlate[];
   isLive: boolean;
 }> {
+  const config = getCarouselConfig();
+
+  // If administrator chose custom selection or reserve plates, serve those directly
+  if (config.streamSource === "custom_selection" || config.streamSource === "reserve_plates") {
+    return {
+      row1: config.row1Photos,
+      row2: config.row2Photos,
+      row3: config.row3Photos,
+      isLive: false,
+    };
+  }
+
   const apiKey = process.env.FLICKR_API_KEY;
   const userId = process.env.FLICKR_USER_ID;
 
   // Only query live Flickr stream if an explicit, non-mock college Flickr account is configured
   if (!apiKey || apiKey.includes("mock") || !userId || userId.includes("mock") || isFlickrKilled()) {
-    return { isLive: false };
+    return {
+      row1: config.row1Photos,
+      row2: config.row2Photos,
+      row3: config.row3Photos,
+      isLive: false,
+    };
   }
 
   try {
     const albumsRes = await getAlbums({ page: 1, per_page: 8 });
     const albums = albumsRes.albums || [];
     if (albums.length === 0) {
-      return { isLive: false };
+      return {
+        row1: config.row1Photos,
+        row2: config.row2Photos,
+        row3: config.row3Photos,
+        isLive: false,
+      };
     }
 
     const a1 = albums[0]?.id;
@@ -384,7 +406,7 @@ export async function getLiveCarouselRows(): Promise<{
       a3 ? getAlbumPhotos(a3, { per_page: 14 }) : Promise.resolve({ photos: [] }),
     ]);
 
-    const row1: CarouselPlate[] = (p1.photos || []).map((p) => ({
+    const liveRow1: CarouselPlate[] = (p1.photos || []).map((p) => ({
       id: p.id,
       title: p.title || "AMS Performance Archive",
       discipline: albums[0]?.title || "Acoustics & Media Society",
@@ -394,7 +416,7 @@ export async function getLiveCarouselRows(): Promise<{
       height: p.height,
     }));
 
-    const row2: CarouselPlate[] = (p2.photos || []).map((p) => ({
+    const liveRow2: CarouselPlate[] = (p2.photos || []).map((p) => ({
       id: p.id,
       title: p.title || "AMS Performance Archive",
       discipline: albums[1]?.title || "Acoustics & Media Society",
@@ -404,7 +426,7 @@ export async function getLiveCarouselRows(): Promise<{
       height: p.height,
     }));
 
-    const row3: CarouselPlate[] = (p3.photos || []).map((p) => ({
+    const liveRow3: CarouselPlate[] = (p3.photos || []).map((p) => ({
       id: p.id,
       title: p.title || "AMS Performance Archive",
       discipline: albums[2]?.title || "Acoustics & Media Society",
@@ -414,10 +436,20 @@ export async function getLiveCarouselRows(): Promise<{
       height: p.height,
     }));
 
-    return { row1, row2, row3, isLive: true };
+    return {
+      row1: liveRow1.length > 0 ? liveRow1 : config.row1Photos,
+      row2: liveRow2.length > 0 ? liveRow2 : config.row2Photos,
+      row3: liveRow3.length > 0 ? liveRow3 : config.row3Photos,
+      isLive: true,
+    };
   } catch (err) {
     console.warn("[FlickrClient] Failed to build live AMS carousel rows:", err);
-    return { isLive: false };
+    return {
+      row1: config.row1Photos,
+      row2: config.row2Photos,
+      row3: config.row3Photos,
+      isLive: false,
+    };
   }
 }
 

@@ -79,22 +79,6 @@ export function CinematicAboutSection() {
       className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full select-none overflow-hidden"
       aria-label="About the Cultural Council"
     >
-      {/* 1. TOP LEDGER RIBBON */}
-      <div className="border-b border-stone-300/80 pb-3 mb-10 sm:mb-14 flex items-center justify-between font-mono text-[11px] uppercase tracking-widest text-ink-faint">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
-          <span className="text-ink font-semibold">CHAPTER 01 // MANIFESTO</span>
-          <span className="hidden sm:inline text-stone-400">//</span>
-          <span className="hidden sm:inline text-stone-500">
-            IIIT ALLAHABAD APEX CULTURAL MANDATE
-          </span>
-        </div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200/70 border border-stone-300 font-mono text-[10px] uppercase tracking-wider text-ink font-semibold">
-          <Sparkles className="w-3 h-3 text-amber-600" />
-          <span>MANY FORMS. ONE SPIRIT.</span>
-        </div>
-      </div>
-
       {/* 2. CINEMATIC HEADLINE SPREAD & MINIMAL STORYTELLING */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start pb-14 border-b border-stone-300/80">
         {/* Left Column: Monumental Headline */}

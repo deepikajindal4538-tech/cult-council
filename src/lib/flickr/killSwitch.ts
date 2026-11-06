@@ -1,6 +1,12 @@
 import "server-only";
 import fs from "fs";
 import path from "path";
+import {
+  ROW_1_RESERVE,
+  ROW_2_RESERVE,
+  ROW_3_RESERVE,
+  CarouselReservePlate,
+} from "./carouselReserveData";
 
 export interface FlickrAuditEntry {
   id: string;
@@ -38,6 +44,16 @@ export interface CustomHeroSlide {
   order: number;
 }
 
+export interface CarouselPlate {
+  id: string;
+  title: string;
+  discipline: string;
+  category: string;
+  url: string;
+  width?: number;
+  height?: number;
+}
+
 export interface CarouselRowConfig {
   row1Label: string;
   row1SpeedSeconds: number;
@@ -45,7 +61,10 @@ export interface CarouselRowConfig {
   row2SpeedSeconds: number;
   row3Label: string;
   row3SpeedSeconds: number;
-  streamSource: "ams_live" | "reserve_plates" | "hybrid";
+  streamSource: "ams_live" | "reserve_plates" | "hybrid" | "custom_selection";
+  row1Photos?: CarouselPlate[];
+  row2Photos?: CarouselPlate[];
+  row3Photos?: CarouselPlate[];
 }
 
 export interface FlickrControlState {
@@ -197,6 +216,18 @@ export const DEFAULT_HERO_SLIDES: CustomHeroSlide[] = [
   },
 ];
 
+function mapReserveToPlate(p: CarouselReservePlate): CarouselPlate {
+  return {
+    id: p.id,
+    title: p.title,
+    discipline: p.discipline,
+    category: p.category,
+    url: p.url,
+    width: p.width,
+    height: p.height,
+  };
+}
+
 export const DEFAULT_CAROUSEL_CONFIG: CarouselRowConfig = {
   row1Label: "ROW 01 // ACOUSTICS & PRO-NIGHTS",
   row1SpeedSeconds: 40,
@@ -205,6 +236,9 @@ export const DEFAULT_CAROUSEL_CONFIG: CarouselRowConfig = {
   row3Label: "ROW 03 // THEATRICAL GUILD & LIVE CANVASES",
   row3SpeedSeconds: 44,
   streamSource: "ams_live",
+  row1Photos: ROW_1_RESERVE.map(mapReserveToPlate),
+  row2Photos: ROW_2_RESERVE.map(mapReserveToPlate),
+  row3Photos: ROW_3_RESERVE.map(mapReserveToPlate),
 };
 
 const DEFAULT_STATE: FlickrControlState = {
@@ -485,7 +519,23 @@ export function saveHeroSlides(slides: CustomHeroSlide[], actor: string = "ADMIN
 
 export function getCarouselConfig(): CarouselRowConfig {
   const state = loadState();
-  return state.carouselConfig || DEFAULT_CAROUSEL_CONFIG;
+  const config = state.carouselConfig || DEFAULT_CAROUSEL_CONFIG;
+  return {
+    ...DEFAULT_CAROUSEL_CONFIG,
+    ...config,
+    row1Photos:
+      config.row1Photos && config.row1Photos.length > 0
+        ? config.row1Photos
+        : DEFAULT_CAROUSEL_CONFIG.row1Photos,
+    row2Photos:
+      config.row2Photos && config.row2Photos.length > 0
+        ? config.row2Photos
+        : DEFAULT_CAROUSEL_CONFIG.row2Photos,
+    row3Photos:
+      config.row3Photos && config.row3Photos.length > 0
+        ? config.row3Photos
+        : DEFAULT_CAROUSEL_CONFIG.row3Photos,
+  };
 }
 
 export function saveCarouselConfig(config: CarouselRowConfig, actor: string = "ADMIN", ip: string = "127.0.0.1"): CarouselRowConfig {

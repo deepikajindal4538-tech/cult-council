@@ -160,9 +160,6 @@ export function Navbar() {
                   {/* Minimalist Dropdown */}
                   <div className="absolute top-full -left-4 pt-2 w-72 hidden group-hover:block transition-all duration-200">
                     <div className="bg-[#FAF8F5] border border-stone-300/80 rounded-xl shadow-lg p-2 space-y-0.5 text-ink">
-                      <div className="px-3 py-1.5 text-[9px] uppercase tracking-[0.25em] text-ink-faint border-b border-stone-200 font-semibold">
-                        The Six Autonomous Guilds
-                      </div>
                       {item.subItems.map((sub) => (
                         <Link
                           key={sub.href}
@@ -172,15 +169,6 @@ export function Navbar() {
                           {sub.name}
                         </Link>
                       ))}
-                      <div className="border-t border-stone-200 pt-1 mt-1">
-                        <Link
-                          href="/societies"
-                          className="px-3 py-1.5 text-[11px] font-semibold text-ink hover:bg-stone-200/50 rounded-lg flex items-center justify-between"
-                        >
-                          <span>Guild Register</span>
-                          <span>&rarr;</span>
-                        </Link>
-                      </div>
                     </div>
                   </div>
                 </div>
