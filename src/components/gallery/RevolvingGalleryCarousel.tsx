@@ -340,7 +340,7 @@ export default function RevolvingGalleryCarousel({
       </div>
 
       {/* 3-ROW REVOLVING CAROUSEL CONTAINER */}
-      <div className="relative w-full space-y-5 sm:space-y-6">
+      <div className="relative w-full space-y-2.5 sm:space-y-3">
         {/* Left & Right Soft Vignette Fade Masks */}
         <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-36 z-20 pointer-events-none bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent" />
         <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-36 z-20 pointer-events-none bg-gradient-to-l from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent" />
@@ -348,7 +348,7 @@ export default function RevolvingGalleryCarousel({
         {/* --- ROW 1 (Revolves Left: Concerts, Music & Main Stage) --- */}
         <div className="overflow-hidden flex w-full">
           <div
-            className={`flex gap-5 sm:gap-6 shrink-0 ${
+            className={`flex gap-3 sm:gap-3.5 shrink-0 ${
               isPaused ? "" : "animate-marquee-left"
             } hover:[animation-play-state:paused]`}
             style={{ width: "max-content" }}
@@ -366,7 +366,7 @@ export default function RevolvingGalleryCarousel({
         {/* --- ROW 2 (Revolves Right: Dance Battles & Street Theatrics) --- */}
         <div className="overflow-hidden flex w-full">
           <div
-            className={`flex gap-5 sm:gap-6 shrink-0 ${
+            className={`flex gap-3 sm:gap-3.5 shrink-0 ${
               isPaused ? "" : "animate-marquee-right"
             } hover:[animation-play-state:paused]`}
             style={{ width: "max-content" }}
@@ -384,7 +384,7 @@ export default function RevolvingGalleryCarousel({
         {/* --- ROW 3 (Revolves Left: Fine Arts, Murals & Literary Salons) --- */}
         <div className="overflow-hidden flex w-full">
           <div
-            className={`flex gap-5 sm:gap-6 shrink-0 ${
+            className={`flex gap-3 sm:gap-3.5 shrink-0 ${
               isPaused ? "" : "animate-marquee-left-fast"
             } hover:[animation-play-state:paused]`}
             style={{ width: "max-content" }}
@@ -436,7 +436,7 @@ function CarouselCard({
   return (
     <div
       onClick={onInspect}
-      className="group relative cursor-pointer w-72 sm:w-80 md:w-96 aspect-[16/10] shrink-0 rounded-2xl bg-[#F4F1EA] p-2.5 sm:p-3 border border-stone-300/80 shadow-sm hover:shadow-xl hover:border-stone-400 transition-all duration-300 overflow-hidden"
+      className="group relative cursor-pointer w-72 sm:w-80 md:w-96 aspect-[16/10] shrink-0 rounded-2xl bg-[#F4F1EA] p-1.5 sm:p-2 border border-stone-300/80 shadow-xs hover:shadow-xl hover:border-stone-400 transition-all duration-300 overflow-hidden"
     >
       <div className="relative w-full h-full rounded-xl overflow-hidden bg-stone-200">
         <Image

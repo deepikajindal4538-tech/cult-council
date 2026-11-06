@@ -3,13 +3,11 @@ import Link from "next/link";
 import {
   Users,
   Award,
-  Sparkles,
   Calendar,
   Building2,
   Mail,
   MapPin,
   ArrowRight,
-  ShieldCheck,
   Music,
   Camera,
   Feather,
@@ -42,17 +40,6 @@ export default function AboutPage() {
           </div>
 
           <div className="max-w-4xl space-y-6">
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-900 font-mono text-xs uppercase tracking-wider">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>APEX STATUTORY STUDENT BODY • ESTABLISHED 1999</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200/80 border border-stone-300 font-mono text-xs uppercase tracking-wider text-ink font-semibold">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>MANY FORMS. ONE SPIRIT.</span>
-              </div>
-            </div>
-
             <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[1.02]">
               Where Culture{" "}
               <span className="italic font-normal text-stone-700">Finds Its Voice</span>.
