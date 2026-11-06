@@ -2,10 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/flickr/adminAuth";
 import { setFlickrKillSwitch } from "@/lib/flickr/killSwitch";
 
+function getClientIp(req: NextRequest): string {
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) {
+    return forwarded.split(",")[0].trim();
+  }
+  return req.headers.get("x-real-ip") || "127.0.0.1";
+}
+
 export async function POST(req: NextRequest) {
   if (!isAdminAuthenticated(req)) {
     return NextResponse.json({ error: "Unauthorized access." }, { status: 401 });
   }
+
+  const ip = getClientIp(req);
+  const userAgent = req.headers.get("user-agent") || "Browser Client";
 
   try {
     const body = await req.json();
@@ -18,7 +29,9 @@ export async function POST(req: NextRequest) {
     const state = setFlickrKillSwitch(
       killed,
       typeof reason === "string" && reason.trim() ? reason.trim() : "Admin manual control action",
-      "ADMIN_USER"
+      "ADMIN_USER",
+      ip,
+      userAgent
     );
 
     return NextResponse.json(

@@ -38,8 +38,11 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { passkey } = body;
 
+    const userAgent = req.headers.get("user-agent") || "Browser Client";
+
     if (!passkey || typeof passkey !== "string") {
       recordFailedAdminLogin(ip);
+      recordAuditAction("ADMIN_LOGIN_FAILED", "UNKNOWN", `Empty passkey attempted from IP: ${ip}`, ip, userAgent, "FAILED");
       return NextResponse.json({ error: "Passkey is required." }, { status: 400 });
     }
 
@@ -48,6 +51,7 @@ export async function POST(req: NextRequest) {
     if (!isValid) {
       recordFailedAdminLogin(ip);
       const remainingAttempts = rateLimit.remaining - 1;
+      recordAuditAction("ADMIN_LOGIN_FAILED", "UNKNOWN", `Invalid passkey attempted from IP: ${ip} (${remainingAttempts} attempts remaining)`, ip, userAgent, "FAILED");
       return NextResponse.json(
         {
           error: "Invalid admin passkey.",
@@ -60,7 +64,7 @@ export async function POST(req: NextRequest) {
     // Success: reset attempts, create secure signed session token
     resetAdminLoginAttempts(ip);
     const token = createAdminSessionToken();
-    recordAuditAction("ADMIN_LOGIN", "ADMIN", `Authenticated from IP: ${ip}`);
+    recordAuditAction("ADMIN_LOGIN_SUCCESS", "ADMIN", `Authenticated successfully from IP: ${ip}`, ip, userAgent, "SUCCESS");
 
     const res = NextResponse.json(
       {
