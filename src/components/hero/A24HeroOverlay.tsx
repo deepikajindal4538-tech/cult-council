@@ -125,7 +125,7 @@ export function A24HeroOverlay({
         />
       </div>
 
-      {/* 2. BOTTOM SECTION: CENTER TESTIMONIAL, MOBILE LADDER, & RIGHT DOSSIER CTA */}
+      {/* 2. BOTTOM SECTION: CENTER TESTIMONIAL, MOBILE LADDER, & RIGHT SOCIETY CTA */}
       <footer className="w-full flex flex-col md:flex-row items-center justify-between gap-4 pt-4">
         {/* Left Indicator / Drag Cue */}
         <div className="pointer-events-auto hidden lg:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-ink-faint w-48">
@@ -133,7 +133,7 @@ export function A24HeroOverlay({
           <span>SCROLL TO ADVANCE</span>
         </div>
 
-        {/* Center: Society Artistic Manifesto & Mobile Mini Ladder */}
+        {/* Center: Society Overview & Mobile Mini Ladder */}
         <div className="pointer-events-auto flex flex-col items-center justify-center text-center max-w-md mx-auto space-y-2">
           {/* Mobile Mini Societies Ladder Track */}
           <div className="flex md:hidden items-center justify-center gap-1.5 py-1">

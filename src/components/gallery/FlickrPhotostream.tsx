@@ -362,7 +362,7 @@ export default function FlickrPhotostream({
           ))
         ) : (
           <div className="py-20 text-center font-mono text-sm text-stone-400">
-            Loading photographic ledger...
+            Loading photos...
           </div>
         )}
       </div>

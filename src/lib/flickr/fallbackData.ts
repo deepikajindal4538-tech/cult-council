@@ -51,7 +51,7 @@ export const FALLBACK_ALBUMS: EnrichedAlbum[] = [
       },
       {
         id: "53000103",
-        title: "Cultural Runway Couture & Scenography Showcase",
+        title: "Cultural Runway & Fashion Showcase",
         thumbnailUrl: "/images/gallery/ramp-walk.jpg",
         displayUrl: "/images/gallery/ramp-walk.jpg",
         fullUrl: "/images/gallery/ramp-walk.jpg",
@@ -87,7 +87,7 @@ export const FALLBACK_ALBUMS: EnrichedAlbum[] = [
       },
       {
         id: "53000107",
-        title: "Thespian Backstage Mask Art & Persona Formulation",
+        title: "Backstage Makeup and Stage Rehearsal",
         thumbnailUrl: "/images/gallery/theatre-prep.jpg",
         displayUrl: "/images/gallery/theatre-prep.jpg",
         fullUrl: "/images/gallery/theatre-prep.jpg",
@@ -108,7 +108,7 @@ export const FALLBACK_ALBUMS: EnrichedAlbum[] = [
   {
     id: "72177720315482913",
     title: "Goonj '25: Annual Theatrics Production & Street Gala",
-    description: "Rangtarangini's flagship theatrical showcase. Hard-hitting Nukkad Natak, proscenium stage drama, character makeup, and thespian passion in open-air amphitheatres.",
+    description: "Rangtarangini's flagship theatrical showcase. Hard-hitting Nukkad Natak, proscenium stage drama, and makeup in open-air amphitheatres.",
     photoCount: 6,
     category: "Theatrics",
     curator: "Rangtarangini Drama Society",
@@ -121,7 +121,7 @@ export const FALLBACK_ALBUMS: EnrichedAlbum[] = [
     photos: [
       {
         id: "53000401",
-        title: "Rangtarangini Face Art and Thespian Prep",
+        title: "Rangtarangini Backstage Rehearsal",
         thumbnailUrl: "/images/gallery/theatre-prep.jpg",
         displayUrl: "/images/gallery/theatre-prep.jpg",
         fullUrl: "/images/gallery/theatre-prep.jpg",
@@ -157,7 +157,7 @@ export const FALLBACK_ALBUMS: EnrichedAlbum[] = [
       },
       {
         id: "53000405",
-        title: "Theatrical Costume & Scenography Promenade",
+        title: "Theatrical Costume & Stage Walk",
         thumbnailUrl: "/images/gallery/ramp-walk.jpg",
         displayUrl: "/images/gallery/ramp-walk.jpg",
         fullUrl: "/images/gallery/ramp-walk.jpg",
@@ -209,7 +209,7 @@ export const FALLBACK_ALBUMS: EnrichedAlbum[] = [
       },
       {
         id: "53000203",
-        title: "Campus Runway & Musical Scenography",
+        title: "Campus Runway & Stage Performance",
         thumbnailUrl: "/images/gallery/ramp-walk.jpg",
         displayUrl: "/images/gallery/ramp-walk.jpg",
         fullUrl: "/images/gallery/ramp-walk.jpg",
@@ -317,8 +317,8 @@ export const FALLBACK_ALBUMS: EnrichedAlbum[] = [
   },
   {
     id: "72177720315482914",
-    title: "Campus Couture & Scenography: Annual Runway Gala",
-    description: "Avant-garde apparel, traditional ethnic silhouettes, live stage scenography, and fine art runway presentations curated by Nirmiti.",
+    title: "Campus Couture: Annual Fashion Showcase",
+    description: "Student fashion collections, ethnic attire, and fine art runway presentations organized by Nirmiti.",
     photoCount: 6,
     category: "Fine Arts",
     curator: "Nirmiti & Cultural Council",
@@ -458,7 +458,7 @@ export const FALLBACK_ALBUMS: EnrichedAlbum[] = [
   {
     id: "72177720315482916",
     title: "Aparoksha Horizons: Techno-Cultural EDM & Laser Night",
-    description: "The intersection of algorithmic arts, laser scenography, digital installations, and electronic pro-nights during IIIT Allahabad's annual conclave.",
+    description: "Stage lights, visual art installations, and electronic pro-nights during IIIT Allahabad's annual festival.",
     photoCount: 6,
     category: "Techno-Cultural",
     curator: "Acoustics & Media Society (AMS)",
@@ -498,7 +498,7 @@ export const FALLBACK_ALBUMS: EnrichedAlbum[] = [
       },
       {
         id: "53000704",
-        title: "Digital Runway & Futuristic Scenography Walk",
+        title: "Digital Runway & Stage Walk",
         thumbnailUrl: "/images/gallery/ramp-walk.jpg",
         displayUrl: "/images/gallery/ramp-walk.jpg",
         fullUrl: "/images/gallery/ramp-walk.jpg",

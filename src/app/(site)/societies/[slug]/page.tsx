@@ -134,7 +134,7 @@ export default async function SocietyDetailPage({
         </div>
       </section>
 
-      {/* 3. Detailed Dossier Breakdown & Leadership Roster */}
+      {/* 3. Detailed Society Breakdown & Leadership Roster */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left: About & Craft */}

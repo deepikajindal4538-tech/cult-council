@@ -118,7 +118,7 @@ export default function AdminPortalClient() {
       }
     } catch (err) {
       console.error("Failed fetching admin data:", err);
-      showToast("Error synchronizing admin ledger data", "error");
+      showToast("Error synchronizing admin data", "error");
     } finally {
       setDataLoading(false);
     }
@@ -361,7 +361,7 @@ export default function AdminPortalClient() {
   };
 
   const handleResetCouncil = async () => {
-    if (!confirm("Reset council leadership roster back to statutory institute seeds?")) return;
+    if (!confirm("Reset council leadership roster back to initial seeds?")) return;
     try {
       const res = await fetch("/api/admin/council", {
         method: "POST",
@@ -454,7 +454,7 @@ export default function AdminPortalClient() {
                 Cultural Council IIIT Allahabad
               </span>
               <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-stone-400">
-                Statutory Apex Body • Administrative Terminal
+                Cultural Council • Administrative Terminal
               </span>
             </div>
           </div>
@@ -527,7 +527,7 @@ export default function AdminPortalClient() {
         </div>
 
         <footer className="text-center font-mono text-[10px] text-stone-500 uppercase tracking-widest z-10">
-          Statutory Student Body • Indian Institute of Information Technology Allahabad
+          Student Cultural Council • Indian Institute of Information Technology Allahabad
         </footer>
       </div>
     );
@@ -560,7 +560,7 @@ export default function AdminPortalClient() {
               </span>
             </div>
             <span className="font-mono text-[10px] uppercase tracking-widest text-stone-400 block sm:inline">
-              IIIT Allahabad Apex Administration
+              IIIT Allahabad Administration
             </span>
           </div>
         </div>
@@ -652,7 +652,7 @@ export default function AdminPortalClient() {
         {dataLoading && (
           <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 font-mono text-xs flex items-center gap-2">
             <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-            <span>Synchronizing live ledger data from institute stores...</span>
+            <span>Synchronizing live data...</span>
           </div>
         )}
 
@@ -869,7 +869,7 @@ export default function AdminPortalClient() {
               </div>
             </div>
 
-            {/* Events Ledger Table */}
+            {/* Events Schedule Table */}
             <div className="bg-stone-900 border border-stone-800 rounded-2xl overflow-hidden shadow-xl">
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-mono text-xs">
@@ -1310,7 +1310,7 @@ export default function AdminPortalClient() {
                     <option value="geneticx">geneticx (Dance)</option>
                     <option value="sarasva">sarasva (Literature)</option>
                     <option value="nirmiti">nirmiti (Fine Arts)</option>
-                    <option value="council">council (Flagship / Apex)</option>
+                    <option value="council">council (Flagship / Council)</option>
                   </select>
                 </div>
 
@@ -1555,7 +1555,7 @@ export default function AdminPortalClient() {
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label className="block text-stone-400 mb-1 font-semibold uppercase text-[10px]">Official Statutory Designation</label>
+                  <label className="block text-stone-400 mb-1 font-semibold uppercase text-[10px]">Official Designation</label>
                   <input
                     name="designation"
                     defaultValue={editingMember?.designation || ""}
@@ -1663,7 +1663,7 @@ export default function AdminPortalClient() {
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label className="block text-stone-400 mb-1 font-semibold uppercase text-[10px]">Bio / Statutory Mandate</label>
+                  <label className="block text-stone-400 mb-1 font-semibold uppercase text-[10px]">Bio / Responsibilities</label>
                   <textarea
                     name="bio"
                     defaultValue={editingMember?.bio || ""}

@@ -55,7 +55,7 @@ export async function DELETE(req: NextRequest) {
   return NextResponse.json(
     {
       success: true,
-      message: "Audit ledger cleared successfully.",
+      message: "Audit logs cleared successfully.",
       logs: updatedState.auditLog,
     },
     { status: 200 }

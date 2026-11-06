@@ -32,7 +32,7 @@ export const councilRoster: CouncilPerson[] = [
     photoUrl: "",
     email: "dean.sa@iiita.ac.in",
     avatarFallback: "KP",
-    bio: "Chief overseer and statutory authority for all student activities, collegiate wellness, and national cultural delegations of IIIT Allahabad.",
+    bio: "Overseeing student cultural activities, campus wellness, and student delegations of IIIT Allahabad.",
     order: 1,
   },
   // 2. FACULTY COORDINATOR
@@ -50,7 +50,7 @@ export const councilRoster: CouncilPerson[] = [
     email: "sunny@iiita.ac.in",
     avatarFallback: "SS",
 
-    bio: "Guiding the autonomous student leadership, anchoring institutional permissions, and aligning annual cultural milestones.",
+    bio: "Guiding the student council leadership, mentoring event coordinators, and supporting campus cultural initiatives.",
     order: 2,
   },
   // 3. PRESIDENT
@@ -68,7 +68,7 @@ export const councilRoster: CouncilPerson[] = [
     email: "iit2024214@iiita.ac.in",
     avatarFallback: "AH",
 
-    bio: "Spearheading the council charter, presiding over executive decisions, and fostering synergy across all 6 autonomous wings.",
+    bio: "Leading the student cultural council, coordinating festival planning, and supporting all 6 campus cultural societies.",
     order: 3,
   },
   // 4. GENERAL SECRETARY
@@ -169,7 +169,7 @@ export const councilRoster: CouncilPerson[] = [
     photoUrl: "/images/team/aviral.jpg",
     email: "iin2024019@iiita.ac.in",
     avatarFallback: "AA",
-    bio: "Managing institute wall murals, stage scenography, digital canvas installations, and festive atmospheric decor.",
+    bio: "Managing campus wall murals, stage backdrops, art exhibitions, and festival decor.",
     order: 9,
   },
   {

@@ -184,7 +184,7 @@ export default function AlbumCatalogClient({
       )}
 
       {/* ========================================================================= */}
-      {/* 2. EVENT ALBUMS & DOSSIERS TAB                                            */}
+      {/* 2. EVENT ALBUMS TAB                                                       */}
       {/* ========================================================================= */}
       {activeTab === "albums" && (
         <div className="space-y-8">

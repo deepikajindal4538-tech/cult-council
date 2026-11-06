@@ -79,13 +79,13 @@ export default function GalleryLightbox({
       aria-label="Photo Lightbox Exhibition"
       className="fixed inset-0 z-50 flex flex-col bg-stone-950/95 backdrop-blur-xl text-stone-100 select-none animate-in fade-in duration-200"
     >
-      {/* Top Ledger Header */}
+      {/* Top Header */}
       <div className="flex items-center justify-between px-4 sm:px-8 py-4 border-b border-white/10 bg-black/40 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono text-xs uppercase tracking-wider font-semibold">
             <Camera className="w-3.5 h-3.5" />
             <span>
-              PLATE {String(currentIndex + 1).padStart(2, "0")} /{" "}
+              PHOTO {String(currentIndex + 1).padStart(2, "0")} /{" "}
               {String(photos.length).padStart(2, "0")}
             </span>
           </span>
@@ -177,14 +177,14 @@ export default function GalleryLightbox({
         )}
       </div>
 
-      {/* Bottom Information Ledger & Thumbnail Navigator */}
+      {/* Bottom Information Panel & Thumbnail Navigator */}
       <div className="border-t border-white/10 bg-black/60 backdrop-blur-md px-4 sm:px-8 py-3 space-y-3">
         {/* Caption bar */}
         {showInfo && (
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-2">
             <div>
               <h4 className="font-serif text-lg sm:text-xl font-bold text-white tracking-wide">
-                {currentPhoto.title || "Untitled Exhibition Plate"}
+                {currentPhoto.title || "Untitled Photograph"}
               </h4>
               <p className="font-mono text-[11px] text-stone-400">
                 Photographed by Acoustics &amp; Media Society (AMS) • Cultural Council, IIIT Allahabad

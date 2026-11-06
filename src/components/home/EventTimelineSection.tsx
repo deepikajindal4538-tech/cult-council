@@ -271,6 +271,7 @@ function getGoogleCalendarUrl(evt: TimelineEvent) {
 }
 
 export default function EventTimelineSection() {
+  const [events, setEvents] = useState<TimelineEvent[]>(TIMELINE_EVENTS);
   const [activeCategory, setActiveCategory] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"timeline" | "grid">("timeline");
@@ -278,6 +279,28 @@ export default function EventTimelineSection() {
   const [savedEventIds, setSavedEventIds] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch("/api/public/events")
+      .then((res) => {
+        if (!res.ok) throw new Error("Status " + res.status);
+        return res.json();
+      })
+      .then((data) => {
+        const list = Array.isArray(data) ? data : data?.events;
+        if (isMounted && Array.isArray(list) && list.length > 0) {
+          setEvents(list);
+        }
+      })
+      .catch((err) => {
+        // Fallback to static TIMELINE_EVENTS silently
+        console.debug("Timeline events dynamic sync:", err);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const toggleSave = (id: string, title: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -309,7 +332,7 @@ export default function EventTimelineSection() {
   };
 
   const filteredEvents = useMemo(() => {
-    return TIMELINE_EVENTS.filter((evt) => {
+    return events.filter((evt) => {
       const matchesCategory = activeCategory === "ALL" || evt.category === activeCategory;
       const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
@@ -321,7 +344,7 @@ export default function EventTimelineSection() {
         evt.category.toLowerCase().includes(q);
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
+  }, [events, activeCategory, searchQuery]);
 
   return (
     <section id="timeline" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#FAF8F5] border-t border-stone-300/80 overflow-hidden select-none">

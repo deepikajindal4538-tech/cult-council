@@ -189,7 +189,7 @@ export const councilDetails = {
   name: "Cultural Council",
   institution: "Indian Institute of Information Technology Allahabad",
   established: 1999,
-  tagline: "The Nexus of Creative Expression & Collegiate Artistry",
+  tagline: "Creative Expression & Campus Arts at IIIT Allahabad",
   mandate:
     "The cultural societies operate within the Cultural Council of the Students' Body. They are student-led, but function under guidance of the Officer-In-Charge (Cultural Council) and institutional oversight through the Dean (Student Affairs). The cultural societies function through a collaborative model. Society Coordinators lead genre-specific initiatives, Senior Members and Members execute cultural events and artistic activities, while Volunteers participate in performances, workshops, fests, and outreach, ensuring broad student involvement.",
   officeLocation: "Student Activity Center (SAC), Ground Floor, Devghat, Jhalwa, Prayagraj 211015",

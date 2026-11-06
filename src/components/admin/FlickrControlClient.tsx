@@ -169,7 +169,7 @@ export default function FlickrControlClient() {
     row1SpeedSeconds: 40,
     row2Label: "ROW 02 // KINETIC CHOREOGRAPHY & DANCE",
     row2SpeedSeconds: 48,
-    row3Label: "ROW 03 // THEATRICAL GUILD & LIVE CANVASES",
+    row3Label: "ROW 03 // DRAMA & FINE ARTS",
     row3SpeedSeconds: 44,
     streamSource: "ams_live",
   });
@@ -482,7 +482,7 @@ export default function FlickrControlClient() {
       const res = await fetch("/api/admin/flickr/audit-logs", { method: "DELETE" });
       if (res.ok) {
         fetchLogs();
-        showToast("success", "Audit log ledger cleared.");
+        showToast("success", "Audit logs cleared.");
       }
     } catch {
       showToast("error", "Failed to clear audit logs.");
@@ -1251,7 +1251,7 @@ export default function FlickrControlClient() {
               </div>
             </div>
 
-            {/* Audit Logs Ledger Table */}
+            {/* Audit Logs Table */}
             <div className="bg-white border border-stone-300 rounded-2xl overflow-hidden shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-mono text-xs">
@@ -1900,7 +1900,7 @@ export default function FlickrControlClient() {
                                     {photo.title}
                                   </h5>
                                   <div className="font-mono text-[9px] text-stone-400 truncate">
-                                    {photo.discipline || "Dance Guild"}
+                                    {photo.discipline || "Dance Society"}
                                   </div>
 
                                   <div className="flex items-center justify-between pt-1 border-t border-stone-200/80">
@@ -2285,7 +2285,7 @@ export default function FlickrControlClient() {
                   Folder Directory Routing Manager
                 </h2>
                 <p className="font-serif italic text-sm text-ink-muted max-w-2xl">
-                  Map and direct any of the 968 official Acoustics &amp; Media Society (AMS IIITA) albums to specific society wings, gallery highlights, or festival dossiers.
+                  Map and direct any of the 968 official Acoustics &amp; Media Society (AMS IIITA) albums to specific society wings, gallery highlights, or festival collections.
                 </p>
               </div>
 

@@ -35,13 +35,13 @@ export default async function SocietiesPage() {
 
           <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl">
             Under the umbrella of the IIIT Allahabad Cultural Council, these six societies
-            empower student musicians, dancers, thespians, artists, and writers to organize over 50
+            empower student musicians, dancers, theatre artists, painters, and writers to organize over 50
             performances and workshops annually.
           </p>
         </div>
       </section>
 
-      {/* 2. Societies Grid Dossier Cards */}
+      {/* 2. Societies Grid Cards */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {societies.map((society, idx) => (

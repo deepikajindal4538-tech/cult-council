@@ -98,7 +98,7 @@ export function HeroPinned({ societies }: HeroPinnedProps) {
 
         {/* Main Central Artifact Stage */}
         <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex-1 flex flex-col lg:flex-row items-center justify-between py-6 gap-8">
-          {/* Left: Editorial Dossier Metadata Panel */}
+          {/* Left: Editorial Society Metadata Panel */}
           <div className="w-full lg:w-5/12 flex items-center justify-start order-2 lg:order-1">
             <SocietyInfoPanel
               society={activeSociety}

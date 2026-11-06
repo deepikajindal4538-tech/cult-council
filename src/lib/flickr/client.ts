@@ -216,8 +216,8 @@ export const ALBUM_SEARCH_TOPICS: Record<
   },
   "72177720315482911": {
     query: "theatre stage play drama actors proscenium",
-    defaultTitle: "Goonj Annual Theatre Guild: Street Plays & Proscenium Stage",
-    curator: "AMS Archives • Goonj Guild",
+    defaultTitle: "Goonj Annual Theatre Festival: Street Plays & Stage Drama",
+    curator: "AMS Archives • Rangtarangini",
     category: "Goonj Theatrics",
     description: "Raw emotions, thunderous dholak street plays at the main plaza, and nuanced proscenium productions exploring historical and socio-political themes.",
   },

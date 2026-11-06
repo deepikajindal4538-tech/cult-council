@@ -54,10 +54,10 @@ export interface RevolvingGalleryCarouselProps {
 }
 
 export default function RevolvingGalleryCarousel({
-  chapterLabel = "CHAPTER 04 // THE PHOTOGRAPHIC RECORD",
-  curatorLabel = "CURATED BY ACOUSTICS & MEDIA SOCIETY • 50-PLATE RESERVE",
-  title = "Living Chronicle of the Arts",
-  subtitle = "Three revolving streams of performance plates, pro-night symphonies, street plays, and quiet midnight canvases drawn from the council's 50-image reserve.",
+  chapterLabel = "CAMPUS PHOTO GALLERY",
+  curatorLabel = "ACOUSTICS & MEDIA SOCIETY • CURATED COLLECTION",
+  title = "Moments in Motion",
+  subtitle = "Live concerts, stage drama, dance battles, and art exhibitions captured across campus.",
   showCatalogLink = true,
   row1 = ROW_1,
   row2 = ROW_2,
@@ -95,7 +95,7 @@ export default function RevolvingGalleryCarousel({
         photos={lightboxPhotos}
         currentIndex={activePhotoIndex}
         onIndexChange={setActivePhotoIndex}
-        albumTitle="Visual Archives & Photographic Record"
+        albumTitle="Campus Photo Gallery"
       />
 
       {/* Editorial Header */}
@@ -200,19 +200,19 @@ export default function RevolvingGalleryCarousel({
         </div>
       </div>
 
-      {/* Bottom Curatorial Notice */}
+      {/* Bottom Archive Notice */}
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-ink-faint uppercase tracking-wider">
         <div className="flex items-center gap-2">
           <Camera className="w-3.5 h-3.5 text-stone-500" />
-          <span>Acoustics &amp; Media Society (AMS) • High-Resolution Plates</span>
+          <span>Acoustics &amp; Media Society (AMS) • IIIT Allahabad</span>
         </div>
         <div className="flex items-center gap-4">
-          <span>Click any plate to inspect in Lightbox</span>
+          <span>Click any image to view in fullscreen</span>
           {showCatalogLink && (
             <>
               <span>•</span>
               <Link href="/gallery" className="text-ink hover:underline font-semibold">
-                View All 6 Guild Collections &rarr;
+                View All Society Albums &rarr;
               </Link>
             </>
           )}

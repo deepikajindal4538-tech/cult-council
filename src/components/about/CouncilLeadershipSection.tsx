@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Mail,
@@ -13,10 +13,32 @@ import { councilRoster, CouncilPerson } from "@/lib/councilData";
 type FilterTab = "all" | "patrons" | "executives" | "council_members";
 
 export function CouncilLeadershipSection() {
+  const [roster, setRoster] = useState<CouncilPerson[]>(councilRoster);
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch("/api/public/council")
+      .then((res) => {
+        if (!res.ok) throw new Error("Status " + res.status);
+        return res.json();
+      })
+      .then((data) => {
+        const members = Array.isArray(data) ? data : data?.members;
+        if (isMounted && Array.isArray(members) && members.length > 0) {
+          setRoster(members);
+        }
+      })
+      .catch((err) => {
+        console.debug("Dynamic council sync fallback:", err);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleCopyEmail = (email: string) => {
     navigator.clipboard.writeText(email);
@@ -30,9 +52,9 @@ export function CouncilLeadershipSection() {
     setFailedImages((prev) => ({ ...prev, [id]: true }));
   };
 
-  const patrons = councilRoster.filter((p) => p.tier === "patron");
-  const executives = councilRoster.filter((p) => p.tier === "executive");
-  const councilMembers = councilRoster.filter((p) => p.tier === "council");
+  const patrons = roster.filter((p) => p.tier === "patron");
+  const executives = roster.filter((p) => p.tier === "executive");
+  const councilMembers = roster.filter((p) => p.tier === "council");
 
   // Renders card matching the exact user-uploaded reference design
   const renderCard = (person: CouncilPerson) => {

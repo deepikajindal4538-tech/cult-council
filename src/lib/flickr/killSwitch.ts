@@ -115,7 +115,7 @@ export const DEFAULT_FOLDER_ROUTES: FolderRouteDirective[] = [
     albumTitle: "Garba Night '26",
     targetType: "society",
     targetDestination: "/societies/geneticx",
-    targetLabel: "Geneticx Dance Guild",
+    targetLabel: "Geneticx Dance Society",
     badge: "TRADITIONAL & CHOREOGRAPHY",
     photoCount: 663,
     primaryPhotoUrl: "https://live.staticflickr.com/65535/55611655088_b3ce00b977_z.jpg",
@@ -187,9 +187,9 @@ export const DEFAULT_HERO_SLIDES: CustomHeroSlide[] = [
   {
     id: "theatre-prep",
     src: "/images/gallery/theatre-prep.jpg",
-    title: "Rangtarangini Thespians",
+    title: "Rangtarangini Dramatics",
     category: "Theatrics & Face Art",
-    caption: "Theatrical mask and persona formulation backstage",
+    caption: "Backstage makeup and stage prep before the annual play",
     societySlug: "rangtarangini",
     active: true,
     order: 3,
@@ -233,7 +233,7 @@ export const DEFAULT_CAROUSEL_CONFIG: CarouselRowConfig = {
   row1SpeedSeconds: 40,
   row2Label: "ROW 02 // KINETIC CHOREOGRAPHY & DANCE",
   row2SpeedSeconds: 48,
-  row3Label: "ROW 03 // THEATRICAL GUILD & LIVE CANVASES",
+  row3Label: "ROW 03 // DRAMA & FINE ARTS",
   row3SpeedSeconds: 44,
   streamSource: "ams_live",
   row1Photos: ROW_1_RESERVE.map(mapReserveToPlate),
@@ -396,7 +396,7 @@ export function clearAuditLog(actor: string = "ADMIN", ip: string = "127.0.0.1")
     actor,
     ip,
     status: "INFO",
-    details: `Audit ledger purged by ${actor}`,
+    details: `Audit log cleared by ${actor}`,
   };
 
   const updated: FlickrControlState = {
@@ -446,7 +446,7 @@ export function saveFolderRoute(
       targetType: route.targetType || "society",
       targetDestination: route.targetDestination,
       targetLabel: route.targetLabel || route.targetDestination,
-      badge: route.badge || "CAMPUS DOSSIER",
+      badge: route.badge || "CAMPUS EVENT",
       photoCount: route.photoCount || 0,
       primaryPhotoUrl: route.primaryPhotoUrl || "",
       status: route.status || "Active",
