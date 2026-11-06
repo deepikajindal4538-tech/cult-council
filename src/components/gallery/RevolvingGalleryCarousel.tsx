@@ -7,6 +7,14 @@ import { ArrowUpRight, Maximize2, Pause, Play, Camera, Sparkles } from "lucide-r
 import GalleryLightbox from "./GalleryLightbox";
 import { TrimmedPhoto } from "@/lib/flickr/schemas";
 
+import {
+  CAROUSEL_RESERVE_50,
+  ROW_1_RESERVE,
+  ROW_2_RESERVE,
+  ROW_3_RESERVE,
+  CarouselReservePlate,
+} from "@/lib/flickr/carouselReserveData";
+
 export interface CarouselPlate {
   id: string;
   title: string;
@@ -17,80 +25,22 @@ export interface CarouselPlate {
   height?: number;
 }
 
-const GENUINE_PLATES: CarouselPlate[] = [
-  {
-    id: "plate-pronite",
-    title: "Effervescence Main Stage Arena Crowd",
-    discipline: "AMS // Festival Arena",
-    category: "Effervescence",
-    url: "/images/gallery/pronite-crowd.jpg",
-    width: 2400,
-    height: 1600,
-  },
-  {
-    id: "plate-virtuosi",
-    title: "Virtuosi Stage & Live Concert",
-    discipline: "Virtuosi // Music & Band",
-    category: "Live Concert",
-    url: "/images/gallery/band-night.jpg",
-    width: 2400,
-    height: 1600,
-  },
-  {
-    id: "plate-geneticx",
-    title: "Geneticx Dance Crew Stage Production",
-    discipline: "Geneticx // Kinetic Choreography",
-    category: "Dance",
-    url: "/images/gallery/geneticx-dance.jpg",
-    width: 2400,
-    height: 1600,
-  },
-  {
-    id: "plate-theatre",
-    title: "Rangtarangini Thespians Backstage Face Art",
-    discipline: "Rangtarangini // Theatrics & Drama",
-    category: "Theatrics",
-    url: "/images/gallery/theatre-prep.jpg",
-    width: 2400,
-    height: 1600,
-  },
-  {
-    id: "plate-ramp",
-    title: "Campus Couture Cultural Runway",
-    discipline: "Nirmiti // Fashion & Scenography",
-    category: "Fine Arts",
-    url: "/images/gallery/ramp-walk.jpg",
-    width: 2400,
-    height: 1600,
-  },
-];
+function mapReserveToPlate(p: CarouselReservePlate): CarouselPlate {
+  return {
+    id: p.id,
+    title: p.title,
+    discipline: p.discipline,
+    category: p.category,
+    url: p.url,
+    width: p.width,
+    height: p.height,
+  };
+}
 
-// Row 1: Concerts & Arena (Starts with Pronite & Band)
-const ROW_1: CarouselPlate[] = [
-  GENUINE_PLATES[0],
-  GENUINE_PLATES[1],
-  GENUINE_PLATES[2],
-  GENUINE_PLATES[3],
-  GENUINE_PLATES[4],
-];
-
-// Row 2: Kinetic Dance & Street Drama (Starts with Dance & Theatre)
-const ROW_2: CarouselPlate[] = [
-  GENUINE_PLATES[2],
-  GENUINE_PLATES[3],
-  GENUINE_PLATES[4],
-  GENUINE_PLATES[0],
-  GENUINE_PLATES[1],
-];
-
-// Row 3: Scenography & Arena Highlights (Starts with Runway & Drama)
-const ROW_3: CarouselPlate[] = [
-  GENUINE_PLATES[4],
-  GENUINE_PLATES[3],
-  GENUINE_PLATES[1],
-  GENUINE_PLATES[2],
-  GENUINE_PLATES[0],
-];
+// 50-Plate Reserve Pools for 3 Marquee Rows
+const ROW_1: CarouselPlate[] = ROW_1_RESERVE.map(mapReserveToPlate);
+const ROW_2: CarouselPlate[] = ROW_2_RESERVE.map(mapReserveToPlate);
+const ROW_3: CarouselPlate[] = ROW_3_RESERVE.map(mapReserveToPlate);
 
 export interface RevolvingGalleryCarouselProps {
   chapterLabel?: string;
@@ -105,9 +55,9 @@ export interface RevolvingGalleryCarouselProps {
 
 export default function RevolvingGalleryCarousel({
   chapterLabel = "CHAPTER 04 // THE PHOTOGRAPHIC RECORD",
-  curatorLabel = "CURATED BY ACOUSTICS & MEDIA SOCIETY",
+  curatorLabel = "CURATED BY ACOUSTICS & MEDIA SOCIETY • 50-PLATE RESERVE",
   title = "Living Chronicle of the Arts",
-  subtitle = "Three revolving streams of performance plates, pro-night symphonies, street plays, and quiet midnight canvases.",
+  subtitle = "Three revolving streams of performance plates, pro-night symphonies, street plays, and quiet midnight canvases drawn from the council's 50-image reserve.",
   showCatalogLink = true,
   row1 = ROW_1,
   row2 = ROW_2,

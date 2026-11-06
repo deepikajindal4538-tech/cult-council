@@ -45,24 +45,28 @@ export default async function GalleryPage() {
         </div>
       </section>
 
-      {/* 3-Row Revolving Carousel Showcase */}
+      {/* 3-Row Revolving Carousel Showcase with 50-Plate Reserve */}
       <RevolvingGalleryCarousel
-        chapterLabel="CURATED EXHIBITION // CONTINUOUS RECORD"
-        curatorLabel="AMS REPOSITORY • 24 HIGH-RES PLATES"
+        chapterLabel="CONTINUOUS ARCHIVAL STREAM // 50-PLATE RESERVE"
+        curatorLabel="AMS REPOSITORY • 50 CURATED PERFORMANCE PLATES"
         title="Living Exhibition Stream"
-        subtitle="Three revolving streams of performance plates, pro-night symphonies, street plays, and quiet midnight canvases."
+        subtitle="Three revolving streams of pro-night symphonies, arena crowds, dance choreography, and dramatic moments drawn from the 50-image reserve."
         showCatalogLink={false}
       />
 
-      {/* Flickr Album Catalog */}
+      {/* Major Event Collective Albums Catalog */}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-16 sm:px-6 lg:px-8 border-t border-stone-300/80">
-        <div className="mb-7">
-          <h2 className="font-serif text-2xl font-bold text-ink sm:text-3xl">
-            Explore the photo archive
+        <div className="mb-8 space-y-2">
+          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-amber-800">
+            <span>COLLECTIVE EVENT DOSSIERS</span>
+            <span>•</span>
+            <span>CAMPUS FLAGSHIP GATHERINGS</span>
+          </div>
+          <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl">
+            Major Campus Event Archives
           </h2>
-          <p className="mt-2 font-serif italic text-ink-muted">
-            Browse and search albums curated by the Acoustics &amp; Media
-            Society.
+          <p className="font-serif italic text-lg text-ink-muted max-w-3xl">
+            Comprehensive collective dossiers preserving complete photo narratives for each major cultural festival, championship, and seasonal production.
           </p>
         </div>
         <AlbumCatalogClient

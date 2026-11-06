@@ -13,6 +13,8 @@ import {
   Calendar,
   Eye,
   CheckCircle2,
+  Bookmark,
+  Award,
 } from "lucide-react";
 import { TrimmedAlbum } from "@/lib/flickr/schemas";
 
@@ -22,67 +24,81 @@ interface AlbumCatalogClientProps {
 }
 
 const CATEGORIES = [
-  "All Plates",
-  "Festivals",
-  "Theatrics",
-  "Music",
-  "Dance",
-  "Fine Arts",
-  "Literature",
+  "All Major Events",
+  "Effervescence Fest",
+  "Goonj Theatrics",
+  "Virtuosi Music",
+  "Geneticx Dance",
+  "Couture & Fine Arts",
+  "Sarasva Literary",
+  "Techno-Cultural & Sports",
 ];
 
 export default function AlbumCatalogClient({
   initialAlbums,
   isLiveFlickr,
 }: AlbumCatalogClientProps) {
-  const [selectedCategory, setSelectedCategory] = useState("All Plates");
+  const [selectedCategory, setSelectedCategory] = useState("All Major Events");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredAlbums = useMemo(() => {
     return initialAlbums.filter((album) => {
       // Category match
       let matchesCategory = true;
-      if (selectedCategory !== "All Plates") {
+      if (selectedCategory !== "All Major Events") {
         const catLower = selectedCategory.toLowerCase();
         const titleLower = album.title.toLowerCase();
         const descLower = (album.description || "").toLowerCase();
 
-        if (catLower === "festivals") {
+        if (catLower.includes("effervescence")) {
           matchesCategory =
             titleLower.includes("effervescence") ||
             titleLower.includes("fest") ||
-            descLower.includes("crowd") ||
             descLower.includes("pro-night");
-        } else if (catLower === "theatrics") {
+        } else if (catLower.includes("goonj") || catLower.includes("theatrics")) {
           matchesCategory =
+            titleLower.includes("goonj") ||
             titleLower.includes("rangtarangini") ||
-            titleLower.includes("nukkad") ||
-            titleLower.includes("street play") ||
-            titleLower.includes("drama");
-        } else if (catLower === "music") {
+            titleLower.includes("theatrics") ||
+            titleLower.includes("drama") ||
+            descLower.includes("thespian") ||
+            descLower.includes("nukkad");
+        } else if (catLower.includes("virtuosi") || catLower.includes("music")) {
           matchesCategory =
             titleLower.includes("virtuosi") ||
             titleLower.includes("unplugged") ||
-            titleLower.includes("acoustic") ||
-            titleLower.includes("band");
-        } else if (catLower === "dance") {
+            titleLower.includes("band") ||
+            titleLower.includes("music") ||
+            descLower.includes("acoustic");
+        } else if (catLower.includes("geneticx") || catLower.includes("dance")) {
           matchesCategory =
             titleLower.includes("geneticx") ||
-            titleLower.includes("cypher") ||
+            titleLower.includes("footloose") ||
             titleLower.includes("dance") ||
-            titleLower.includes("break");
-        } else if (catLower === "fine arts") {
+            descLower.includes("choreography") ||
+            descLower.includes("cypher");
+        } else if (catLower.includes("couture") || catLower.includes("fine arts")) {
           matchesCategory =
+            titleLower.includes("couture") ||
             titleLower.includes("nirmiti") ||
-            titleLower.includes("canvas") ||
-            titleLower.includes("mural") ||
-            titleLower.includes("art");
-        } else if (catLower === "literature") {
+            titleLower.includes("runway") ||
+            titleLower.includes("scenography") ||
+            descLower.includes("fashion") ||
+            descLower.includes("mural");
+        } else if (catLower.includes("sarasva") || catLower.includes("literary")) {
           matchesCategory =
             titleLower.includes("sarasva") ||
             titleLower.includes("kavya") ||
+            titleLower.includes("sahitya") ||
             titleLower.includes("literary") ||
-            titleLower.includes("poetry");
+            descLower.includes("mushaira") ||
+            descLower.includes("poetry");
+        } else if (catLower.includes("techno") || catLower.includes("sports")) {
+          matchesCategory =
+            titleLower.includes("aparoksha") ||
+            titleLower.includes("asmita") ||
+            titleLower.includes("techno") ||
+            titleLower.includes("march-past");
         }
       }
 
@@ -112,43 +128,42 @@ export default function AlbumCatalogClient({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search albums by title, artist, festival..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-300 bg-white font-mono text-xs text-ink placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:border-stone-500 transition-all"
+              placeholder="Search major event archives by festival, society, year..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-stone-300 bg-white font-mono text-xs text-ink placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:border-stone-500 transition-all shadow-2xs"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-stone-400 hover:text-ink px-1"
-                title="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-ink font-mono text-xs"
               >
-                ✕
+                Clear
               </button>
             )}
           </div>
 
-          {/* Sync status indicator */}
+          {/* Status badge & Count */}
           <div className="flex items-center gap-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-stone-200 bg-white font-mono text-[11px] uppercase tracking-wider text-ink-muted">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-stone-200 bg-white font-mono text-[11px] uppercase tracking-wider text-ink-muted shadow-2xs">
               <span
                 className={`w-2 h-2 rounded-full ${
                   isLiveFlickr ? "bg-emerald-500 animate-pulse" : "bg-amber-500"
                 }`}
               />
               <span>
-                {isLiveFlickr ? "Live Flickr Stream" : "Curated Photographic Archive"}
+                {isLiveFlickr ? "Live Flickr Stream" : "Major Event Archival Collections"}
               </span>
             </div>
             <div className="font-mono text-xs text-ink-faint hidden sm:block">
-              {filteredAlbums.length} of {initialAlbums.length} COLLECTIONS
+              {filteredAlbums.length} of {initialAlbums.length} EVENT DOSSIERS
             </div>
           </div>
         </div>
 
-        {/* Category Pills */}
+        {/* Category Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
           <div className="flex items-center gap-1.5 text-stone-400 mr-1 flex-shrink-0">
             <Filter className="w-3.5 h-3.5" />
-            <span className="font-mono text-[10px] uppercase tracking-widest">DISCIPLINE:</span>
+            <span className="font-mono text-[10px] uppercase tracking-widest">EVENTS:</span>
           </div>
           {CATEGORIES.map((category) => {
             const isActive = selectedCategory === category;
@@ -156,10 +171,10 @@ export default function AlbumCatalogClient({
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-3.5 py-1.5 rounded-full font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-all duration-200 ${
+                className={`px-3.5 py-1.5 rounded-full font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? "bg-ink text-white font-semibold shadow-sm"
-                    : "bg-white border border-stone-200 text-ink-muted hover:border-stone-400 hover:text-ink"
+                    ? "bg-ink text-white font-semibold shadow-xs"
+                    : "bg-white border border-stone-200 text-ink-muted hover:border-stone-400 hover:text-ink shadow-2xs"
                 }`}
               >
                 {category}
@@ -178,13 +193,13 @@ export default function AlbumCatalogClient({
                   year: "numeric",
                   month: "short",
                 })
-              : "Archival Plate";
+              : "Archival Record";
 
             return (
               <Link
                 key={album.id}
                 href={`/gallery/${album.id}`}
-                className="group flex flex-col bg-white rounded-2xl border border-stone-300 shadow-sm hover:shadow-xl hover:border-stone-400 transition-all duration-300 overflow-hidden"
+                className="group flex flex-col bg-white rounded-2xl border border-stone-300 shadow-xs hover:shadow-xl hover:border-stone-400 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
               >
                 {/* Museum Mat Frame */}
                 <div className="p-3 bg-[#F4F1EA] border-b border-stone-200">
@@ -193,46 +208,48 @@ export default function AlbumCatalogClient({
                       src={album.coverImageUrl}
                       alt={album.title}
                       fill
+                      unoptimized
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       priority={idx < 3}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    {/* Top badging */}
+                    {/* Top Badging */}
                     <div className="absolute top-3 left-3">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-stone-900/80 backdrop-blur-sm text-stone-100 font-mono text-[10px] uppercase tracking-wider font-semibold border border-white/10">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-stone-900/85 backdrop-blur-md text-stone-100 font-mono text-[10px] uppercase tracking-wider font-semibold border border-white/10 shadow-sm">
                         <Camera className="w-3 h-3 text-amber-300" />
                         <span>{album.photoCount} PLATES</span>
                       </span>
                     </div>
 
                     <div className="absolute top-3 right-3">
-                      <span className="inline-flex items-center px-2 py-1 rounded-md bg-white/90 backdrop-blur-sm text-stone-700 font-mono text-[10px] uppercase tracking-wider font-semibold">
-                        ALB-{String(idx + 1).padStart(2, "0")}
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-md text-stone-800 font-mono text-[10px] uppercase tracking-wider font-semibold shadow-xs">
+                        <Bookmark className="w-3 h-3 text-amber-600" />
+                        <span>DOSSIER-{String(idx + 1).padStart(2, "0")}</span>
                       </span>
                     </div>
 
-                    {/* Hover Explore Indicator */}
+                    {/* Hover Explore Pill */}
                     <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-ink font-mono text-xs uppercase tracking-wider font-semibold shadow-md">
-                        <span>Examine Dossier</span>
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-ink font-mono text-xs uppercase tracking-wider font-semibold shadow-md group-hover:scale-105 transition-transform">
+                        <span>Examine Collection</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Album Details */}
+                {/* Album Dossier Details */}
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
+                  <div className="space-y-2.5">
                     <div className="flex items-center justify-between font-mono text-[11px] text-ink-faint border-b border-stone-100 pb-2">
                       <span className="uppercase tracking-widest flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
+                        <Calendar className="w-3 h-3 text-stone-400" />
                         {formattedDate}
                       </span>
                       <span className="font-mono text-[10px] text-stone-400">
-                        ID: {album.id.slice(0, 8)}...
+                        ARCHIVE #{album.id.slice(-6)}
                       </span>
                     </div>
 
@@ -241,17 +258,19 @@ export default function AlbumCatalogClient({
                     </h2>
 
                     {album.description && (
-                      <p className="font-sans text-xs text-ink-muted line-clamp-2 leading-relaxed">
+                      <p className="font-sans text-xs text-ink-muted line-clamp-3 leading-relaxed">
                         {album.description}
                       </p>
                     )}
                   </div>
 
-                  {/* Footer link line */}
+                  {/* Curatorial Ledger Footer */}
                   <div className="pt-4 border-t border-stone-100 flex items-center justify-between font-mono text-xs text-ink-muted group-hover:text-ink transition-colors">
-                    <span className="uppercase tracking-wider">Acoustics &amp; Media Society</span>
-                    <span className="flex items-center gap-1 font-semibold group-hover:translate-x-1 transition-transform">
-                      <span>View Gallery</span>
+                    <span className="uppercase tracking-wider text-[11px] font-medium text-stone-500">
+                      Official Event Dossier
+                    </span>
+                    <span className="flex items-center gap-1 font-semibold group-hover:translate-x-1 transition-transform text-amber-800">
+                      <span>Open Dossier</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
@@ -261,23 +280,26 @@ export default function AlbumCatalogClient({
           })}
         </div>
       ) : (
-        /* Empty State */
-        <div className="text-center py-24 px-4 bg-white rounded-2xl border border-dashed border-stone-300">
-          <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center mx-auto mb-4 text-stone-400">
+        <div className="py-20 text-center bg-white border border-stone-300 rounded-2xl p-8 space-y-4 shadow-sm">
+          <div className="w-12 h-12 rounded-full bg-stone-100 text-stone-400 mx-auto flex items-center justify-center">
             <Camera className="w-6 h-6" />
           </div>
-          <h3 className="font-serif text-2xl font-bold text-ink mb-2">No photographic plates found</h3>
-          <p className="font-sans text-sm text-ink-muted max-w-md mx-auto mb-6">
-            We could not find any photographic albums matching &quot;{searchQuery}&quot; under the &quot;{selectedCategory}&quot; category.
-          </p>
+          <div className="space-y-1">
+            <h3 className="font-serif text-xl font-bold text-ink">
+              No matching major event dossiers found
+            </h3>
+            <p className="font-mono text-xs text-ink-muted">
+              Try adjusting your event filter or search query.
+            </p>
+          </div>
           <button
             onClick={() => {
+              setSelectedCategory("All Major Events");
               setSearchQuery("");
-              setSelectedCategory("All Plates");
             }}
-            className="px-5 py-2 rounded-full bg-ink text-white font-mono text-xs uppercase tracking-wider hover:bg-stone-800 transition-colors"
+            className="px-4 py-2 rounded-xl bg-ink text-white font-mono text-xs uppercase tracking-wider hover:bg-stone-800 transition-colors shadow-sm"
           >
-            Reset Filters
+            Reset Event Filters
           </button>
         </div>
       )}
