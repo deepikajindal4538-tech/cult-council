@@ -1577,36 +1577,73 @@ export default function FlickrControlClient() {
                     <h3 className="font-serif text-xl font-semibold text-ink">
                       Revolving Marquee Stream Configuration
                     </h3>
-                    <div className="flex items-center gap-2 font-mono text-xs">
+                    <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
                       <span className="text-stone-500">STREAM SOURCE:</span>
                       <select
                         value={carouselConfig.streamSource}
                         onChange={(e) =>
                           setCarouselConfig({
                             ...carouselConfig,
-                            streamSource: e.target.value as "ams_live" | "reserve_plates" | "hybrid",
+                            streamSource: e.target.value as "ams_live" | "reserve_plates" | "hybrid" | "custom_selection",
                           })
                         }
                         className="bg-white border border-stone-300 rounded-lg px-3 py-1 font-semibold text-amber-800"
                       >
-                        <option value="ams_live">Official AMS IIITA Live Albums</option>
+                        <option value="custom_selection">Custom Selected Images (Curated Per Row)</option>
+                        <option value="ams_live">Official AMS IIITA Live Stream</option>
                         <option value="reserve_plates">50-Plate Curated Reserve</option>
-                        <option value="hybrid">Hybrid (Live Primary + Reserve)</option>
+                        <option value="hybrid">Hybrid (Live Primary + Reserve Fallback)</option>
                       </select>
                     </div>
                   </div>
 
-                  {/* 3 Rows Settings */}
-                  <div className="space-y-4">
-                    {/* Row 1 */}
-                    <div className="bg-white p-5 rounded-xl border border-stone-200 space-y-3 font-mono text-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-amber-800">STREAM ROW 1 // ACOUSTICS &amp; PRO-NIGHTS</span>
-                        <span className="text-stone-500">{carouselConfig.row1SpeedSeconds}s duration</span>
+                  {/* 3 Rows Settings & Visual Image Selectors */}
+                  <div className="space-y-6">
+                    {/* ========================================================================= */}
+                    {/* STREAM ROW 1 */}
+                    {/* ========================================================================= */}
+                    <div className="bg-white p-5 rounded-xl border border-stone-200/90 shadow-2xs space-y-4">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-stone-100 pb-3">
+                        <div className="flex items-center gap-2.5">
+                          <span className="w-3 h-3 rounded-full bg-amber-500" />
+                          <div>
+                            <span className="font-mono text-xs font-bold text-amber-800 uppercase tracking-wider block">
+                              STREAM ROW 1 // ACOUSTICS &amp; PRO-NIGHTS
+                            </span>
+                            <span className="font-mono text-[11px] text-stone-400">
+                              {(carouselConfig.row1Photos || []).length} photos assigned • {carouselConfig.row1SpeedSeconds}s duration
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleOpenPicker(1)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 font-mono text-xs font-semibold hover:bg-amber-100 transition-colors shadow-2xs cursor-pointer"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Select / Add Photos</span>
+                          </button>
+
+                          {(carouselConfig.row1Photos || []).length > 0 && (
+                            <button
+                              onClick={() => {
+                                if (confirm("Clear all photos from Row 1?")) {
+                                  setCarouselConfig({ ...carouselConfig, row1Photos: [] });
+                                }
+                              }}
+                              className="p-1.5 rounded-lg border border-stone-200 hover:bg-rose-50 text-stone-400 hover:text-rose-600 transition-colors"
+                              title="Clear all photos from Row 1"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
                       </div>
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-[11px] text-stone-400 uppercase mb-1">Row Label</label>
+                          <label className="block text-[11px] text-stone-400 uppercase mb-1 font-mono">Row Label</label>
                           <input
                             type="text"
                             value={carouselConfig.row1Label}
@@ -1617,7 +1654,7 @@ export default function FlickrControlClient() {
                           />
                         </div>
                         <div>
-                          <label className="block text-[11px] text-stone-400 uppercase mb-1">
+                          <label className="block text-[11px] text-stone-400 uppercase mb-1 font-mono">
                             Marquee Speed ({carouselConfig.row1SpeedSeconds}s)
                           </label>
                           <input
@@ -1635,17 +1672,157 @@ export default function FlickrControlClient() {
                           />
                         </div>
                       </div>
+
+                      {/* Row 1 Photos Horizontal Gallery Strip */}
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-stone-400">
+                            Assigned Photos in Row 1 (Display Sequence Left-to-Right)
+                          </span>
+                          <span className="font-mono text-[10px] text-stone-400 hidden sm:inline">
+                            Use arrows to reorder, or send to other rows
+                          </span>
+                        </div>
+
+                        {(carouselConfig.row1Photos || []).length > 0 ? (
+                          <div className="flex items-center gap-3 overflow-x-auto pb-3 pt-1 scrollbar-thin">
+                            {(carouselConfig.row1Photos || []).map((photo, pIdx) => (
+                              <div
+                                key={photo.id + "-" + pIdx}
+                                className="flex-shrink-0 w-44 bg-stone-50 border border-stone-200 rounded-xl overflow-hidden shadow-2xs group flex flex-col justify-between"
+                              >
+                                <div className="relative aspect-[16/10] w-full bg-stone-200 overflow-hidden">
+                                  <Image
+                                    src={photo.url}
+                                    alt={photo.title}
+                                    fill
+                                    unoptimized
+                                    sizes="176px"
+                                    className="object-cover"
+                                  />
+                                  <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/60 backdrop-blur-md text-white font-mono text-[9px] font-semibold">
+                                    #{pIdx + 1}
+                                  </span>
+                                  <button
+                                    onClick={() => handleRemovePhotoFromRow(1, pIdx)}
+                                    className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/60 hover:bg-rose-600 text-white transition-colors cursor-pointer"
+                                    title="Remove from Row 1"
+                                  >
+                                    <X className="w-3 h-3" />
+                                  </button>
+                                </div>
+
+                                <div className="p-2 space-y-1">
+                                  <h5 className="font-serif text-xs font-bold text-ink truncate" title={photo.title}>
+                                    {photo.title}
+                                  </h5>
+                                  <div className="font-mono text-[9px] text-stone-400 truncate">
+                                    {photo.discipline || "Acoustics & Media"}
+                                  </div>
+
+                                  <div className="flex items-center justify-between pt-1 border-t border-stone-200/80">
+                                    <div className="flex items-center gap-1">
+                                      <button
+                                        disabled={pIdx === 0}
+                                        onClick={() => handleMovePhoto(1, pIdx, "left")}
+                                        className="p-1 rounded bg-white border border-stone-200 hover:bg-stone-100 disabled:opacity-30 text-stone-600 cursor-pointer"
+                                        title="Move Left"
+                                      >
+                                        <ChevronLeft className="w-3 h-3" />
+                                      </button>
+                                      <button
+                                        disabled={pIdx === (carouselConfig.row1Photos?.length || 1) - 1}
+                                        onClick={() => handleMovePhoto(1, pIdx, "right")}
+                                        className="p-1 rounded bg-white border border-stone-200 hover:bg-stone-100 disabled:opacity-30 text-stone-600 cursor-pointer"
+                                        title="Move Right"
+                                      >
+                                        <ChevronRight className="w-3 h-3" />
+                                      </button>
+                                    </div>
+
+                                    <div className="flex items-center gap-1 font-mono text-[9px]">
+                                      <button
+                                        onClick={() => handleMoveToRow(1, 2, pIdx)}
+                                        className="px-1.5 py-0.5 rounded bg-white border border-stone-200 hover:bg-stone-100 text-stone-600 cursor-pointer"
+                                        title="Send to Row 2"
+                                      >
+                                        → R2
+                                      </button>
+                                      <button
+                                        onClick={() => handleMoveToRow(1, 3, pIdx)}
+                                        className="px-1.5 py-0.5 rounded bg-white border border-stone-200 hover:bg-stone-100 text-stone-600 cursor-pointer"
+                                        title="Send to Row 3"
+                                      >
+                                        → R3
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="py-6 px-4 bg-stone-50 border border-dashed border-stone-300 rounded-xl text-center space-y-2">
+                            <p className="font-mono text-xs text-stone-400">
+                              No images currently assigned to Row 1.
+                            </p>
+                            <button
+                              onClick={() => handleOpenPicker(1)}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 text-ink font-mono text-xs hover:bg-stone-100 cursor-pointer"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Select Images for Row 1</span>
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
 
-                    {/* Row 2 */}
-                    <div className="bg-white p-5 rounded-xl border border-stone-200 space-y-3 font-mono text-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-rose-800">STREAM ROW 2 // KINETIC CHOREOGRAPHY &amp; DANCE</span>
-                        <span className="text-stone-500">{carouselConfig.row2SpeedSeconds}s duration</span>
+                    {/* ========================================================================= */}
+                    {/* STREAM ROW 2 */}
+                    {/* ========================================================================= */}
+                    <div className="bg-white p-5 rounded-xl border border-stone-200/90 shadow-2xs space-y-4">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-stone-100 pb-3">
+                        <div className="flex items-center gap-2.5">
+                          <span className="w-3 h-3 rounded-full bg-rose-500" />
+                          <div>
+                            <span className="font-mono text-xs font-bold text-rose-800 uppercase tracking-wider block">
+                              STREAM ROW 2 // KINETIC CHOREOGRAPHY &amp; DANCE
+                            </span>
+                            <span className="font-mono text-[11px] text-stone-400">
+                              {(carouselConfig.row2Photos || []).length} photos assigned • {carouselConfig.row2SpeedSeconds}s duration
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleOpenPicker(2)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-50 border border-rose-300 text-rose-900 font-mono text-xs font-semibold hover:bg-rose-100 transition-colors shadow-2xs cursor-pointer"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Select / Add Photos</span>
+                          </button>
+
+                          {(carouselConfig.row2Photos || []).length > 0 && (
+                            <button
+                              onClick={() => {
+                                if (confirm("Clear all photos from Row 2?")) {
+                                  setCarouselConfig({ ...carouselConfig, row2Photos: [] });
+                                }
+                              }}
+                              className="p-1.5 rounded-lg border border-stone-200 hover:bg-rose-50 text-stone-400 hover:text-rose-600 transition-colors"
+                              title="Clear all photos from Row 2"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
                       </div>
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-[11px] text-stone-400 uppercase mb-1">Row Label</label>
+                          <label className="block text-[11px] text-stone-400 uppercase mb-1 font-mono">Row Label</label>
                           <input
                             type="text"
                             value={carouselConfig.row2Label}
@@ -1656,7 +1833,7 @@ export default function FlickrControlClient() {
                           />
                         </div>
                         <div>
-                          <label className="block text-[11px] text-stone-400 uppercase mb-1">
+                          <label className="block text-[11px] text-stone-400 uppercase mb-1 font-mono">
                             Marquee Speed ({carouselConfig.row2SpeedSeconds}s)
                           </label>
                           <input
@@ -1674,17 +1851,157 @@ export default function FlickrControlClient() {
                           />
                         </div>
                       </div>
+
+                      {/* Row 2 Photos Horizontal Gallery Strip */}
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-stone-400">
+                            Assigned Photos in Row 2 (Display Sequence Left-to-Right)
+                          </span>
+                          <span className="font-mono text-[10px] text-stone-400 hidden sm:inline">
+                            Use arrows to reorder, or send to other rows
+                          </span>
+                        </div>
+
+                        {(carouselConfig.row2Photos || []).length > 0 ? (
+                          <div className="flex items-center gap-3 overflow-x-auto pb-3 pt-1 scrollbar-thin">
+                            {(carouselConfig.row2Photos || []).map((photo, pIdx) => (
+                              <div
+                                key={photo.id + "-" + pIdx}
+                                className="flex-shrink-0 w-44 bg-stone-50 border border-stone-200 rounded-xl overflow-hidden shadow-2xs group flex flex-col justify-between"
+                              >
+                                <div className="relative aspect-[16/10] w-full bg-stone-200 overflow-hidden">
+                                  <Image
+                                    src={photo.url}
+                                    alt={photo.title}
+                                    fill
+                                    unoptimized
+                                    sizes="176px"
+                                    className="object-cover"
+                                  />
+                                  <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/60 backdrop-blur-md text-white font-mono text-[9px] font-semibold">
+                                    #{pIdx + 1}
+                                  </span>
+                                  <button
+                                    onClick={() => handleRemovePhotoFromRow(2, pIdx)}
+                                    className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/60 hover:bg-rose-600 text-white transition-colors cursor-pointer"
+                                    title="Remove from Row 2"
+                                  >
+                                    <X className="w-3 h-3" />
+                                  </button>
+                                </div>
+
+                                <div className="p-2 space-y-1">
+                                  <h5 className="font-serif text-xs font-bold text-ink truncate" title={photo.title}>
+                                    {photo.title}
+                                  </h5>
+                                  <div className="font-mono text-[9px] text-stone-400 truncate">
+                                    {photo.discipline || "Dance Guild"}
+                                  </div>
+
+                                  <div className="flex items-center justify-between pt-1 border-t border-stone-200/80">
+                                    <div className="flex items-center gap-1">
+                                      <button
+                                        disabled={pIdx === 0}
+                                        onClick={() => handleMovePhoto(2, pIdx, "left")}
+                                        className="p-1 rounded bg-white border border-stone-200 hover:bg-stone-100 disabled:opacity-30 text-stone-600 cursor-pointer"
+                                        title="Move Left"
+                                      >
+                                        <ChevronLeft className="w-3 h-3" />
+                                      </button>
+                                      <button
+                                        disabled={pIdx === (carouselConfig.row2Photos?.length || 1) - 1}
+                                        onClick={() => handleMovePhoto(2, pIdx, "right")}
+                                        className="p-1 rounded bg-white border border-stone-200 hover:bg-stone-100 disabled:opacity-30 text-stone-600 cursor-pointer"
+                                        title="Move Right"
+                                      >
+                                        <ChevronRight className="w-3 h-3" />
+                                      </button>
+                                    </div>
+
+                                    <div className="flex items-center gap-1 font-mono text-[9px]">
+                                      <button
+                                        onClick={() => handleMoveToRow(2, 1, pIdx)}
+                                        className="px-1.5 py-0.5 rounded bg-white border border-stone-200 hover:bg-stone-100 text-stone-600 cursor-pointer"
+                                        title="Send to Row 1"
+                                      >
+                                        → R1
+                                      </button>
+                                      <button
+                                        onClick={() => handleMoveToRow(2, 3, pIdx)}
+                                        className="px-1.5 py-0.5 rounded bg-white border border-stone-200 hover:bg-stone-100 text-stone-600 cursor-pointer"
+                                        title="Send to Row 3"
+                                      >
+                                        → R3
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="py-6 px-4 bg-stone-50 border border-dashed border-stone-300 rounded-xl text-center space-y-2">
+                            <p className="font-mono text-xs text-stone-400">
+                              No images currently assigned to Row 2.
+                            </p>
+                            <button
+                              onClick={() => handleOpenPicker(2)}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 text-ink font-mono text-xs hover:bg-stone-100 cursor-pointer"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Select Images for Row 2</span>
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
 
-                    {/* Row 3 */}
-                    <div className="bg-white p-5 rounded-xl border border-stone-200 space-y-3 font-mono text-xs">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-indigo-800">STREAM ROW 3 // DRAMA &amp; LIVE CANVASES</span>
-                        <span className="text-stone-500">{carouselConfig.row3SpeedSeconds}s duration</span>
+                    {/* ========================================================================= */}
+                    {/* STREAM ROW 3 */}
+                    {/* ========================================================================= */}
+                    <div className="bg-white p-5 rounded-xl border border-stone-200/90 shadow-2xs space-y-4">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-stone-100 pb-3">
+                        <div className="flex items-center gap-2.5">
+                          <span className="w-3 h-3 rounded-full bg-indigo-500" />
+                          <div>
+                            <span className="font-mono text-xs font-bold text-indigo-800 uppercase tracking-wider block">
+                              STREAM ROW 3 // DRAMA &amp; LIVE CANVASES
+                            </span>
+                            <span className="font-mono text-[11px] text-stone-400">
+                              {(carouselConfig.row3Photos || []).length} photos assigned • {carouselConfig.row3SpeedSeconds}s duration
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleOpenPicker(3)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-300 text-indigo-900 font-mono text-xs font-semibold hover:bg-indigo-100 transition-colors shadow-2xs cursor-pointer"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Select / Add Photos</span>
+                          </button>
+
+                          {(carouselConfig.row3Photos || []).length > 0 && (
+                            <button
+                              onClick={() => {
+                                if (confirm("Clear all photos from Row 3?")) {
+                                  setCarouselConfig({ ...carouselConfig, row3Photos: [] });
+                                }
+                              }}
+                              className="p-1.5 rounded-lg border border-stone-200 hover:bg-rose-50 text-stone-400 hover:text-rose-600 transition-colors"
+                              title="Clear all photos from Row 3"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
                       </div>
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-[11px] text-stone-400 uppercase mb-1">Row Label</label>
+                          <label className="block text-[11px] text-stone-400 uppercase mb-1 font-mono">Row Label</label>
                           <input
                             type="text"
                             value={carouselConfig.row3Label}
@@ -1695,7 +2012,7 @@ export default function FlickrControlClient() {
                           />
                         </div>
                         <div>
-                          <label className="block text-[11px] text-stone-400 uppercase mb-1">
+                          <label className="block text-[11px] text-stone-400 uppercase mb-1 font-mono">
                             Marquee Speed ({carouselConfig.row3SpeedSeconds}s)
                           </label>
                           <input
@@ -1713,6 +2030,110 @@ export default function FlickrControlClient() {
                           />
                         </div>
                       </div>
+
+                      {/* Row 3 Photos Horizontal Gallery Strip */}
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-stone-400">
+                            Assigned Photos in Row 3 (Display Sequence Left-to-Right)
+                          </span>
+                          <span className="font-mono text-[10px] text-stone-400 hidden sm:inline">
+                            Use arrows to reorder, or send to other rows
+                          </span>
+                        </div>
+
+                        {(carouselConfig.row3Photos || []).length > 0 ? (
+                          <div className="flex items-center gap-3 overflow-x-auto pb-3 pt-1 scrollbar-thin">
+                            {(carouselConfig.row3Photos || []).map((photo, pIdx) => (
+                              <div
+                                key={photo.id + "-" + pIdx}
+                                className="flex-shrink-0 w-44 bg-stone-50 border border-stone-200 rounded-xl overflow-hidden shadow-2xs group flex flex-col justify-between"
+                              >
+                                <div className="relative aspect-[16/10] w-full bg-stone-200 overflow-hidden">
+                                  <Image
+                                    src={photo.url}
+                                    alt={photo.title}
+                                    fill
+                                    unoptimized
+                                    sizes="176px"
+                                    className="object-cover"
+                                  />
+                                  <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-black/60 backdrop-blur-md text-white font-mono text-[9px] font-semibold">
+                                    #{pIdx + 1}
+                                  </span>
+                                  <button
+                                    onClick={() => handleRemovePhotoFromRow(3, pIdx)}
+                                    className="absolute top-1.5 right-1.5 p-1 rounded-full bg-black/60 hover:bg-rose-600 text-white transition-colors cursor-pointer"
+                                    title="Remove from Row 3"
+                                  >
+                                    <X className="w-3 h-3" />
+                                  </button>
+                                </div>
+
+                                <div className="p-2 space-y-1">
+                                  <h5 className="font-serif text-xs font-bold text-ink truncate" title={photo.title}>
+                                    {photo.title}
+                                  </h5>
+                                  <div className="font-mono text-[9px] text-stone-400 truncate">
+                                    {photo.discipline || "Fine Arts & Drama"}
+                                  </div>
+
+                                  <div className="flex items-center justify-between pt-1 border-t border-stone-200/80">
+                                    <div className="flex items-center gap-1">
+                                      <button
+                                        disabled={pIdx === 0}
+                                        onClick={() => handleMovePhoto(3, pIdx, "left")}
+                                        className="p-1 rounded bg-white border border-stone-200 hover:bg-stone-100 disabled:opacity-30 text-stone-600 cursor-pointer"
+                                        title="Move Left"
+                                      >
+                                        <ChevronLeft className="w-3 h-3" />
+                                      </button>
+                                      <button
+                                        disabled={pIdx === (carouselConfig.row3Photos?.length || 1) - 1}
+                                        onClick={() => handleMovePhoto(3, pIdx, "right")}
+                                        className="p-1 rounded bg-white border border-stone-200 hover:bg-stone-100 disabled:opacity-30 text-stone-600 cursor-pointer"
+                                        title="Move Right"
+                                      >
+                                        <ChevronRight className="w-3 h-3" />
+                                      </button>
+                                    </div>
+
+                                    <div className="flex items-center gap-1 font-mono text-[9px]">
+                                      <button
+                                        onClick={() => handleMoveToRow(3, 1, pIdx)}
+                                        className="px-1.5 py-0.5 rounded bg-white border border-stone-200 hover:bg-stone-100 text-stone-600 cursor-pointer"
+                                        title="Send to Row 1"
+                                      >
+                                        → R1
+                                      </button>
+                                      <button
+                                        onClick={() => handleMoveToRow(3, 2, pIdx)}
+                                        className="px-1.5 py-0.5 rounded bg-white border border-stone-200 hover:bg-stone-100 text-stone-600 cursor-pointer"
+                                        title="Send to Row 2"
+                                      >
+                                        → R2
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="py-6 px-4 bg-stone-50 border border-dashed border-stone-300 rounded-xl text-center space-y-2">
+                            <p className="font-mono text-xs text-stone-400">
+                              No images currently assigned to Row 3.
+                            </p>
+                            <button
+                              onClick={() => handleOpenPicker(3)}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-300 text-ink font-mono text-xs hover:bg-stone-100 cursor-pointer"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Select Images for Row 3</span>
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -1720,7 +2141,7 @@ export default function FlickrControlClient() {
                     <button
                       onClick={handleSaveCarouselHero}
                       disabled={isSavingCarouselHero}
-                      className="px-5 py-2.5 rounded-xl bg-ink text-white font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-stone-800 transition-all shadow-md"
+                      className="px-5 py-2.5 rounded-xl bg-ink text-white font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-stone-800 transition-all shadow-md cursor-pointer"
                     >
                       <Save className="w-4 h-4 text-amber-400" />
                       <span>{isSavingCarouselHero ? "SAVING..." : "SAVE CAROUSEL CONFIGURATION"}</span>
@@ -2396,6 +2817,347 @@ export default function FlickrControlClient() {
                 }`}
               >
                 {isTogglingKill ? "Processing..." : "Confirm Action"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Carousel Image Picker Modal */}
+      {pickerModalRow && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl border border-stone-300 shadow-2xl max-w-4xl w-full max-h-[85vh] flex flex-col overflow-hidden animate-in fade-in duration-200">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-5 border-b border-stone-200 bg-stone-50">
+              <div>
+                <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-amber-800 font-bold mb-1">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>IMAGE SELECTOR FOR CAROUSEL ROW {pickerModalRow}</span>
+                </div>
+                <h3 className="font-serif text-xl font-bold text-ink">
+                  Select Photographs for Row {pickerModalRow}
+                </h3>
+              </div>
+              <button
+                onClick={() => setPickerModalRow(null)}
+                className="p-2 rounded-full hover:bg-stone-200 text-stone-500 hover:text-ink transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Source Switcher: Reserve Plates vs Live Flickr Photos vs Custom URL */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-6 py-3 border-b border-stone-200 bg-white">
+              <div className="inline-flex rounded-xl bg-stone-100 p-1 border border-stone-200 font-mono text-xs">
+                <button
+                  onClick={() => setPickerTab("reserve")}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    pickerTab === "reserve" ? "bg-white text-ink font-bold shadow-2xs" : "text-stone-500 hover:text-ink"
+                  }`}
+                >
+                  50 Reserve Archive Plates ({reservePlates.length})
+                </button>
+                <button
+                  onClick={() => setPickerTab("flickr")}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    pickerTab === "flickr" ? "bg-white text-ink font-bold shadow-2xs" : "text-stone-500 hover:text-ink"
+                  }`}
+                >
+                  Live Flickr College Photos
+                </button>
+                <button
+                  onClick={() => setPickerTab("custom")}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    pickerTab === "custom" ? "bg-white text-ink font-bold shadow-2xs" : "text-stone-500 hover:text-ink"
+                  }`}
+                >
+                  Add Custom URL
+                </button>
+              </div>
+
+              <span className="font-mono text-xs text-stone-400">
+                Row {pickerModalRow} currently has {(carouselConfig[pickerModalRow === 1 ? "row1Photos" : pickerModalRow === 2 ? "row2Photos" : "row3Photos"] || []).length} photos
+              </span>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 overflow-y-auto flex-1 space-y-4">
+              {/* Source 1: Reserve Plates */}
+              {pickerTab === "reserve" && (
+                <div className="space-y-4">
+                  <div className="relative">
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                    <input
+                      type="text"
+                      value={pickerSearchQuery}
+                      onChange={(e) => setPickerSearchQuery(e.target.value)}
+                      placeholder="Search reserve photos by title, event, or discipline..."
+                      className="w-full pl-10 pr-4 py-2 rounded-xl border border-stone-300 bg-stone-50 font-mono text-xs text-ink"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[50vh] overflow-y-auto pr-1">
+                    {filteredReserveForPicker.map((plate) => {
+                      const rowKey = pickerModalRow === 1 ? "row1Photos" : pickerModalRow === 2 ? "row2Photos" : "row3Photos";
+                      const isSelected = (carouselConfig[rowKey] || []).some((p) => p.id === plate.id);
+
+                      return (
+                        <div
+                          key={plate.id}
+                          className={`relative rounded-xl border p-2.5 flex flex-col justify-between transition-all ${
+                            isSelected
+                              ? "border-emerald-500 bg-emerald-50/50 ring-1 ring-emerald-500"
+                              : "border-stone-200 bg-stone-50/50 hover:border-stone-400"
+                          }`}
+                        >
+                          <div className="relative aspect-[16/10] w-full rounded-lg overflow-hidden bg-stone-200 mb-2">
+                            <Image
+                              src={plate.thumbnailUrl || plate.url}
+                              alt={plate.title}
+                              fill
+                              unoptimized
+                              sizes="180px"
+                              className="object-cover"
+                            />
+                            {isSelected && (
+                              <div className="absolute top-1.5 right-1.5 p-1 rounded-full bg-emerald-600 text-white shadow">
+                                <Check className="w-3 h-3" />
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="space-y-1 mb-2">
+                            <h5 className="font-serif text-xs font-bold text-ink truncate" title={plate.title}>
+                              {plate.title}
+                            </h5>
+                            <span className="block font-mono text-[9px] text-stone-400 truncate">
+                              {plate.event} • {plate.discipline}
+                            </span>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const targetRow = pickerModalRow;
+                              if (isSelected) {
+                                const list = (carouselConfig[rowKey] || []).filter((p) => p.id !== plate.id);
+                                setCarouselConfig({ ...carouselConfig, [rowKey]: list });
+                              } else {
+                                handleAddPhotoToRow(targetRow, {
+                                  id: plate.id,
+                                  title: plate.title,
+                                  discipline: plate.discipline,
+                                  category: plate.category,
+                                  url: plate.url,
+                                  width: plate.width,
+                                  height: plate.height,
+                                });
+                              }
+                            }}
+                            className={`w-full py-1.5 rounded-lg font-mono text-[10px] uppercase font-bold tracking-wider transition-all cursor-pointer ${
+                              isSelected
+                                ? "bg-rose-100 hover:bg-rose-200 text-rose-800"
+                                : "bg-ink hover:bg-stone-800 text-white"
+                            }`}
+                          >
+                            {isSelected ? "Remove from Row" : "+ Add to Row"}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Source 2: Live Flickr College Photos */}
+              {pickerTab === "flickr" && (
+                <div className="space-y-4">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                    <label className="font-mono text-xs text-stone-600 flex items-center gap-2">
+                      <span>Select Flickr Album:</span>
+                      <select
+                        value={pickerAlbumId}
+                        onChange={(e) => {
+                          setPickerAlbumId(e.target.value);
+                          fetchFlickrAlbumPhotos(e.target.value);
+                        }}
+                        className="bg-white border border-stone-300 rounded-lg px-3 py-1 font-mono text-xs text-ink"
+                      >
+                        {availableRemoteAlbums.map((alb) => (
+                          <option key={alb.id} value={alb.id}>
+                            {alb.title} ({alb.photoCount} photos)
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+
+                    <button
+                      type="button"
+                      onClick={() => fetchFlickrAlbumPhotos(pickerAlbumId)}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-mono text-xs cursor-pointer"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 ${isLoadingPickerFlickr ? "animate-spin" : ""}`} />
+                      <span>Refresh Photos</span>
+                    </button>
+                  </div>
+
+                  {isLoadingPickerFlickr ? (
+                    <div className="py-16 text-center text-stone-400 font-mono text-xs">
+                      Fetching live photographs from Flickr API...
+                    </div>
+                  ) : pickerFlickrPhotos.length > 0 ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[50vh] overflow-y-auto pr-1">
+                      {pickerFlickrPhotos.map((photo: any) => {
+                        const rowKey = pickerModalRow === 1 ? "row1Photos" : pickerModalRow === 2 ? "row2Photos" : "row3Photos";
+                        const isSelected = (carouselConfig[rowKey] || []).some((p) => p.id === String(photo.id));
+
+                        return (
+                          <div
+                            key={photo.id}
+                            className={`relative rounded-xl border p-2.5 flex flex-col justify-between transition-all ${
+                              isSelected
+                                ? "border-emerald-500 bg-emerald-50/50 ring-1 ring-emerald-500"
+                                : "border-stone-200 bg-stone-50/50 hover:border-stone-400"
+                            }`}
+                          >
+                            <div className="relative aspect-[16/10] w-full rounded-lg overflow-hidden bg-stone-200 mb-2">
+                              <Image
+                                src={photo.thumbnailUrl || photo.displayUrl}
+                                alt={photo.title}
+                                fill
+                                unoptimized
+                                sizes="180px"
+                                className="object-cover"
+                              />
+                              {isSelected && (
+                                <div className="absolute top-1.5 right-1.5 p-1 rounded-full bg-emerald-600 text-white shadow">
+                                  <Check className="w-3 h-3" />
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="space-y-1 mb-2">
+                              <h5 className="font-serif text-xs font-bold text-ink truncate" title={photo.title}>
+                                {photo.title}
+                              </h5>
+                              <span className="block font-mono text-[9px] text-stone-400 truncate">
+                                Flickr ID: {photo.id}
+                              </span>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const targetRow = pickerModalRow;
+                                if (isSelected) {
+                                  const list = (carouselConfig[rowKey] || []).filter((p) => p.id !== String(photo.id));
+                                  setCarouselConfig({ ...carouselConfig, [rowKey]: list });
+                                } else {
+                                  handleAddPhotoToRow(targetRow, {
+                                    id: String(photo.id),
+                                    title: photo.title || "AMS Performance Archive",
+                                    discipline: "Acoustics & Media Society",
+                                    category: "Live Flickr",
+                                    url: photo.displayUrl || photo.fullUrl,
+                                    width: photo.width,
+                                    height: photo.height,
+                                  });
+                                }
+                              }}
+                              className={`w-full py-1.5 rounded-lg font-mono text-[10px] uppercase font-bold tracking-wider transition-all cursor-pointer ${
+                                isSelected
+                                  ? "bg-rose-100 hover:bg-rose-200 text-rose-800"
+                                  : "bg-ink hover:bg-stone-800 text-white"
+                              }`}
+                            >
+                              {isSelected ? "Remove from Row" : "+ Add to Row"}
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="py-12 text-center text-stone-400 font-mono text-xs">
+                      No photos found in this album.
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Source 3: Add Custom URL */}
+              {pickerTab === "custom" && (
+                <div className="space-y-4 max-w-lg mx-auto py-4">
+                  <div>
+                    <label className="block font-mono text-xs text-stone-600 mb-1">Image URL (JPEG / WebP / PNG)</label>
+                    <input
+                      type="text"
+                      value={customPlateUrl}
+                      onChange={(e) => setCustomPlateUrl(e.target.value)}
+                      placeholder="https://example.com/photo.jpg or /images/..."
+                      className="w-full bg-stone-50 border border-stone-300 rounded-lg px-3 py-2 text-ink font-mono text-xs"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-mono text-xs text-stone-600 mb-1">Title</label>
+                    <input
+                      type="text"
+                      value={customPlateTitle}
+                      onChange={(e) => setCustomPlateTitle(e.target.value)}
+                      placeholder="e.g. Asmita 2026 Grand Finale"
+                      className="w-full bg-stone-50 border border-stone-300 rounded-lg px-3 py-2 text-ink font-mono text-xs"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-mono text-xs text-stone-600 mb-1">Discipline / Society</label>
+                    <input
+                      type="text"
+                      value={customPlateDiscipline}
+                      onChange={(e) => setCustomPlateDiscipline(e.target.value)}
+                      placeholder="e.g. Virtuosi // Electric Ensemble"
+                      className="w-full bg-stone-50 border border-stone-300 rounded-lg px-3 py-2 text-ink font-mono text-xs"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!customPlateUrl.trim() || !customPlateTitle.trim()) {
+                        showToast("error", "URL and Title are required.");
+                        return;
+                      }
+                      const targetRow = pickerModalRow;
+                      handleAddPhotoToRow(targetRow, {
+                        id: "custom-" + Date.now(),
+                        title: customPlateTitle.trim(),
+                        discipline: customPlateDiscipline.trim() || "Cultural Archive",
+                        category: "Custom Selection",
+                        url: customPlateUrl.trim(),
+                      });
+                      setCustomPlateUrl("");
+                      setCustomPlateTitle("");
+                      setCustomPlateDiscipline("");
+                    }}
+                    className="w-full py-2.5 rounded-xl bg-ink text-white font-mono text-xs uppercase font-bold tracking-wider hover:bg-stone-800 transition-colors shadow cursor-pointer"
+                  >
+                    + Add Custom Image to Row {pickerModalRow}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex items-center justify-between p-4 border-t border-stone-200 bg-stone-50">
+              <span className="font-mono text-xs text-stone-500">
+                Total in Row {pickerModalRow}: {(carouselConfig[pickerModalRow === 1 ? "row1Photos" : pickerModalRow === 2 ? "row2Photos" : "row3Photos"] || []).length} photos
+              </span>
+              <button
+                type="button"
+                onClick={() => setPickerModalRow(null)}
+                className="px-5 py-2 rounded-xl bg-ink text-white font-mono text-xs font-semibold hover:bg-stone-800 transition-colors shadow-sm cursor-pointer"
+              >
+                Done / Close Selector
               </button>
             </div>
           </div>
