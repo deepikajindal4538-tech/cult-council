@@ -9,13 +9,7 @@ import {
   Layers,
   ArrowUpRight,
   Filter,
-  Sparkles,
   Calendar,
-  Eye,
-  CheckCircle2,
-  Bookmark,
-  Award,
-  Grid,
 } from "lucide-react";
 import { TrimmedAlbum, TrimmedPhoto } from "@/lib/flickr/schemas";
 import FlickrPhotostream from "./FlickrPhotostream";
@@ -285,18 +279,11 @@ export default function AlbumCatalogClient({
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
 
-                      {/* Top Badges */}
+                      {/* Top Badge: Photo Count */}
                       <div className="absolute top-3 left-3">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-stone-100 font-mono text-[10px] uppercase tracking-wider font-semibold shadow-xs">
                           <Camera className="w-3 h-3 text-amber-300" />
-                          <span>{album.photoCount} PHOTOS</span>
-                        </span>
-                      </div>
-
-                      <div className="absolute top-3 right-3">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/95 backdrop-blur-md text-stone-800 font-mono text-[10px] uppercase tracking-wider font-semibold shadow-xs">
-                          <Bookmark className="w-3 h-3 text-amber-600" />
-                          <span>ALBUM-{String(idx + 1).padStart(2, "0")}</span>
+                          <span>{album.photoCount} Photos</span>
                         </span>
                       </div>
 
@@ -312,13 +299,10 @@ export default function AlbumCatalogClient({
                     {/* Album Details */}
                     <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                       <div className="space-y-2">
-                        <div className="flex items-center justify-between font-mono text-[11px] text-ink-faint border-b border-stone-100 pb-2">
+                        <div className="flex items-center font-mono text-[11px] text-ink-faint border-b border-stone-100 pb-2">
                           <span className="uppercase tracking-widest flex items-center gap-1">
                             <Calendar className="w-3 h-3 text-stone-400" />
                             {formattedDate}
-                          </span>
-                          <span className="font-mono text-[10px] text-stone-400">
-                            ID: {album.id.slice(-6)}
                           </span>
                         </div>
 

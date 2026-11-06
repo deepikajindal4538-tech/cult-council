@@ -99,8 +99,8 @@ export default async function EventsPage({
                 <div>
                   {/* Top Metadata */}
                   <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-ink-faint pb-3 border-b border-stone-300/80 mb-4">
-                    <span className="font-bold text-ink">
-                      EVENT [{String(i + 1).padStart(2, "0")}]
+                    <span className="font-bold text-amber-800">
+                      {evt.category || "CAMPUS EVENT"}
                     </span>
                     <span
                       className="px-2.5 py-0.5 rounded-full font-semibold"

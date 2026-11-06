@@ -4,7 +4,9 @@ import { useEffect, useLayoutEffect, useMemo, useRef, type CSSProperties, type R
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type SplitBy = 'char' | 'word' | 'line';
 type Hinge = 'top' | 'bottom' | 'left' | 'right';

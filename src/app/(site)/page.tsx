@@ -61,9 +61,6 @@ export default async function HomePage() {
 
         {/* High-End Editorial Exhibition Card (Light Theme Harmony) */}
         <div className="relative rounded-3xl bg-[#F4F1EA] border border-stone-300/90 p-7 sm:p-10 lg:p-12 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
-          {/* Subtle Ambient Warm Glow */}
-          <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl pointer-events-none" />
-
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Festival Details (7 cols) */}
             <div className="lg:col-span-7 space-y-6">

@@ -44,51 +44,25 @@ export function A24HeroOverlay({
                   style={{ backgroundColor: society.accentColor || "#1C1917" }}
                 />
                 <span className="font-semibold text-ink">
-                  SOCIETY 0{activeIndex + 1} • {society.category}
+                  {society.category}
                 </span>
               </div>
 
               {/* Massive Editorial Serif Title */}
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink uppercase leading-none mb-4">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink uppercase leading-none mb-3">
                 {society.name}
               </h2>
 
-              {/* Society Overview Table */}
-              <div className="w-full border-t border-stone-300/90 text-xs font-mono">
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
-                  <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    COORDINATOR
-                  </span>
-                  <span className="col-span-8 font-serif font-medium text-ink text-right truncate">
-                    {society.leads?.[0]?.name || "Student Coordinator"}
-                  </span>
-                </div>
+              {/* Clean Society Brief */}
+              <div className="space-y-2 max-w-xs sm:max-w-sm">
+                <p className="font-serif italic text-xs sm:text-sm text-stone-700 leading-relaxed">
+                  &ldquo;{society.tagline}&rdquo;
+                </p>
 
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
-                  <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    FOUNDED
-                  </span>
-                  <span className="col-span-8 font-serif font-medium text-ink text-right">
-                    {society.stats?.foundedYear || 2004}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
-                  <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    CATEGORY
-                  </span>
-                  <span className="col-span-8 font-serif font-medium text-ink text-right truncate">
-                    {society.category}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-300/90 items-center">
-                  <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    MEMBERS
-                  </span>
-                  <span className="col-span-8 font-serif font-medium text-ink text-right">
-                    {society.stats?.membersCount || 45}+ Active Members
-                  </span>
+                <div className="flex items-center gap-2.5 font-mono text-[10px] text-stone-500 uppercase tracking-wider pt-1 border-t border-stone-300/80">
+                  <span>Coordinator: <strong className="text-ink font-medium">{society.leads?.[0]?.name || "Student Coordinator"}</strong></span>
+                  <span>•</span>
+                  <span>{society.stats?.membersCount || 45}+ Members</span>
                 </div>
               </div>
             </motion.div>

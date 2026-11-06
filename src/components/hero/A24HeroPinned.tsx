@@ -125,8 +125,8 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
           }}
         />
 
-        {/* Soft slim top gradient dissolve */}
-        <div className="absolute top-0 inset-x-0 h-10 sm:h-14 pointer-events-none z-30 bg-gradient-to-b from-[#FAF8F5]/80 via-[#FAF8F5]/30 to-transparent" />
+        {/* Soft top gradient dissolve to prevent any direct cut */}
+        <div className="absolute top-0 inset-x-0 h-16 sm:h-24 pointer-events-none z-30 bg-gradient-to-b from-[#FAF8F5] via-[#FAF8F5]/60 to-transparent" />
 
         {/* Smooth Crossfade Stage Wrapper: Eliminates direct cut from previous section */}
         <motion.div

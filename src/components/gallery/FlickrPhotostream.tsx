@@ -307,54 +307,30 @@ export default function FlickrPhotostream({
                     priority={item.index < 8}
                   />
 
-                  {/* Flickr Signature Hover Vignette & Metadata Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-3 pointer-events-none">
-                    {/* Top: Index Badge & Quick Actions */}
-                    <div className="flex items-center justify-between pointer-events-auto">
-                      <span className="px-2 py-0.5 rounded bg-black/60 backdrop-blur-md text-white font-mono text-[10px] font-semibold tracking-wider shadow-sm">
-                        #{String(item.index + 1).padStart(2, "0")}
-                      </span>
-
-                      <div className="flex items-center gap-1.5">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openLightbox(item.index);
-                          }}
-                          className="p-1.5 rounded bg-black/60 hover:bg-black/90 backdrop-blur-md text-white transition-colors cursor-pointer"
-                          title="Fullscreen Lightbox"
-                        >
-                          <Maximize2 className="w-3.5 h-3.5" />
-                        </button>
-
-                        <a
-                          href={item.photo.fullUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 rounded bg-black/60 hover:bg-black/90 backdrop-blur-md text-white transition-colors cursor-pointer"
-                          title="Open Original High-Res"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                        </a>
-                      </div>
+                  {/* Clean Minimal Hover: Only Image, File Name, and Expand Option */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-3 pointer-events-none">
+                    {/* Top: Expand Option Only */}
+                    <div className="flex justify-end pointer-events-auto">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openLightbox(item.index);
+                        }}
+                        className="p-2 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white transition-all hover:scale-105 cursor-pointer shadow-sm"
+                        title="Expand Photograph"
+                      >
+                        <Maximize2 className="w-3.5 h-3.5" />
+                      </button>
                     </div>
 
-                    {/* Bottom: Clean Title & Attribution */}
-                    <div className="space-y-0.5 pointer-events-auto text-left">
-                      <h3 className="font-sans text-sm font-semibold text-white drop-shadow truncate">
-                        {item.photo.title || `Photograph ${item.index + 1}`}
-                      </h3>
-                      <div className="flex items-center gap-1.5 font-mono text-[10px] text-stone-300">
-                        <span>AMS IIITA</span>
-                        <span>•</span>
-                        <span>
-                          {item.photo.width && item.photo.height
-                            ? `${item.photo.width}×${item.photo.height}`
-                            : "Original Ratio"}
-                        </span>
+                    {/* Bottom: Clean File Name / Title Only */}
+                    {item.photo.title && (
+                      <div className="pointer-events-auto text-left">
+                        <p className="font-sans text-xs sm:text-sm font-medium text-white drop-shadow truncate">
+                          {item.photo.title}
+                        </p>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               ))}

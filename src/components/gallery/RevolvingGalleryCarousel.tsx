@@ -223,8 +223,8 @@ export default function RevolvingGalleryCarousel({
 }
 
 /**
- * Single Plate Component with Museum Mat Mount Frame
- * Pure photography plate: No info, no tags, only the high-res image and the expand option.
+ * Single Plate Component
+ * Pure borderless photography card — no borders, no mat frame, keeping only the photos.
  */
 function CarouselCard({
   plate,
@@ -236,24 +236,22 @@ function CarouselCard({
   return (
     <div
       onClick={onInspect}
-      className="group relative cursor-pointer w-72 sm:w-80 md:w-96 aspect-[16/10] shrink-0 rounded-2xl bg-[#F4F1EA] p-1.5 sm:p-2 border border-stone-300/80 shadow-xs hover:shadow-xl hover:border-stone-400 transition-all duration-300 overflow-hidden"
+      className="group relative cursor-pointer w-72 sm:w-80 md:w-96 aspect-[16/10] shrink-0 rounded-xl overflow-hidden shadow-xs hover:shadow-2xl transition-all duration-300 bg-stone-200"
     >
-      <div className="relative w-full h-full rounded-xl overflow-hidden bg-stone-200">
-        <Image
-          src={plate.url}
-          alt=""
-          fill
-          unoptimized
-          sizes="(max-width: 768px) 280px, 384px"
-          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-        />
+      <Image
+        src={plate.url}
+        alt=""
+        fill
+        unoptimized
+        sizes="(max-width: 768px) 280px, 384px"
+        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+      />
 
-        {/* Expand / Maximize Option ONLY — Pure minimal icon */}
-        <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <span className="p-2.5 rounded-full bg-stone-900/85 backdrop-blur-md text-white shadow-lg flex items-center justify-center hover:bg-black hover:scale-110 transition-all">
-            <Maximize2 className="w-3.5 h-3.5" />
-          </span>
-        </div>
+      {/* Expand / Maximize Option ONLY — Pure minimal icon */}
+      <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        <span className="p-2.5 rounded-full bg-stone-900/85 backdrop-blur-md text-white shadow-lg flex items-center justify-center hover:bg-black hover:scale-110 transition-all">
+          <Maximize2 className="w-3.5 h-3.5" />
+        </span>
       </div>
     </div>
   );

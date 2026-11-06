@@ -49,7 +49,7 @@ export default async function SocietyDetailPage({
             <ArrowLeft className="w-4 h-4" />
             <span>BACK TO ALL SOCIETIES</span>
           </Link>
-          <span>SOCIETY // {society.slug.toUpperCase()}</span>
+          <span>CULTURAL COUNCIL • {society.name.toUpperCase()}</span>
         </div>
       </div>
 
@@ -66,7 +66,7 @@ export default async function SocietyDetailPage({
                   className="w-2.5 h-2.5 rounded-full"
                   style={{ backgroundColor: society.accentColor }}
                 />
-                <span>CATEGORY // {society.category}</span>
+                <span>{society.category.toUpperCase()}</span>
                 <span>•</span>
                 <span>EST. {society.stats?.foundedYear || 2004}</span>
               </div>
@@ -139,8 +139,8 @@ export default async function SocietyDetailPage({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* Left: About & Craft */}
           <div className="lg:col-span-7 space-y-8">
-            <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-ink-faint">
-              <span>SECTION 01 // ABOUT THE SOCIETY</span>
+            <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-amber-800 font-semibold">
+              <span>ABOUT THE SOCIETY</span>
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-ink">
@@ -163,8 +163,8 @@ export default async function SocietyDetailPage({
 
             {/* Leadership & Coordinators Table */}
             <div className="pt-6">
-              <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-ink-faint mb-4">
-                <span>COORDINATORS &amp; LEADS // CURRENT TENURE</span>
+              <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-stone-500 font-semibold mb-4">
+                <span>COORDINATORS &amp; LEADS</span>
               </div>
 
               <div className="divide-y divide-stone-200 border-y border-stone-300 font-mono text-xs">
@@ -185,8 +185,8 @@ export default async function SocietyDetailPage({
 
           {/* Right: Connect & Social Box */}
           <div className="lg:col-span-5 space-y-8">
-            <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-ink-faint">
-              <span>SECTION 02 // CONNECT &amp; JOIN</span>
+            <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-amber-800 font-semibold">
+              <span>CONNECT &amp; JOIN</span>
             </div>
 
             <div className="bg-[#F4F1EA] p-8 rounded-2xl border border-stone-300 space-y-6 shadow-soft">
@@ -249,9 +249,9 @@ export default async function SocietyDetailPage({
       {/* 4. Society Events */}
       {societyEvents.length > 0 && (
         <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-300">
-          <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-ink-faint mb-8 flex items-center justify-between">
-            <span>SECTION 03 // EVENTS &amp; PERFORMANCES</span>
-            <span>{societyEvents.length} EVENTS</span>
+          <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-amber-800 font-semibold mb-8 flex items-center justify-between">
+            <span>UPCOMING EVENTS &amp; PERFORMANCES</span>
+            <span className="text-stone-500 font-normal">{societyEvents.length} EVENTS</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -2,10 +2,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Sparkles,
   ArrowRight,
   ArrowUpRight,
-  ShieldCheck,
   Camera,
   Music,
   Palette,
@@ -83,9 +81,8 @@ export function CinematicAboutSection() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start pb-14 border-b border-stone-300/80">
         {/* Left Column: Monumental Headline */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-900 font-mono text-xs uppercase tracking-wider">
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-700" />
-            <span>ESTD. 1999 • INSTITUTE OF NATIONAL IMPORTANCE</span>
+          <div className="font-mono text-xs uppercase tracking-widest text-amber-800 font-semibold">
+            IIIT ALLAHABAD • CULTURAL COUNCIL
           </div>
 
           <h2 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-[-0.035em] text-ink leading-[0.93]">
@@ -111,7 +108,7 @@ export function CinematicAboutSection() {
               vibrant and welcoming campus community.
             </p>
             <p className="font-mono text-xs text-stone-500 uppercase tracking-widest pt-1">
-              MANY FORMS. ONE SPIRIT. • MUSIC • DANCE • THEATRE • LITERATURE • ART • MEDIA
+              MUSIC • DANCE • THEATRE • LITERATURE • FINE ARTS • MEDIA
             </p>
           </div>
 
@@ -133,121 +130,76 @@ export function CinematicAboutSection() {
           </div>
         </div>
 
-        {/* Right Column: Council Overview */}
-        <div className="lg:col-span-5 bg-white p-6 sm:p-9 rounded-3xl border border-stone-300/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-stone-200 pb-4">
-            <div className="flex items-center gap-3">
-              <div className="relative w-14 h-14 shrink-0">
-                <Image
-                  src="/images/council-logo.png"
-                  alt="Cultural Council Official Crest"
-                  fill
-                  sizes="56px"
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-serif font-bold text-base text-ink leading-tight">
-                  Cultural Council
-                </span>
-                <span className="font-mono text-[9px] uppercase tracking-wider text-ink-faint">
-                  SHDC • IIIT ALLAHABAD
-                </span>
-              </div>
-            </div>
-            <span className="font-mono text-[10px] text-amber-800 font-bold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200/60">
-              ESTD. 1999
-            </span>
+        {/* Right Column: Genuine Campus Community Feature */}
+        <div className="lg:col-span-5 bg-white p-5 sm:p-7 rounded-3xl border border-stone-300/90 shadow-sm space-y-5">
+          <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-stone-100 border border-stone-200">
+            <Image
+              src="/images/gallery/pronite-crowd.jpg"
+              alt="Students gathered at campus cultural fest"
+              fill
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover"
+              priority
+            />
           </div>
 
-          <div className="space-y-4">
-            <div className="flex items-baseline justify-between border-b border-stone-100 pb-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-stone-500">
-                Cultural Societies
-              </span>
-              <div className="text-right">
-                <span className="font-serif text-3xl font-bold text-ink">06</span>
-                <span className="block font-mono text-[9px] text-stone-400">
-                  ACTIVE SOCIETIES
-                </span>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="relative w-8 h-8 shrink-0">
+                  <Image
+                    src="/images/council-logo.png"
+                    alt="Cultural Council Crest"
+                    fill
+                    sizes="32px"
+                    className="object-contain"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-serif font-bold text-base text-ink leading-none">
+                    Cultural Council
+                  </h4>
+                  <span className="font-mono text-[10px] text-stone-500 uppercase tracking-wider">
+                    Student Activity Center • IIIT Allahabad
+                  </span>
+                </div>
               </div>
+              <span className="font-mono text-[11px] text-amber-800 font-bold bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200/60">
+                ESTD. 1999
+              </span>
             </div>
 
-            <div className="flex items-baseline justify-between border-b border-stone-100 pb-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-stone-500">
-                Annual Events
-              </span>
-              <div className="text-right">
-                <span className="font-serif text-3xl font-bold text-ink">75+</span>
-                <span className="block font-mono text-[9px] text-stone-400">
-                  EVENTS / YEAR
-                </span>
-              </div>
-            </div>
+            <p className="font-sans text-xs text-ink-muted leading-relaxed">
+              From open acoustic jam sessions on the library lawns to street plays, dance cyphers, and annual pro-nights, the Cultural Council provides the stage, rehearsal spaces, and community for student artists across campus.
+            </p>
 
-            <div className="flex items-baseline justify-between border-b border-stone-100 pb-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-stone-500">
-                Festival Footfall
-              </span>
-              <div className="text-right">
-                <span className="font-serif text-3xl font-bold text-ink">2,500+</span>
-                <span className="block font-mono text-[9px] text-amber-700">
-                  EFFERVESCENCE ARENA
-                </span>
-              </div>
+            <div className="pt-2 flex items-center justify-between font-mono text-xs text-ink">
+              <Link
+                href="/societies"
+                className="group inline-flex items-center gap-1.5 uppercase tracking-wider font-semibold hover:text-amber-800 transition-colors"
+              >
+                <span>Explore the 6 Societies</span>
+                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-amber-700" />
+              </Link>
             </div>
-
-            <div className="flex items-baseline justify-between border-b border-stone-100 pb-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-stone-500">
-                Student Members
-              </span>
-              <div className="text-right">
-                <span className="font-serif text-3xl font-bold text-ink">320+</span>
-                <span className="block font-mono text-[9px] text-stone-400">
-                  ACROSS SOCIETIES
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-baseline justify-between pt-1">
-              <span className="font-mono text-xs uppercase tracking-wider text-stone-500">
-                Main Venues
-              </span>
-              <div className="text-right">
-                <span className="font-serif text-lg font-bold text-ink">
-                  1,000 Audi + 3,500 OAT
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-2 border-t border-stone-200">
-            <Link
-              href="/societies"
-              className="group flex items-center justify-between text-xs font-mono uppercase tracking-widest text-ink hover:text-stone-600 transition-colors"
-            >
-              <span>Explore All 6 Societies</span>
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-amber-700" />
-            </Link>
           </div>
         </div>
       </div>
 
-      {/* 3. "MANY FORMS. ONE SPIRIT." — THE SIX SOCIETIES MATRIX */}
+      {/* 3. THE SIX SOCIETIES MATRIX */}
       <div className="pt-12 sm:pt-16">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-amber-700 font-bold mb-1">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>MANY FORMS. ONE SPIRIT.</span>
+            <div className="font-mono text-xs uppercase tracking-widest text-amber-800 font-semibold mb-1">
+              CAMPUS CULTURAL SOCIETIES
             </div>
             <h3 className="font-serif text-2xl sm:text-4xl font-bold tracking-tight text-ink">
               Six Societies, One Creative Community
             </h3>
           </div>
           <p className="max-w-md font-sans text-xs text-ink-muted leading-relaxed">
-            Each society is led by passionate student coordinators who organize regular
-            sessions, workshops, competitions, and flagship festival events throughout the year.
+            Each society is led by student coordinators who organize regular
+            sessions, workshops, competitions, and festival events throughout the year.
           </p>
         </div>
 
@@ -267,8 +219,8 @@ export function CinematicAboutSection() {
                         className="w-2 h-2 rounded-full"
                         style={{ backgroundColor: item.accent }}
                       />
-                      <span className="font-mono text-xs font-bold text-ink">
-                        {item.num} // {item.name}
+                      <span className="font-serif font-bold text-base text-ink">
+                        {item.name}
                       </span>
                     </div>
                     <Icon
@@ -278,10 +230,10 @@ export function CinematicAboutSection() {
                   </div>
 
                   <div>
-                    <h4 className="font-serif text-xl font-bold text-ink group-hover:text-stone-700 transition-colors">
+                    <h4 className="font-mono text-xs uppercase tracking-wider text-stone-500 font-semibold">
                       {item.discipline}
                     </h4>
-                    <p className="text-xs text-ink-muted leading-relaxed pt-1 font-sans">
+                    <p className="text-xs text-ink-muted leading-relaxed pt-1.5 font-sans">
                       {item.tagline}
                     </p>
                   </div>

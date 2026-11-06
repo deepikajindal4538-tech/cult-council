@@ -155,12 +155,12 @@ export function HeroSlider({}: HeroSliderProps) {
           }}
         />
 
-        {/* Reduced, subtle bottom fade to connect smoothly with the canvas background */}
+        {/* Generous smooth bottom fade to connect seamlessly with the canvas background */}
         <div
-          className="absolute inset-x-0 bottom-0 h-16 sm:h-24 pointer-events-none z-10"
+          className="absolute inset-x-0 bottom-0 h-28 sm:h-44 pointer-events-none z-10"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(250,248,245,0) 0%, rgba(250,248,245,0.3) 60%, #FAF8F5 100%)",
+              "linear-gradient(to bottom, rgba(250,248,245,0) 0%, rgba(250,248,245,0.4) 50%, rgba(250,248,245,0.85) 80%, #FAF8F5 100%)",
           }}
         />
       </div>

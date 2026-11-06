@@ -16,8 +16,8 @@ interface DynamicCountdownConfig {
 
 const DEFAULT_CONFIG: DynamicCountdownConfig = {
   targetDate: "2027-02-01T00:00:00.000Z",
-  stageEyebrow: "COUNTDOWN TO FEBRUARY // ARENA STAGE",
-  festivalSubtitle: "PRO-NIGHT IGNITION",
+  stageEyebrow: "ANNUAL CULTURAL FESTIVAL",
+  festivalSubtitle: "EFFERVESCENCE '27",
   edition: "Edition 22",
   isLive: true,
 };
@@ -142,15 +142,12 @@ export function FestivalCountdown({ targetDate }: FestivalCountdownProps) {
       {/* Header Bar */}
       <div className="flex items-center justify-between border-b border-stone-100 pb-2.5 mb-3">
         <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-600" />
-          </span>
+          <span className="w-2 h-2 rounded-full bg-amber-600" />
           <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold text-amber-900">
             {config.stageEyebrow}
           </span>
         </div>
-        <span className="font-mono text-[10px] uppercase tracking-wider text-stone-400">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-stone-500 font-medium">
           {config.festivalSubtitle}
         </span>
       </div>
