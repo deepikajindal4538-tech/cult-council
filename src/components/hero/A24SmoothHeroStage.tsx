@@ -20,18 +20,18 @@ export function A24SmoothHeroStage({
   const containerRef = useRef<HTMLDivElement>(null);
   const n = societies.length;
 
-  // Responsive push distance calculation
-  const [dimensions, setDimensions] = useState({ pushX: 200, nameShiftX: 200, isMobile: false });
+  // Responsive push distance calculation - shifted further right
+  const [dimensions, setDimensions] = useState({ pushX: 330, nameShiftX: 200, isMobile: false });
 
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
       if (w < 768) {
-        setDimensions({ pushX: 45, nameShiftX: 45, isMobile: true });
+        setDimensions({ pushX: 75, nameShiftX: 45, isMobile: true });
       } else if (w < 1024) {
-        setDimensions({ pushX: 140, nameShiftX: 140, isMobile: false });
+        setDimensions({ pushX: 220, nameShiftX: 140, isMobile: false });
       } else {
-        setDimensions({ pushX: 210, nameShiftX: 210, isMobile: false });
+        setDimensions({ pushX: 330, nameShiftX: 200, isMobile: false });
       }
     };
 
@@ -142,7 +142,7 @@ export function A24SmoothHeroStage({
             const exitRatio = Math.min(1, Math.max(0, (-rawDelta - 0.35) / 0.30));
             const easeExit = exitRatio * exitRatio;
 
-            const sweepLeft = easeExit * (isMobile ? 650 : 1300);
+            const sweepLeft = easeExit * (isMobile ? 700 : 1500);
             iconX = pushX - sweepLeft;
             iconY = easeExit * (isMobile ? 40 : 80);
             iconScale = Math.max(0.65, 1 - exitRatio * 0.35);
