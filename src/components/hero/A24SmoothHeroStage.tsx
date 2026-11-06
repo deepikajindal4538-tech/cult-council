@@ -21,17 +21,26 @@ export function A24SmoothHeroStage({
   const n = societies.length;
 
   // Responsive push distance calculation - shifted further right
-  const [dimensions, setDimensions] = useState({ pushX: 330, nameShiftX: 200, isMobile: false });
+  const [dimensions, setDimensions] = useState({
+    pushX: 410,
+    nameShiftX: 260,
+    isMobile: false,
+    width: 1440,
+  });
 
   useEffect(() => {
     const handleResize = () => {
       const w = window.innerWidth;
-      if (w < 768) {
-        setDimensions({ pushX: 75, nameShiftX: 45, isMobile: true });
+      if (w < 640) {
+        setDimensions({ pushX: 85, nameShiftX: 55, isMobile: true, width: w });
+      } else if (w < 768) {
+        setDimensions({ pushX: 110, nameShiftX: 70, isMobile: true, width: w });
       } else if (w < 1024) {
-        setDimensions({ pushX: 220, nameShiftX: 140, isMobile: false });
+        setDimensions({ pushX: 250, nameShiftX: 160, isMobile: false, width: w });
+      } else if (w < 1366) {
+        setDimensions({ pushX: 350, nameShiftX: 220, isMobile: false, width: w });
       } else {
-        setDimensions({ pushX: 330, nameShiftX: 200, isMobile: false });
+        setDimensions({ pushX: 420, nameShiftX: 260, isMobile: false, width: w });
       }
     };
 
@@ -40,7 +49,7 @@ export function A24SmoothHeroStage({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const { pushX, nameShiftX, isMobile } = dimensions;
+  const { pushX, nameShiftX, isMobile, width } = dimensions;
 
   return (
     <div
@@ -64,9 +73,27 @@ export function A24SmoothHeroStage({
           const isCurrent = Math.abs(rawDelta) < 0.35;
           const zIndex = 20;
 
+          const isClapboard =
+            soc.objectConfig?.type === "clapboard" ||
+            soc.slug === "rangtarangini" ||
+            soc.name?.toLowerCase().includes("rangtarangini");
+
+          const isLongName =
+            (soc.name && soc.name.length > 9) || soc.slug === "rangtarangini";
+
+          // Extra rightward shift for clapboard / Rangtarangini to provide 100% clearance for long names
+          const clapboardBonus = isMobile ? 40 : width < 1366 ? 90 : 130;
+          const itemPushX = isClapboard ? pushX + clapboardBonus : pushX;
+
+          // Extra leftward shift for long watermark names (e.g. RANGTARANGINI)
+          const nameBonus = isLongName ? (isMobile ? 30 : 80) : 0;
+          const itemNameShiftX = nameShiftX + nameBonus;
+
+          const displayName = (soc.slug === "ams" ? "AMS" : soc.name).toUpperCase();
+
           // Phase Calculations:
           // 1. Top-Right Incoming (0.15 < rawDelta <= 0.45): Icon swoops in from far top-right corner to center (0,0)
-          // 2. Push & Reveal (0 <= rawDelta <= 0.15): Name unfolds to the left, pushing icon rightwards to (+pushX)
+          // 2. Push & Reveal (0 <= rawDelta <= 0.15): Name unfolds to the left, pushing icon rightwards to (+itemPushX)
           // 3. Dwell (-0.35 <= rawDelta < 0): Settled position (name left, icon right)
           // 4. Exit to Bottom-Left (-0.65 <= rawDelta < -0.35): Drifts down towards bottom-left and dissolves to 0
 
@@ -92,7 +119,7 @@ export function A24SmoothHeroStage({
             const easeEntry = Math.sin(entry * Math.PI * 0.5);
 
             // Perched far up in the top-right corner (never touches center until easeEntry approaches 1)
-            const startX = pushX + (isMobile ? 260 : 480);
+            const startX = itemPushX + (isMobile ? 260 : 480);
             const startY = -(isMobile ? 200 : 360);
 
             iconX = (1 - easeEntry) * startX;
@@ -112,27 +139,27 @@ export function A24SmoothHeroStage({
             const pushRatio = (0.15 - rawDelta) / 0.15;
             const easePush = 1 - Math.pow(1 - pushRatio, 3); // smooth cubic-out push
 
-            // Icon is pushed rightwards from center (0) to (+pushX)
-            iconX = easePush * pushX;
+            // Icon is pushed rightwards from center (0) to (+itemPushX)
+            iconX = easePush * itemPushX;
             iconY = 0;
             iconScale = 1;
             iconOpacity = 1;
             iconRotateZ = 0;
 
-            // Full society name emerges from behind the icon towards the left (-nameShiftX)
-            nameX = -easePush * nameShiftX;
+            // Full society name emerges from behind the icon towards the left (-itemNameShiftX)
+            nameX = -easePush * itemNameShiftX;
             nameY = 0;
             nameOpacity = easePush * 0.14;
             nameScale = 0.88 + 0.12 * easePush;
           } else if (rawDelta >= -0.35) {
             // PHASE 3: Dwell (-0.35 <= rawDelta < 0)
-            iconX = pushX;
+            iconX = itemPushX;
             iconY = 0;
             iconScale = 1;
             iconOpacity = 1;
             iconRotateZ = 0;
 
-            nameX = -nameShiftX;
+            nameX = -itemNameShiftX;
             nameY = 0;
             nameOpacity = 0.14;
             nameScale = 1;
@@ -143,13 +170,13 @@ export function A24SmoothHeroStage({
             const easeExit = exitRatio * exitRatio;
 
             const sweepLeft = easeExit * (isMobile ? 700 : 1500);
-            iconX = pushX - sweepLeft;
+            iconX = itemPushX - sweepLeft;
             iconY = easeExit * (isMobile ? 40 : 80);
             iconScale = Math.max(0.65, 1 - exitRatio * 0.35);
             iconOpacity = Math.max(0, 1 - exitRatio * 1.35);
             iconRotateZ = -easeExit * 20;
 
-            nameX = -nameShiftX - easeExit * (isMobile ? 350 : 700);
+            nameX = -itemNameShiftX - easeExit * (isMobile ? 350 : 700);
             nameY = easeExit * (isMobile ? 40 : 80);
             nameOpacity = Math.max(0, 0.14 * (1 - exitRatio * 1.4));
             nameScale = Math.max(0.7, 1 - exitRatio * 0.3);
@@ -175,15 +202,25 @@ export function A24SmoothHeroStage({
             >
               {/* 1. Full Society Name Watermark Typography: Emerges from behind icon to the left */}
               <div
-                className="absolute pointer-events-none -z-10 flex flex-col items-center justify-center text-center max-w-xl sm:max-w-2xl lg:max-w-4xl px-4"
+                className={`absolute pointer-events-none -z-10 flex flex-col items-center justify-center text-center ${
+                  isLongName
+                    ? "max-w-2xl sm:max-w-3xl lg:max-w-5xl px-2"
+                    : "max-w-xl sm:max-w-2xl lg:max-w-4xl px-4"
+                }`}
                 style={{
                   transform: `translate3d(${nameX.toFixed(1)}px, ${nameY.toFixed(1)}px, 0px) scale(${nameScale.toFixed(3)})`,
                   opacity: Math.min(0.25, Math.max(0, nameOpacity)),
                   willChange: "transform, opacity",
                 }}
               >
-                <span className="font-serif font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.88] tracking-tighter text-stone-900 select-none uppercase">
-                  {soc.name}
+                <span
+                  className={`font-serif font-black whitespace-nowrap leading-[0.88] tracking-tighter text-stone-900 select-none uppercase ${
+                    isLongName
+                      ? "text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl"
+                      : "text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+                  }`}
+                >
+                  {displayName}
                 </span>
               </div>
 
