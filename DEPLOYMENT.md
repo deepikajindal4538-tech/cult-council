@@ -83,7 +83,7 @@ vercel --prod
 
 - [x] **Strict Content-Security-Policy (CSP)**:
   - Default `self` restriction.
-  - Hotlinking restricted to `*.staticflickr.com`, `live.staticflickr.com`, and `images.unsplash.com`.
+  - Hotlinking restricted to `*.staticflickr.com` and `live.staticflickr.com`.
   - Frame ancestors disabled (`frame-ancestors 'none'`) preventing clickjacking.
   - `upgrade-insecure-requests` enabled automatically in production HTTPS.
 - [x] **HSTS (HTTP Strict Transport Security)**:
