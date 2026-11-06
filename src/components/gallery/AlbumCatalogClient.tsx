@@ -224,7 +224,7 @@ export default function AlbumCatalogClient({
                   </span>
                 </div>
                 <div className="font-mono text-xs text-ink-faint hidden sm:block">
-                  {filteredAlbums.length} of {initialAlbums.length} DOSSIERS
+                  {filteredAlbums.length} of {initialAlbums.length} ALBUMS
                 </div>
               </div>
             </div>
@@ -288,27 +288,27 @@ export default function AlbumCatalogClient({
                       <div className="absolute top-3 left-3">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md text-stone-100 font-mono text-[10px] uppercase tracking-wider font-semibold shadow-xs">
                           <Camera className="w-3 h-3 text-amber-300" />
-                          <span>{album.photoCount} PLATES</span>
+                          <span>{album.photoCount} PHOTOS</span>
                         </span>
                       </div>
 
                       <div className="absolute top-3 right-3">
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/95 backdrop-blur-md text-stone-800 font-mono text-[10px] uppercase tracking-wider font-semibold shadow-xs">
                           <Bookmark className="w-3 h-3 text-amber-600" />
-                          <span>DOSSIER-{String(idx + 1).padStart(2, "0")}</span>
+                          <span>ALBUM-{String(idx + 1).padStart(2, "0")}</span>
                         </span>
                       </div>
 
                       {/* Bottom Floating Hover Pill */}
                       <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-ink font-mono text-xs uppercase tracking-wider font-semibold shadow-md group-hover:scale-105 transition-transform">
-                          <span>Examine</span>
+                          <span>View Album</span>
                           <ArrowUpRight className="w-3.5 h-3.5" />
                         </span>
                       </div>
                     </div>
 
-                    {/* Album Dossier Details */}
+                    {/* Album Details */}
                     <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                       <div className="space-y-2">
                         <div className="flex items-center justify-between font-mono text-[11px] text-ink-faint border-b border-stone-100 pb-2">
@@ -338,7 +338,7 @@ export default function AlbumCatalogClient({
                           Official Collection
                         </span>
                         <span className="flex items-center gap-1 font-semibold group-hover:translate-x-1 transition-transform text-amber-800">
-                          <span>View Plates</span>
+                          <span>View Photos</span>
                           <ArrowUpRight className="w-3.5 h-3.5" />
                         </span>
                       </div>
@@ -354,7 +354,7 @@ export default function AlbumCatalogClient({
               </div>
               <div className="space-y-1">
                 <h3 className="font-serif text-xl font-bold text-ink">
-                  No matching major event dossiers found
+                  No matching event albums found
                 </h3>
                 <p className="font-mono text-xs text-ink-muted">
                   Try adjusting your event filter or search query.
