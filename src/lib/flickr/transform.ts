@@ -57,9 +57,11 @@ export function transformAlbumsList(raw: any): TrimmedAlbumsResponse {
     const server = item.server || "65535";
     const primary = item.primary || item.id;
     const secret = item.secret || "";
-    const coverImageUrl = secret
+    const primaryExtras = (item as any).primary_photo_extras;
+    const extrasUrl = primaryExtras?.url_b || primaryExtras?.url_z || primaryExtras?.url_m;
+    const coverImageUrl = extrasUrl || (secret
       ? buildFlickrPhotoUrl(server, primary, secret, "b")
-      : `https://live.staticflickr.com/${server}/${primary}_default_b.jpg`;
+      : `https://live.staticflickr.com/${server}/${primary}_default_b.jpg`);
 
     const count = typeof item.photos === "number"
       ? item.photos

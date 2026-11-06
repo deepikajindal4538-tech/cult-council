@@ -5,6 +5,7 @@ import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
 import { HeroSlider } from "@/components/hero/HeroSlider";
 import { CinematicAboutSection } from "@/components/home/CinematicAboutSection";
 import RevolvingGalleryCarousel from "@/components/gallery/RevolvingGalleryCarousel";
+import { getLiveCarouselRows } from "@/lib/flickr/client";
 import {
   ArrowUpRight,
   Disc,
@@ -28,6 +29,7 @@ import {
 export default async function HomePage() {
   const societies = await getAllSocieties();
   const nextFest = initialFests.find((f) => f.isCurrentOrNext) || initialFests[0];
+  const liveCarousel = await getLiveCarouselRows();
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAF8F5] text-ink selection:bg-stone-300">
@@ -298,10 +300,25 @@ export default async function HomePage() {
       </section>
 
       <RevolvingGalleryCarousel
-        chapterLabel="CHAPTER 05 // VISUAL REPOSITORIES"
-        curatorLabel="CAMPUS ARCHIVES"
+        chapterLabel={
+          liveCarousel.isLive
+            ? "CHAPTER 05 // LIVE FLICKR ARCHIVAL REPOSITORY"
+            : "CHAPTER 05 // VISUAL REPOSITORIES"
+        }
+        curatorLabel={
+          liveCarousel.isLive
+            ? "CAMPUS ARCHIVES • LIVE FLICKR STREAM"
+            : "CAMPUS ARCHIVES"
+        }
         title="Visual Artifacts & Moments"
-        subtitle="Curated high-definition records captured by student photojournalists."
+        subtitle={
+          liveCarousel.isLive
+            ? "High-definition records of live concerts, stage productions, and dance choreography streamed from Flickr."
+            : "Curated high-definition records captured by student photojournalists."
+        }
+        row1={liveCarousel.row1}
+        row2={liveCarousel.row2}
+        row3={liveCarousel.row3}
       />
     </div>
   );

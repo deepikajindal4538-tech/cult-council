@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Camera } from "lucide-react";
-import { getAlbumsWithFallback } from "@/lib/flickr/client";
+import { getAlbumsWithFallback, getLiveCarouselRows } from "@/lib/flickr/client";
 import AlbumCatalogClient from "@/components/gallery/AlbumCatalogClient";
 import RevolvingGalleryCarousel from "@/components/gallery/RevolvingGalleryCarousel";
 
@@ -14,7 +14,10 @@ export const metadata = {
 export const revalidate = 600;
 
 export default async function GalleryPage() {
-  const albumsData = await getAlbumsWithFallback({ page: 1, per_page: 30 });
+  const [albumsData, liveCarousel] = await Promise.all([
+    getAlbumsWithFallback({ page: 1, per_page: 30 }),
+    getLiveCarouselRows(),
+  ]);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#FAF8F5] text-ink selection:bg-stone-300">
@@ -45,13 +48,28 @@ export default async function GalleryPage() {
         </div>
       </section>
 
-      {/* 3-Row Revolving Carousel Showcase with 50-Plate Reserve */}
+      {/* 3-Row Revolving Carousel Showcase with Live Flickr / Archival Stream */}
       <RevolvingGalleryCarousel
-        chapterLabel="CONTINUOUS ARCHIVAL STREAM // 50-PLATE RESERVE"
-        curatorLabel="AMS REPOSITORY • 50 CURATED PERFORMANCE PLATES"
+        chapterLabel={
+          liveCarousel.isLive
+            ? "LIVE FLICKR ARCHIVAL STREAM // REST UPSTREAM"
+            : "CONTINUOUS ARCHIVAL STREAM // 50-PLATE RESERVE"
+        }
+        curatorLabel={
+          liveCarousel.isLive
+            ? "AMS REPOSITORY • STREAMING LIVE VIA FLICKR API"
+            : "AMS REPOSITORY • 50 CURATED PERFORMANCE PLATES"
+        }
         title="Living Exhibition Stream"
-        subtitle="Three revolving streams of pro-night symphonies, arena crowds, dance choreography, and dramatic moments drawn from the 50-image reserve."
+        subtitle={
+          liveCarousel.isLive
+            ? "Three revolving streams of festival pro-nights, dance battles, theatrical plays, and classical concerts streamed live via Flickr."
+            : "Three revolving streams of pro-night symphonies, arena crowds, dance choreography, and dramatic moments drawn from the 50-image reserve."
+        }
         showCatalogLink={false}
+        row1={liveCarousel.row1}
+        row2={liveCarousel.row2}
+        row3={liveCarousel.row3}
       />
 
       {/* Major Event Collective Albums Catalog */}

@@ -5,6 +5,7 @@ import {
   paginationQuerySchema,
   TrimmedAlbumsResponse,
   TrimmedAlbumPhotosResponse,
+  TrimmedPhoto,
 } from "./schemas";
 import { transformAlbumsList, transformAlbumPhotos } from "./transform";
 import { cache } from "../cache";
@@ -61,15 +62,17 @@ async function callFlickrApi<T>(
   const apiKey = process.env.FLICKR_API_KEY;
   const userId = process.env.FLICKR_USER_ID;
 
-  if (!apiKey || !userId) {
-    throw new FlickrClientError("Gallery configuration is incomplete.", 503);
+  if (!apiKey) {
+    throw new FlickrClientError("Gallery configuration is incomplete: Missing API Key.", 503);
   }
 
   // 4. Construct URL with parameters
   const url = new URL(FLICKR_REST_ENDPOINT);
   url.searchParams.set("method", method);
   url.searchParams.set("api_key", apiKey);
-  url.searchParams.set("user_id", userId);
+  if (userId && !userId.includes("mock") && method !== "flickr.photos.search") {
+    url.searchParams.set("user_id", userId);
+  }
   url.searchParams.set("format", "json");
   url.searchParams.set("nojsoncallback", "1");
 
@@ -191,6 +194,203 @@ export interface GalleryAlbumPhotosResult extends TrimmedAlbumPhotosResponse {
   description?: string;
 }
 
+export const ALBUM_SEARCH_TOPICS: Record<
+  string,
+  { query: string; defaultTitle: string; curator: string; category: string; description: string }
+> = {
+  "72177720315482910": {
+    query: "cultural festival concert stage performance crowd arena",
+    defaultTitle: "Effervescence '25: Pro-Night Symphonies & Headline Arena",
+    curator: "AMS Archives • Effervescence Core",
+    category: "Effervescence Fest",
+    description: "Multi-genre concerts, headline rock nights, DJ arena euphorias, and electric audience energies captured live under the arena floodlights.",
+  },
+  "72177720315482911": {
+    query: "theatre stage play drama actors proscenium",
+    defaultTitle: "Goonj Annual Theatre Guild: Street Plays & Proscenium Stage",
+    curator: "AMS Archives • Goonj Guild",
+    category: "Goonj Theatrics",
+    description: "Raw emotions, thunderous dholak street plays at the main plaza, and nuanced proscenium productions exploring historical and socio-political themes.",
+  },
+  "72177720315482912": {
+    query: "acoustic guitar live music concert violinist classical piano",
+    defaultTitle: "Virtuosi Acoustic Sessions: Unplugged & Classical Night",
+    curator: "AMS Archives • Virtuosi Music Society",
+    category: "Virtuosi Music",
+    description: "Unplugged acoustic jam circles, classical violin solos, electric guitar face-offs, and late-night choir recitals at the open-air theatre.",
+  },
+  "72177720315482913": {
+    query: "stage dance choreography dancers performance hiphop",
+    defaultTitle: "Geneticx Dance Battles: Choreonite & Western Duos",
+    curator: "AMS Archives • Geneticx Society",
+    category: "Geneticx Dance",
+    description: "High-voltage choreography, synchronized formations, freestyle street battles, and classical-contemporary fusion showdowns.",
+  },
+  "72177720315482914": {
+    query: "art exhibition canvas painting artwork installations",
+    defaultTitle: "Nirmiti Fine Arts Showcase: Live Canvas & Installations",
+    curator: "AMS Archives • Nirmiti Fine Arts",
+    category: "Couture & Fine Arts",
+    description: "Live speed-painting, midnight mural marathons, charcoal portraits, and sculptural installations transforming campus corridors.",
+  },
+  "72177720315482915": {
+    query: "poetry slam recitation debate literature spoken word stage",
+    defaultTitle: "Sarasva Poetry Slam & National Parliamentary Debate",
+    curator: "AMS Archives • Sarasva Literary",
+    category: "Sarasva Literary",
+    description: "Passionate orations, fierce parliamentary cross-examinations, bilingual poetry recitations, and literary salon discourses.",
+  },
+};
+
+export async function searchLiveFlickrPhotos(
+  searchQuery: { text?: string; tags?: string; per_page?: number; page?: number },
+  customFetcher?: typeof fetch
+): Promise<TrimmedPhoto[]> {
+  const per_page = Math.min(Math.max(searchQuery.per_page || 12, 1), 50);
+  const page = Math.max(searchQuery.page || 1, 1);
+  const cacheKey = `flickr:search:text=${searchQuery.text || ""}:tags=${searchQuery.tags || ""}:page=${page}:per=${per_page}`;
+
+  const cached = cache.get<TrimmedPhoto[]>(cacheKey);
+  if (cached) return cached;
+
+  const apiKey = process.env.FLICKR_API_KEY;
+  if (!apiKey || apiKey.includes("mock")) {
+    return [];
+  }
+
+  const params: Record<string, string | number> = {
+    page,
+    per_page,
+    extras: "url_q,url_z,url_b,width_z,height_z,width_b,height_b",
+    format: "json",
+    nojsoncallback: "1",
+    sort: "interestingness-desc",
+  };
+  if (searchQuery.text) params.text = searchQuery.text;
+  if (searchQuery.tags) {
+    params.tags = searchQuery.tags;
+    params.tag_mode = "any";
+  }
+
+  try {
+    const raw = await callFlickrApi<{ photos?: { photo: any[] } }>(
+      {
+        method: "flickr.photos.search",
+        params,
+        customFetcher,
+      },
+      cacheKey,
+      (json) => json
+    );
+
+    const photosList = raw?.photos?.photo || [];
+    const transformed: TrimmedPhoto[] = photosList.map((p) => {
+      const server = p.server;
+      const id = p.id;
+      const secret = p.secret;
+
+      const baseStatic = `https://live.staticflickr.com/${server}/${id}_${secret}`;
+      const displayUrl = p.url_z || `${baseStatic}_z.jpg`;
+      const thumbnailUrl = p.url_q || `${baseStatic}_q.jpg`;
+      const fullUrl = p.url_b || `${baseStatic}_b.jpg`;
+
+      return {
+        id: String(p.id),
+        title: p.title || "Cultural Archive Plate",
+        thumbnailUrl,
+        displayUrl,
+        fullUrl,
+        width: Number(p.width_z) || 640,
+        height: Number(p.height_z) || 427,
+      };
+    });
+
+    cache.set(cacheKey, transformed, 600);
+    return transformed;
+  } catch (err) {
+    console.warn("[FlickrClient] searchLiveFlickrPhotos failed:", err instanceof Error ? err.message : err);
+    return [];
+  }
+}
+
+export interface CarouselPlate {
+  id: string;
+  title: string;
+  discipline: string;
+  category: string;
+  url: string;
+  width?: number;
+  height?: number;
+}
+
+export async function getLiveCarouselRows(): Promise<{
+  row1?: CarouselPlate[];
+  row2?: CarouselPlate[];
+  row3?: CarouselPlate[];
+  isLive: boolean;
+}> {
+  const apiKey = process.env.FLICKR_API_KEY;
+  const userId = process.env.FLICKR_USER_ID;
+
+  // Only query live Flickr stream if an explicit, non-mock college Flickr account is configured
+  if (!apiKey || apiKey.includes("mock") || !userId || userId.includes("mock") || isFlickrKilled()) {
+    return { isLive: false };
+  }
+
+  try {
+    const albumsRes = await getAlbums({ page: 1, per_page: 8 });
+    const albums = albumsRes.albums || [];
+    if (albums.length === 0) {
+      return { isLive: false };
+    }
+
+    const a1 = albums[0]?.id;
+    const a2 = albums[1]?.id;
+    const a3 = albums[2]?.id;
+
+    const [p1, p2, p3] = await Promise.all([
+      a1 ? getAlbumPhotos(a1, { per_page: 14 }) : Promise.resolve({ photos: [] }),
+      a2 ? getAlbumPhotos(a2, { per_page: 14 }) : Promise.resolve({ photos: [] }),
+      a3 ? getAlbumPhotos(a3, { per_page: 14 }) : Promise.resolve({ photos: [] }),
+    ]);
+
+    const row1: CarouselPlate[] = (p1.photos || []).map((p) => ({
+      id: p.id,
+      title: p.title || "AMS Performance Archive",
+      discipline: albums[0]?.title || "Acoustics & Media Society",
+      category: "AMS IIITA ARCHIVE",
+      url: p.displayUrl,
+      width: p.width,
+      height: p.height,
+    }));
+
+    const row2: CarouselPlate[] = (p2.photos || []).map((p) => ({
+      id: p.id,
+      title: p.title || "AMS Performance Archive",
+      discipline: albums[1]?.title || "Acoustics & Media Society",
+      category: "AMS IIITA ARCHIVE",
+      url: p.displayUrl,
+      width: p.width,
+      height: p.height,
+    }));
+
+    const row3: CarouselPlate[] = (p3.photos || []).map((p) => ({
+      id: p.id,
+      title: p.title || "AMS Performance Archive",
+      discipline: albums[2]?.title || "Acoustics & Media Society",
+      category: "AMS IIITA ARCHIVE",
+      url: p.displayUrl,
+      width: p.width,
+      height: p.height,
+    }));
+
+    return { row1, row2, row3, isLive: true };
+  } catch (err) {
+    console.warn("[FlickrClient] Failed to build live AMS carousel rows:", err);
+    return { isLive: false };
+  }
+}
+
 /**
  * Resilient gallery fetchers that seamlessly switch between live Flickr and curated fallbacks
  */
@@ -206,22 +406,24 @@ export async function getAlbumsWithFallback(
   const apiKey = process.env.FLICKR_API_KEY;
   const userId = process.env.FLICKR_USER_ID;
 
-  if (!apiKey || !userId || apiKey.includes("mock") || userId.includes("mock")) {
+  // If user ID is mock or not yet set, serve verified IIITA campus datasets exclusively
+  if (!apiKey || apiKey.includes("mock") || !userId || userId.includes("mock")) {
     const fallback = getFallbackAlbumsResponse(query.page || 1, query.per_page || 20);
     return { ...fallback, isLiveFlickr: false };
   }
 
+  // 1. Fetch user's college-specific photosets from Flickr
   try {
     const live = await getAlbums(query);
-    return { ...live, isLiveFlickr: true };
+    if (live.albums && live.albums.length > 0) {
+      return { ...live, isLiveFlickr: true };
+    }
   } catch (err) {
-    console.warn(
-      "[FlickrClient] Upstream fetch failed, serving curated fallback albums:",
-      err instanceof Error ? err.message : err
-    );
-    const fallback = getFallbackAlbumsResponse(query.page || 1, query.per_page || 20);
-    return { ...fallback, isLiveFlickr: false };
+    console.warn("[FlickrClient] Upstream user photosets fetch failed, falling back to curated IIITA dataset:", err);
   }
+
+  const fallback = getFallbackAlbumsResponse(query.page || 1, query.per_page || 20);
+  return { ...fallback, isLiveFlickr: false };
 }
 
 export async function getAlbumPhotosWithFallback(
@@ -247,7 +449,8 @@ export async function getAlbumPhotosWithFallback(
   const apiKey = process.env.FLICKR_API_KEY;
   const userId = process.env.FLICKR_USER_ID;
 
-  if (!apiKey || !userId || apiKey.includes("mock") || userId.includes("mock")) {
+  // If user ID is mock or not yet set, serve verified IIITA campus datasets exclusively
+  if (!apiKey || apiKey.includes("mock") || !userId || userId.includes("mock")) {
     const fallback = getFallbackAlbumPhotosResponse(albumId, query.page || 1, query.per_page || 20);
     if (!fallback) return null;
     return {
@@ -259,6 +462,7 @@ export async function getAlbumPhotosWithFallback(
     };
   }
 
+  // 1. Fetch user's college-specific album photos from Flickr
   try {
     const live = await getAlbumPhotos(albumId, query);
     return {
@@ -269,20 +473,18 @@ export async function getAlbumPhotosWithFallback(
       description: enriched?.description || "",
     };
   } catch (err) {
-    console.warn(
-      `[FlickrClient] Upstream fetch for album ${albumId} failed, serving curated fallback:`,
-      err instanceof Error ? err.message : err
-    );
-    const fallback = getFallbackAlbumPhotosResponse(albumId, query.page || 1, query.per_page || 20);
-    if (!fallback) return null;
-    return {
-      ...fallback,
-      isLiveFlickr: false,
-      curator: enriched?.curator,
-      category: enriched?.category,
-      description: enriched?.description,
-    };
+    console.warn(`[FlickrClient] Remote album fetch for ${albumId} failed, serving curated fallback:`, err);
   }
+
+  const fallback = getFallbackAlbumPhotosResponse(albumId, query.page || 1, query.per_page || 20);
+  if (!fallback) return null;
+  return {
+    ...fallback,
+    isLiveFlickr: false,
+    curator: enriched?.curator,
+    category: enriched?.category,
+    description: enriched?.description,
+  };
 }
 
 /**
