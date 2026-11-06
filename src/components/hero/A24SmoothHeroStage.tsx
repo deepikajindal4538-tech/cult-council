@@ -22,8 +22,8 @@ export function A24SmoothHeroStage({
 
   // Responsive push distance calculation - shifted further right
   const [dimensions, setDimensions] = useState({
-    pushX: 410,
-    nameShiftX: 260,
+    pushX: 420,
+    nameShiftX: 180,
     isMobile: false,
     width: 1440,
   });
@@ -32,15 +32,15 @@ export function A24SmoothHeroStage({
     const handleResize = () => {
       const w = window.innerWidth;
       if (w < 640) {
-        setDimensions({ pushX: 85, nameShiftX: 55, isMobile: true, width: w });
+        setDimensions({ pushX: 85, nameShiftX: 35, isMobile: true, width: w });
       } else if (w < 768) {
-        setDimensions({ pushX: 110, nameShiftX: 70, isMobile: true, width: w });
+        setDimensions({ pushX: 110, nameShiftX: 50, isMobile: true, width: w });
       } else if (w < 1024) {
-        setDimensions({ pushX: 250, nameShiftX: 160, isMobile: false, width: w });
+        setDimensions({ pushX: 250, nameShiftX: 110, isMobile: false, width: w });
       } else if (w < 1366) {
-        setDimensions({ pushX: 350, nameShiftX: 220, isMobile: false, width: w });
+        setDimensions({ pushX: 350, nameShiftX: 150, isMobile: false, width: w });
       } else {
-        setDimensions({ pushX: 420, nameShiftX: 260, isMobile: false, width: w });
+        setDimensions({ pushX: 420, nameShiftX: 180, isMobile: false, width: w });
       }
     };
 
@@ -78,18 +78,20 @@ export function A24SmoothHeroStage({
             soc.slug === "rangtarangini" ||
             soc.name?.toLowerCase().includes("rangtarangini");
 
+          const isAms = soc.slug === "ams" || soc.name?.toLowerCase().includes("acoustics");
+
+          const displayName = isAms ? "THUNDERBOLT AMS" : (soc.name || "").toUpperCase();
+
           const isLongName =
-            (soc.name && soc.name.length > 9) || soc.slug === "rangtarangini";
+            displayName.length > 9 || soc.slug === "rangtarangini" || isAms;
 
-          // Extra rightward shift for clapboard / Rangtarangini to provide 100% clearance for long names
-          const clapboardBonus = isMobile ? 40 : width < 1366 ? 90 : 130;
-          const itemPushX = isClapboard ? pushX + clapboardBonus : pushX;
+          // Extra rightward shift for clapboard and camera (Thunderbolt AMS) to provide 100% clearance for long names
+          const itemBonus = (isClapboard || isAms) ? (isMobile ? 40 : width < 1366 ? 85 : 125) : 0;
+          const itemPushX = pushX + itemBonus;
 
-          // Extra leftward shift for long watermark names (e.g. RANGTARANGINI)
-          const nameBonus = isLongName ? (isMobile ? 30 : 80) : 0;
+          // Extra leftward shift for long watermark names (e.g. THUNDERBOLT AMS, RANGTARANGINI)
+          const nameBonus = isLongName ? (isMobile ? 15 : 40) : 0;
           const itemNameShiftX = nameShiftX + nameBonus;
-
-          const displayName = (soc.slug === "ams" ? "AMS" : soc.name).toUpperCase();
 
           // Phase Calculations:
           // 1. Top-Right Incoming (0.15 < rawDelta <= 0.45): Icon swoops in from far top-right corner to center (0,0)
