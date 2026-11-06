@@ -13,17 +13,20 @@ export const initialSocieties = [
       fallbackColor: "#D97706",
     },
     socialLinks: {
-      instagram: "https://instagram.com/ams_iiita",
+      instagram: "https://instagram.com/thunderboltams",
       youtube: "https://youtube.com/@ams_iiita",
     },
+    email: "ams.society@iiita.ac.in",
     leads: [
-      { name: "Aarav Sharma", role: "Society Head" },
-      { name: "Pooja Mehta", role: "Cinematography Lead" },
+      { name: "Aditya Halwai", role: "Coordinator" },
+      { name: "Jashan Goyal", role: "Coordinator" },
+      { name: "Rajiv Teja", role: "Coordinator" },
     ],
     stats: {
-      membersCount: 45,
+      membersCount: 96,
       eventsPerYear: 14,
       foundedYear: 2005,
+      teamStrengthBreakdown: "3 Coordinators, 8 Senior Members, 18 Members, 67 Volunteers",
     },
   },
   {
@@ -40,16 +43,19 @@ export const initialSocieties = [
       fallbackColor: "#E11D48",
     },
     socialLinks: {
-      instagram: "https://instagram.com/geneticx_crew",
+      instagram: "https://instagram.com/thegeneticxcrew",
     },
+    email: "geneticx.society@iiita.ac.in",
     leads: [
-      { name: "Rohan Nair", role: "Society Head" },
-      { name: "Ananya Iyer", role: "Lead Choreographer" },
+      { name: "Jasmine Rahi", role: "Coordinator" },
+      { name: "Srujan Gawande", role: "Coordinator" },
+      { name: "Vishnu Bhawani", role: "Coordinator" },
     ],
     stats: {
       membersCount: 60,
       eventsPerYear: 16,
       foundedYear: 2004,
+      teamStrengthBreakdown: "3 Coordinators, 15 Senior Members, 22 Members, 33 Volunteers",
     },
   },
   {

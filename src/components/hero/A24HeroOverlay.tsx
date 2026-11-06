@@ -55,80 +55,104 @@ export function A24HeroOverlay({
               </h2>
 
               {/* A24 Hairline Credits Ledger Table (.info-content) */}
-              <div className="w-full border-t border-stone-300/90 text-xs font-mono">
-                {/* 1. COORDINATORS */}
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
-                  <span className="col-span-5 text-[10px] uppercase tracking-wider text-ink-faint">
-                    COORDINATORS
-                  </span>
-                  <span className="col-span-7 font-serif font-medium text-ink text-right text-xs leading-tight">
-                    {society.leads?.map((l: any) => l.name).join(", ") || "Society Head"}
-                  </span>
-                </div>
+              {(() => {
+                const isAms = society.slug === "ams";
 
-                {/* 2. TEAM STRENGTH */}
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
-                  <span className="col-span-5 text-[10px] uppercase tracking-wider text-ink-faint">
-                    TEAM STRENGTH
-                  </span>
-                  <span className="col-span-7 font-serif font-medium text-ink text-right text-xs">
-                    {society.stats?.membersCount || 40}+ Active Members
-                  </span>
-                </div>
+                const coordinators = isAms
+                  ? "Aditya Halwai, Jashan Goyal, Rajiv Teja"
+                  : society.leads?.map((l: any) => l.name).join(", ") || "Society Head";
 
-                {/* 3. EMAIL */}
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
-                  <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    EMAIL
-                  </span>
-                  <a
-                    href={`mailto:${society.slug}@iiita.ac.in`}
-                    className="col-span-8 font-serif font-medium text-ink text-right text-xs truncate hover:underline hover:text-stone-600 transition-colors"
-                  >
-                    {society.slug}@iiita.ac.in
-                  </a>
-                </div>
+                const teamStrength = isAms
+                  ? "3 Coordinators, 8 Senior Members, 18 Members, 67 Volunteers"
+                  : society.stats?.teamStrengthBreakdown || `${society.stats?.membersCount || 40}+ Active Members`;
 
-                {/* 4. INSTAGRAM */}
-                <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
-                  <span className="col-span-5 text-[10px] uppercase tracking-wider text-ink-faint">
-                    INSTAGRAM
-                  </span>
-                  <a
-                    href={
-                      society.socialLinks?.instagram ||
-                      `https://instagram.com/${
+                const email = isAms
+                  ? "ams.society@iiita.ac.in"
+                  : society.email || `${society.slug}@iiita.ac.in`;
+
+                const instagramUrl = isAms
+                  ? "https://instagram.com/thunderboltams"
+                  : society.socialLinks?.instagram ||
+                    `https://instagram.com/${
+                      society.slug === "geneticx"
+                        ? "geneticx_crew"
+                        : `${society.slug}_iiita`
+                    }`;
+
+                const instagramHandle = isAms
+                  ? "@thunderboltams"
+                  : society.socialLinks?.instagram
+                    ? `@${society.socialLinks.instagram
+                        .replace(/^https?:\/\/(www\.)?instagram\.com\//, "")
+                        .replace(/\/$/, "")}`
+                    : `@${
                         society.slug === "geneticx"
                           ? "geneticx_crew"
                           : `${society.slug}_iiita`
-                      }`
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="col-span-7 font-serif font-medium text-amber-800 text-right text-xs truncate hover:underline transition-colors"
-                  >
-                    {society.socialLinks?.instagram
-                      ? `@${society.socialLinks.instagram
-                          .replace(/^https?:\/\/(www\.)?instagram\.com\//, "")
-                          .replace(/\/$/, "")}`
-                      : `@${
-                          society.slug === "geneticx"
-                            ? "geneticx_crew"
-                            : `${society.slug}_iiita`
-                        }`}
-                  </a>
-                </div>
+                      }`;
 
-                {/* 5. ABOUT THE SOCIETY */}
-                <div className="py-2 border-b border-stone-300/90">
-                  <span className="block text-[10px] uppercase tracking-wider text-ink-faint mb-1">
-                    ABOUT THE SOCIETY
-                  </span>
-                  <p className="font-serif text-xs text-stone-700 leading-snug italic line-clamp-2">
-                    &ldquo;{society.description || society.tagline}&rdquo;
-                  </p>
-                </div>
-              </div>
+                return (
+                  <div className="w-full border-t border-stone-300/90 text-xs font-mono">
+                    {/* 1. COORDINATORS */}
+                    <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
+                      <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
+                        COORDINATORS
+                      </span>
+                      <span className="col-span-8 font-serif font-medium text-ink text-right text-xs leading-tight">
+                        {coordinators}
+                      </span>
+                    </div>
+
+                    {/* 2. TEAM STRENGTH */}
+                    <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
+                      <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
+                        TEAM STRENGTH
+                      </span>
+                      <span className="col-span-8 font-serif font-medium text-ink text-right text-xs leading-tight">
+                        {teamStrength}
+                      </span>
+                    </div>
+
+                    {/* 3. EMAIL */}
+                    <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
+                      <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
+                        EMAIL
+                      </span>
+                      <a
+                        href={`mailto:${email}`}
+                        className="col-span-8 font-serif font-medium text-ink text-right text-xs truncate hover:underline hover:text-stone-600 transition-colors"
+                      >
+                        {email}
+                      </a>
+                    </div>
+
+                    {/* 4. INSTAGRAM */}
+                    <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
+                      <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
+                        INSTAGRAM
+                      </span>
+                      <a
+                        href={instagramUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="col-span-8 font-serif font-medium text-amber-800 text-right text-xs truncate hover:underline transition-colors"
+                      >
+                        {instagramHandle}
+                      </a>
+                    </div>
+
+                    {/* 5. ABOUT THE SOCIETY */}
+                    <div className="py-2 border-b border-stone-300/90">
+                      <span className="block text-[10px] uppercase tracking-wider text-ink-faint mb-1">
+                        ABOUT THE SOCIETY
+                      </span>
+                      <p className="font-serif text-xs text-stone-700 leading-snug italic line-clamp-2">
+                        &ldquo;{society.description || society.tagline}&rdquo;
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
             </motion.div>
           </AnimatePresence>
         </div>
