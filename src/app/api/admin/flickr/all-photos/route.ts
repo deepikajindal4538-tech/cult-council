@@ -12,6 +12,8 @@ export async function GET(req: NextRequest) {
   // Summary statistics
   const stats = {
     totalPhotos: photos.length,
+    carouselReserveCount: photos.filter((p) => p.pageLocation === "Revolving Carousel").length,
+    majorEventsCount: 8,
     byLocation: {
       heroSlider: photos.filter((p) => p.pageLocation === "Hero Slider").length,
       revolvingCarousel: photos.filter((p) => p.pageLocation === "Revolving Carousel").length,
