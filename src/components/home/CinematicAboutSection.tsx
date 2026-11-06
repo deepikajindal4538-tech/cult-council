@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   Sparkles,
@@ -230,112 +229,8 @@ export function CinematicAboutSection() {
         </div>
       </div>
 
-      {/* 3. ARTISTIC VISUALS — CINEMATIC GALLERY SPREAD */}
-      <div className="pt-14 pb-16">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 mb-6">
-          <div>
-            <span className="font-mono text-xs text-amber-700 uppercase tracking-widest font-semibold block mb-1">
-              ARCHIVAL VISUAL LEDGER // AMS MEDIA SOCIETY
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-ink tracking-tight">
-              Moments Carved from Campus Dust and Halogen Light
-            </h3>
-          </div>
-          <p className="font-mono text-[11px] uppercase tracking-wider text-stone-400">
-            35MM CAPTURES • LIVE PRODUCTIONS
-          </p>
-        </div>
-
-        {/* Asymmetrical 3-Plate Photographic Montage */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-stretch">
-          {/* Plate 01: Dominant Artistic Hero Plate (Backstage Theatrics & Ritual) */}
-          <div className="md:col-span-7 group relative bg-white p-2 sm:p-2.5 rounded-3xl border border-stone-300 shadow-xs hover:shadow-lg transition-all duration-500 overflow-hidden flex flex-col justify-between">
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-stone-900">
-              <Image
-                src="/images/gallery/theatre-prep.jpg"
-                alt="Rangtarangini Theatrics backstage character preparation"
-                fill
-                sizes="(max-width: 1024px) 100vw, 60vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-between p-4 sm:p-6 text-white">
-                <span className="self-start font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20">
-                  PLATE 01 // RANGTARANGINI
-                </span>
-                <div className="space-y-1">
-                  <span className="font-mono text-[10px] text-amber-300 uppercase tracking-widest block">
-                    THE RITUAL OF TRANSFORMATION
-                  </span>
-                  <h4 className="font-serif text-xl sm:text-2xl font-bold leading-tight">
-                    Character formulation in the backstage shadows before the proscenium curtain rises.
-                  </h4>
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-3 px-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-ink-muted">
-              <span>RANGTARANGINI TROUPE</span>
-              <span className="text-stone-400">// AMS ARCHIVE VAULT</span>
-            </div>
-          </div>
-
-          {/* Plates 02 & 03: Stacked Kinetic & Sound Plates */}
-          <div className="md:col-span-5 flex flex-col gap-5 sm:gap-6 justify-between">
-            {/* Plate 02: Kinetic Synchrony (Dance) */}
-            <div className="group relative bg-white p-2 sm:p-2.5 rounded-3xl border border-stone-300 shadow-xs hover:shadow-lg transition-all duration-500 overflow-hidden">
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-stone-900">
-                <Image
-                  src="/images/gallery/geneticx-dance.jpg"
-                  alt="Geneticx Dance Crew precision choreography on stage"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex flex-col justify-end p-4 text-white">
-                  <span className="font-mono text-[9px] text-amber-300 uppercase tracking-widest block">
-                    PLATE 02 // GENETICX DANCE CREW
-                  </span>
-                  <h4 className="font-serif text-lg font-bold leading-snug">
-                    Kinetic synchrony under the auditorium lasers.
-                  </h4>
-                </div>
-              </div>
-              <div className="pt-2 px-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-ink-muted">
-                <span>GENETICX CREW</span>
-                <span className="text-stone-400">STAGE PRODUCTION</span>
-              </div>
-            </div>
-
-            {/* Plate 03: Live Band Acoustics */}
-            <div className="group relative bg-white p-2 sm:p-2.5 rounded-3xl border border-stone-300 shadow-xs hover:shadow-lg transition-all duration-500 overflow-hidden">
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-stone-900">
-                <Image
-                  src="/images/gallery/band-night.jpg"
-                  alt="Virtuosi live concert under arena floodlights"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex flex-col justify-end p-4 text-white">
-                  <span className="font-mono text-[9px] text-amber-300 uppercase tracking-widest block">
-                    PLATE 03 // VIRTUOSI MUSIC WING
-                  </span>
-                  <h4 className="font-serif text-lg font-bold leading-snug">
-                    Electric guitars and acoustic warmth at midnight.
-                  </h4>
-                </div>
-              </div>
-              <div className="pt-2 px-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-ink-muted">
-                <span>VIRTUOSI COLLECTIVE</span>
-                <span className="text-stone-400">MAIN ARENA LIVE</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 4. "MANY FORMS. ONE SPIRIT." — THE SIX GUILDS MATRIX */}
-      <div className="pt-10 border-t border-stone-300/80">
+      {/* 3. "MANY FORMS. ONE SPIRIT." — THE SIX GUILDS MATRIX */}
+      <div className="pt-12 sm:pt-16">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
             <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-amber-700 font-bold mb-1">

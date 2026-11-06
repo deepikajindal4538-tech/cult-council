@@ -168,7 +168,7 @@ export default async function SocietyDetailPage({
               </div>
 
               <div className="divide-y divide-stone-200 border-y border-stone-300 font-mono text-xs">
-                {society.leads?.map((lead, i) => (
+                {society.leads?.map((lead: any, i: number) => (
                   <div key={i} className="py-3 flex items-center justify-between">
                     <div>
                       <span className="font-serif text-sm font-semibold text-ink block">

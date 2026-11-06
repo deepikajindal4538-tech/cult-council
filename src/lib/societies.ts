@@ -9,7 +9,7 @@ export async function getAllSocieties(): Promise<ISociety[] | typeof initialSoci
     await connectDB();
     const societies = await Society.find({}).sort({ order: 1 }).lean();
     if (societies && societies.length > 0) {
-      return societies as unknown as ISociety[];
+      return JSON.parse(JSON.stringify(societies)) as unknown as ISociety[];
     }
   } catch (error) {
     console.warn("MongoDB connection unavailable or empty; falling back to initial societies dataset.", error);
@@ -17,17 +17,17 @@ export async function getAllSocieties(): Promise<ISociety[] | typeof initialSoci
   return initialSocieties;
 }
 
-export async function getSocietyBySlug(slug: string) {
+export async function getSocietyBySlug(slug: string): Promise<ISociety | null> {
   try {
     await connectDB();
     const society = await Society.findOne({ slug }).lean();
     if (society) {
-      return society;
+      return JSON.parse(JSON.stringify(society)) as unknown as ISociety;
     }
   } catch (error) {
     console.warn(`MongoDB lookup failed for slug ${slug}; falling back to initial data.`, error);
   }
-  return initialSocieties.find((s) => s.slug === slug) || null;
+  return (initialSocieties.find((s) => s.slug === slug) as unknown as ISociety) || null;
 }
 
 export async function getAllEvents() {
@@ -35,7 +35,7 @@ export async function getAllEvents() {
     await connectDB();
     const events = await Event.find({}).populate("society").sort({ date: 1 }).lean();
     if (events && events.length > 0) {
-      return events;
+      return JSON.parse(JSON.stringify(events));
     }
   } catch (error) {
     console.warn("MongoDB events lookup fallback to initial events.", error);
@@ -57,7 +57,7 @@ export async function getAllFests() {
     await connectDB();
     const fests = await Fest.find({}).sort({ startDate: -1 }).lean();
     if (fests && fests.length > 0) {
-      return fests;
+      return JSON.parse(JSON.stringify(fests));
     }
   } catch (error) {
     console.warn("MongoDB fests lookup fallback to initial fests.", error);

@@ -1,23 +1,26 @@
 Steps to run the IIIT Allahabad Cultural Council website locally
 
-1. Open a terminal and go to the project folder:
-   cd "/Users/deepikajindal/areyy bass karr bhayiiii/cult-council"
+1. Open a terminal (PowerShell or Command Prompt) and navigate to the project directory:
+   cd "C:\Users\Asus\Desktop\council web"
 
-2. Install the project dependencies if they are not installed yet:
-   npm install
+2. Make sure MongoDB is running locally (or configured in .env.local):
+   # To verify MongoDB status in PowerShell:
+   Get-Service *mongo*
+   # Or ensure your MongoDB connection string in .env.local is reachable:
+   MONGODB_URI=mongodb://127.0.0.1:27017/iiita_cultural_council
 
-3. Check that the local environment file is configured:
-   .env.local
-   Keep API keys and other secrets in this file; do not share or commit them.
+3. Seed initial database data (societies, fests, events):
+   npm run seed
 
 4. Start the development server:
    npm run dev
 
-5. Open the website in a browser:
+5. Open the website in your browser:
    http://localhost:3000
 
-6. To stop the server, return to the terminal and press Ctrl+C.
+6. To stop the development server:
+   Press Ctrl+C in the terminal.
 
-Optional production check:
+Optional production build and run:
    npm run build
    npm run start

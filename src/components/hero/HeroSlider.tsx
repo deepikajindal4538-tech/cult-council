@@ -95,19 +95,19 @@ export function HeroSlider({}: HeroSliderProps) {
   return (
     <section
       id="hero-title"
-      className="relative w-full min-h-screen lg:min-h-[100dvh] flex flex-col justify-between overflow-hidden bg-[#FAF8F5] select-none"
+      className="relative w-full min-h-screen lg:min-h-[100dvh] flex flex-col justify-between overflow-hidden bg-stone-950 select-none"
       aria-label="Cultural Council Hero Showcase"
     >
       {/* 1. SLIDING BACKGROUND PHOTOS & SEAMLESS DISSOLVE */}
-      <div className="absolute inset-0 z-0 overflow-hidden bg-[#FAF8F5]">
-        {/* Photo Container with Organic Liquid Fade Mask */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-stone-950">
+        {/* Photo Container with subtle edge mask only at the very bottom */}
         <div
           className="absolute inset-0 w-full h-full"
           style={{
             maskImage:
-              "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,0.85) 52%, rgba(0,0,0,0.45) 68%, rgba(0,0,0,0.15) 82%, rgba(0,0,0,0) 95%)",
+              "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.4) 96%, rgba(0,0,0,0) 100%)",
             WebkitMaskImage:
-              "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,0.85) 52%, rgba(0,0,0,0.45) 68%, rgba(0,0,0,0.15) 82%, rgba(0,0,0,0) 95%)",
+              "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 85%, rgba(0,0,0,0.4) 96%, rgba(0,0,0,0) 100%)",
           }}
         >
           <AnimatePresence initial={false} custom={direction}>
@@ -133,33 +133,33 @@ export function HeroSlider({}: HeroSliderProps) {
           </AnimatePresence>
 
           {/* Contrast scrim concentrated across the upper title area */}
-          <div className="absolute inset-x-0 top-0 h-[65%] bg-gradient-to-b from-black/85 via-black/50 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-x-0 top-0 h-[70%] bg-gradient-to-b from-black/85 via-black/50 to-transparent z-10 pointer-events-none" />
 
           {/* Center Vignette for focal clarity */}
           <div
             className="absolute inset-0 z-10 pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%)",
+                "radial-gradient(circle at center, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 100%)",
             }}
           />
         </div>
 
         {/* Subtle dot mesh texture */}
         <div
-          className="absolute inset-0 opacity-[0.04] z-10 pointer-events-none"
+          className="absolute inset-0 opacity-[0.03] z-10 pointer-events-none"
           style={{
-            backgroundImage: `radial-gradient(#1C1917 1px, transparent 1px)`,
+            backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`,
             backgroundSize: "24px 24px",
           }}
         />
 
-        {/* Liquid paper dissolve overlay */}
+        {/* Reduced, subtle bottom fade to connect smoothly with the canvas background */}
         <div
-          className="absolute inset-x-0 bottom-0 h-48 sm:h-72 pointer-events-none z-10"
+          className="absolute inset-x-0 bottom-0 h-16 sm:h-24 pointer-events-none z-10"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(250,248,245,0) 0%, rgba(250,248,245,0.35) 40%, rgba(250,248,245,0.85) 75%, #FAF8F5 100%)",
+              "linear-gradient(to bottom, rgba(250,248,245,0) 0%, rgba(250,248,245,0.3) 60%, #FAF8F5 100%)",
           }}
         />
       </div>
@@ -186,10 +186,10 @@ export function HeroSlider({}: HeroSliderProps) {
       </div>
 
       {/* 3. BOTTOM SCROLL CUE */}
-      <footer className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 flex justify-center">
+      <footer className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 flex justify-center">
         <a
           href="#societies-stage"
-          className="group inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/80 hover:text-ink transition-colors py-2.5 px-6 rounded-full bg-white/80 hover:bg-white backdrop-blur-md border border-stone-300/80 shadow-sm hover:shadow"
+          className="group inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/80 hover:text-ink transition-colors py-2.5 px-6 rounded-full bg-white/90 hover:bg-white backdrop-blur-md border border-stone-300 shadow-sm hover:shadow"
         >
           <span>EXPLORE SOCIETIES LADDER</span>
           <ArrowDown className="w-3.5 h-3.5 text-amber-800 animate-bounce group-hover:translate-y-0.5 transition-transform" />
