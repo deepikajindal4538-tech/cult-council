@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     title: "Cultural Council | IIIT Allahabad",
     description: "Fostering arts, drama, dance, music, literature and photography.",
     type: "website",
+    images: ["/images/council-logo.png"],
+  },
+  icons: {
+    icon: "/images/council-logo.png",
+    apple: "/images/council-logo.png",
   },
 };
 
