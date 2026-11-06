@@ -14,6 +14,7 @@ import {
   Flame,
   Users,
 } from "lucide-react";
+import { HowWeWorkSection } from "@/components/about/HowWeWorkSection";
 
 export function CinematicAboutSection() {
   const sixForms = [
@@ -313,6 +314,11 @@ export function CinematicAboutSection() {
             );
           })}
         </div>
+      </div>
+
+      {/* 4. FOUR-TIER STATUTORY GOVERNANCE LIFECYCLE */}
+      <div className="pt-16 sm:pt-20 border-t border-stone-300/80 mt-16 sm:mt-20">
+        <HowWeWorkSection sectionNumber="02" className="!px-0 !py-0" />
       </div>
     </section>
   );

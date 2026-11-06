@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { councilDetails, initialSocieties } from "@/lib/seedData";
 import { CouncilLeadershipSection } from "@/components/about/CouncilLeadershipSection";
+import { HowWeWorkSection } from "@/components/about/HowWeWorkSection";
 
 export const metadata = {
   title: "About Cultural Council | IIIT Allahabad",
@@ -211,13 +212,18 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. The 6 Autonomous Wings */}
+      {/* 3. Operational Blueprint: Four-Tier Governance Lifecycle */}
+      <section className="border-t border-stone-300 bg-white">
+        <HowWeWorkSection sectionNumber="02" />
+      </section>
+
+      {/* 4. The 6 Autonomous Wings */}
       <section className="bg-[#F4F1EA] py-20 px-4 sm:px-6 lg:px-8 border-y border-stone-300">
         <div className="max-w-7xl mx-auto w-full">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
               <div className="font-mono text-xs uppercase tracking-widest text-ink-faint mb-2">
-                02 // CONSTITUENT GUILDS
+                03 // CONSTITUENT GUILDS
               </div>
               <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ink">
                 The Six Creative Wings
@@ -281,7 +287,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto w-full">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
             <div className="font-mono text-xs uppercase tracking-widest text-ink-faint">
-              04 // INFRASTRUCTURE
+              05 // INFRASTRUCTURE
             </div>
             <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ink">
               World-Class Venues &amp; Studios
