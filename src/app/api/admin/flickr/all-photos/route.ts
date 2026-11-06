@@ -16,11 +16,11 @@ export async function GET(req: NextRequest) {
       heroSlider: photos.filter((p) => p.pageLocation === "Hero Slider").length,
       revolvingCarousel: photos.filter((p) => p.pageLocation === "Revolving Carousel").length,
       galleryAlbums: photos.filter((p) => p.pageLocation === "Gallery Albums").length,
-      exhibitionObjects: photos.filter((p) => p.pageLocation === "3D Exhibition Objects").length,
+      councilLeadership: photos.filter((p) => p.pageLocation === "Council Leadership").length,
     },
     bySourceType: {
-      local: photos.filter((p) => p.sourceType === "Local Static Asset").length,
-      unsplash: photos.filter((p) => p.sourceType === "Unsplash Curated CDN").length,
+      genuineCampus: photos.filter((p) => p.sourceType === "Genuine Campus Photography").length,
+      leadership: photos.filter((p) => p.sourceType === "Council Leadership Archive").length,
       flickr: photos.filter((p) => p.sourceType === "Flickr Live").length,
     },
   };

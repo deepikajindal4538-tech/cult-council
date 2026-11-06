@@ -12,11 +12,6 @@ const nextConfig = {
         hostname: 'live.staticflickr.com',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        pathname: '/**',
-      },
     ],
   },
   // Security headers can be configured here or in middleware.ts
