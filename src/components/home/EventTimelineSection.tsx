@@ -14,13 +14,10 @@ import {
   ChevronRight,
   Bookmark,
   Radio,
-  Search,
   Share2,
   Check,
   X,
   ExternalLink,
-  Grid,
-  Layers,
   Ticket,
   Music,
   Theater,
@@ -273,8 +270,6 @@ function getGoogleCalendarUrl(evt: TimelineEvent) {
 export default function EventTimelineSection() {
   const [events, setEvents] = useState<TimelineEvent[]>(TIMELINE_EVENTS);
   const [activeCategory, setActiveCategory] = useState("ALL");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [viewMode, setViewMode] = useState<"timeline" | "grid">("timeline");
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
   const [savedEventIds, setSavedEventIds] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -333,18 +328,9 @@ export default function EventTimelineSection() {
 
   const filteredEvents = useMemo(() => {
     return events.filter((evt) => {
-      const matchesCategory = activeCategory === "ALL" || evt.category === activeCategory;
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        !q ||
-        evt.title.toLowerCase().includes(q) ||
-        evt.societyName.toLowerCase().includes(q) ||
-        evt.venue.toLowerCase().includes(q) ||
-        evt.description.toLowerCase().includes(q) ||
-        evt.category.toLowerCase().includes(q);
-      return matchesCategory && matchesSearch;
+      return activeCategory === "ALL" || evt.category === activeCategory;
     });
-  }, [events, activeCategory, searchQuery]);
+  }, [events, activeCategory]);
 
   return (
     <section id="timeline" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#FAF8F5] border-t border-stone-300/80 overflow-hidden select-none">
@@ -353,75 +339,11 @@ export default function EventTimelineSection() {
       <div className="absolute bottom-1/4 -right-48 w-96 h-96 rounded-full bg-rose-500/5 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
-        {/* 1. SECTION HEADER SPREAD */}
-        <div className="border-b border-stone-300/80 pb-8 mb-10 sm:mb-14">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-            <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-amber-800">
-                <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
-                <span>UPCOMING EVENTS</span>
-                <span>•</span>
-                <span className="font-semibold">2026–2027 CALENDAR</span>
-              </div>
-              <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink leading-[1.02]">
-                Upcoming Events &amp; Performances
-              </h2>
-              <p className="font-serif italic text-base sm:text-lg text-ink-muted">
-                &ldquo;Discover upcoming concerts, stage plays, dance battles, poetry sessions, and exhibitions across campus.&rdquo;
-              </p>
-            </div>
-
-            {/* View Mode & Live Count Controls */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              {/* Search Bar */}
-              <div className="relative w-full sm:w-64">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search events, venues, societies..."
-                  className="w-full pl-9 pr-3 py-2 bg-white/90 border border-stone-300 rounded-full font-mono text-xs text-ink placeholder:text-stone-400 focus:outline-none focus:border-stone-600 shadow-2xs transition-colors"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-ink cursor-pointer"
-                  >
-                    <X className="w-3 h-3" />
-                  </button>
-                )}
-              </div>
-
-              {/* View Switcher Pill */}
-              <div className="inline-flex items-center p-1 rounded-full bg-stone-200/80 border border-stone-300 font-mono text-xs shrink-0">
-                <button
-                  onClick={() => setViewMode("timeline")}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all cursor-pointer ${
-                    viewMode === "timeline"
-                      ? "bg-white text-ink font-bold shadow-xs"
-                      : "text-stone-600 hover:text-ink"
-                  }`}
-                  aria-label="Timeline View"
-                >
-                  <Layers className="w-3.5 h-3.5" />
-                  <span className="text-[11px] uppercase tracking-wider">Timeline</span>
-                </button>
-                <button
-                  onClick={() => setViewMode("grid")}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all cursor-pointer ${
-                    viewMode === "grid"
-                      ? "bg-white text-ink font-bold shadow-xs"
-                      : "text-stone-600 hover:text-ink"
-                  }`}
-                  aria-label="Grid View"
-                >
-                  <Grid className="w-3.5 h-3.5" />
-                  <span className="text-[11px] uppercase tracking-wider">Grid</span>
-                </button>
-              </div>
-            </div>
-          </div>
+        {/* 1. SECTION HEADER */}
+        <div className="border-b border-stone-300/80 pb-6 mb-10 sm:mb-14">
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink leading-[1.02]">
+            Upcoming Events &amp; Performances
+          </h2>
 
           {/* 2. CATEGORY FILTER PILLS */}
           <div className="mt-6 flex flex-wrap items-center gap-2 pt-4 border-t border-stone-200/80 font-mono text-xs">
@@ -443,31 +365,23 @@ export default function EventTimelineSection() {
                 </button>
               );
             })}
-
-            {/* Filter Count Counter */}
-            <span className="ml-auto text-[11px] font-mono uppercase tracking-widest text-ink-faint">
-              SHOWING {filteredEvents.length} OF {TIMELINE_EVENTS.length} EVENTS
-            </span>
           </div>
         </div>
 
-        {/* 3. TIMELINE BODY (VIEW MODES) */}
+        {/* 3. TIMELINE BODY */}
         {filteredEvents.length === 0 ? (
           <div className="py-20 text-center rounded-3xl bg-[#F4F1EA] border border-stone-300/80 p-8 space-y-4">
             <Ticket className="w-10 h-10 mx-auto text-stone-400 stroke-1" />
-            <h3 className="font-serif text-2xl font-bold text-ink">No scheduled events matched your query</h3>
-            <p className="font-mono text-xs text-ink-muted">Try clearing the search or category filter to view all events.</p>
+            <h3 className="font-serif text-2xl font-bold text-ink">No scheduled events in this category</h3>
+            <p className="font-mono text-xs text-ink-muted">Select &ldquo;All Events&rdquo; to view the complete calendar.</p>
             <button
-              onClick={() => {
-                setActiveCategory("ALL");
-                setSearchQuery("");
-              }}
+              onClick={() => setActiveCategory("ALL")}
               className="px-5 py-2 rounded-full bg-stone-900 text-white font-mono text-xs uppercase tracking-wider font-semibold hover:bg-stone-800 transition-colors cursor-pointer"
             >
-              Reset Filters
+              View All Events
             </button>
           </div>
-        ) : viewMode === "timeline" ? (
+        ) : (
           /* CINEMATIC TIMELINE WITH GLOWING SPINE & PASS STUBS */
           <div className="relative">
             {/* Ambient Vertical Glowing Laser Spine */}
@@ -659,123 +573,6 @@ export default function EventTimelineSection() {
                 })}
               </AnimatePresence>
             </div>
-          </div>
-        ) : (
-          /* MASONRY PRODUCTION DECK (GRID VIEW) */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <AnimatePresence mode="popLayout">
-              {filteredEvents.map((evt, idx) => {
-                const Icon = getCategoryIcon(evt.category);
-                const isSaved = savedEventIds.includes(evt.id);
-                const isFlagship = evt.type === "flagship";
-
-                return (
-                  <motion.div
-                    key={evt.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.94 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3, delay: idx * 0.03 }}
-                    onClick={() => setSelectedEvent(evt)}
-                    className={`group relative rounded-2xl border p-6 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-[#FAF8F5] ${
-                      isFlagship
-                        ? "border-amber-400 bg-gradient-to-br from-[#FAF8F5] via-amber-50/60 to-[#FAF8F5] shadow-sm"
-                        : "border-stone-300/90 hover:border-stone-400"
-                    }`}
-                  >
-                    <div className="space-y-4">
-                      {/* Top Bar with Ticket Pass Code and Category Icon */}
-                      <div className="flex items-center justify-between border-b border-stone-200/90 pb-3">
-                        <div className="flex items-center gap-2">
-                          <span className="p-2 rounded-xl bg-white border border-stone-200 shadow-2xs">
-                            <Icon className="w-4 h-4" style={{ color: evt.accentColor }} />
-                          </span>
-                          <div>
-                            <span className="font-mono text-[9px] uppercase tracking-widest text-ink-faint block">
-                              #{evt.passCode}
-                            </span>
-                            <span className="font-mono text-xs font-bold text-ink">
-                              {evt.date}
-                            </span>
-                          </div>
-                        </div>
-
-                        <span
-                          className={`px-2 py-0.5 rounded-full font-mono text-[9px] font-bold uppercase tracking-wider ${
-                            evt.status === "HEADLINE FESTIVAL"
-                              ? "bg-amber-600 text-white"
-                              : evt.status === "REGISTRATIONS OPEN"
-                              ? "bg-emerald-100 text-emerald-900 border border-emerald-300"
-                              : "bg-stone-200 text-stone-700"
-                          }`}
-                        >
-                          {evt.status}
-                        </span>
-                      </div>
-
-                      {/* Event Title */}
-                      <h3 className="font-serif text-xl sm:text-2xl font-bold text-ink leading-tight group-hover:text-amber-950 transition-colors">
-                        {evt.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p className="font-sans text-xs text-stone-700 leading-relaxed line-clamp-3">
-                        {evt.description}
-                      </p>
-
-                      {/* Highlights */}
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {evt.highlights.map((h, i) => (
-                          <span
-                            key={i}
-                            className="px-2 py-0.5 rounded bg-stone-100 border border-stone-200 text-[10px] font-mono text-stone-600"
-                          >
-                            {h}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Bottom Metadata & GCal */}
-                    <div className="mt-6 pt-4 border-t border-stone-200/90 flex items-center justify-between font-mono text-xs">
-                      <div className="flex flex-col text-[11px] text-stone-600">
-                        <span className="flex items-center gap-1 font-semibold text-ink truncate max-w-[170px]">
-                          <MapPin className="w-3 h-3 text-amber-700 shrink-0" />
-                          <span className="truncate">{evt.venue}</span>
-                        </span>
-                        <span className="text-[10px] text-stone-500 pl-4">{evt.time}</span>
-                      </div>
-
-                      <div className="flex items-center gap-1.5">
-                        <a
-                          href={getGoogleCalendarUrl(evt)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="p-1.5 rounded-full bg-white hover:bg-stone-100 border border-stone-300 text-ink shadow-2xs"
-                          title="Add to GCal"
-                        >
-                          <Calendar className="w-3.5 h-3.5 text-amber-700" />
-                        </a>
-                        <button
-                          type="button"
-                          onClick={(e) => toggleSave(evt.id, evt.title, e)}
-                          className={`p-1.5 rounded-full border transition-all cursor-pointer ${
-                            isSaved
-                              ? "bg-amber-600 border-amber-600 text-white"
-                              : "bg-white border-stone-300 text-stone-500 hover:text-ink"
-                          }`}
-                          aria-label="Save pass"
-                        >
-                          <Bookmark className="w-3.5 h-3.5" fill={isSaved ? "currentColor" : "none"} />
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
           </div>
         )}
 
