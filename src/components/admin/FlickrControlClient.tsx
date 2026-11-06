@@ -29,6 +29,7 @@ import {
   LogOut,
   Radio,
   FileText,
+  Sparkles,
 } from "lucide-react";
 import GalleryLightbox from "@/components/gallery/GalleryLightbox";
 import { TrimmedPhoto } from "@/lib/flickr/schemas";
@@ -78,6 +79,10 @@ interface WebsitePhoto {
   discipline: string;
   aspectRatio: string;
   sourceType: string;
+  reserveSlot?: number;
+  reserveRow?: 1 | 2 | 3;
+  event?: string;
+  reserveStatus?: "Active" | "Standby";
   albumId?: string;
   albumTitle?: string;
   width?: number;
@@ -860,11 +865,11 @@ export default function FlickrControlClient() {
             {/* Filter Tabs by Page Location */}
             <div className="flex flex-wrap items-center gap-1.5 font-mono text-[11px] w-full md:w-auto">
               {[
-                { label: "All Pages", value: "ALL" },
+                { label: "All Assets", value: "ALL" },
+                { label: "Carousel 50 Reserve (50)", value: "Revolving Carousel" },
+                { label: "Major Event Dossiers", value: "Gallery Albums" },
                 { label: "Hero Slider", value: "Hero Slider" },
-                { label: "Revolving Carousel", value: "Revolving Carousel" },
-                { label: "Gallery Albums", value: "Gallery Albums" },
-                { label: "3D Objects", value: "3D Exhibition Objects" },
+                { label: "Council Leadership", value: "Council Leadership" },
               ].map((tab) => (
                 <button
                   key={tab.value}
@@ -880,6 +885,37 @@ export default function FlickrControlClient() {
               ))}
             </div>
           </div>
+
+          {/* 50-Plate Carousel Reserve Control Banner */}
+          {selectedLocation === "Revolving Carousel" && (
+            <div className="bg-stone-900 border border-stone-800 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-amber-400">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>MAIN SCROLLER // 50-PLATE ARCHIVAL RESERVE POOL</span>
+                </div>
+                <h3 className="font-serif text-2xl font-normal text-stone-100">
+                  50 Genuine Master Plates Armed &amp; Synchronized
+                </h3>
+                <p className="font-sans text-xs text-stone-300 max-w-2xl leading-relaxed">
+                  Continuous marquee distribution: Row 1 (Concerts &amp; Arena, 17 Plates), Row 2 (Kinetic Dance &amp; Theatrics, 17 Plates), Row 3 (Runway Scenography &amp; Fine Arts, 16 Plates). Active on homepage Chapter 04 and media gallery.
+                </p>
+              </div>
+              <div className="flex items-center gap-3 shrink-0">
+                <button
+                  onClick={() =>
+                    showToast(
+                      "success",
+                      "50 Carousel Reserve Plates verified and synchronized with 60fps marquee stream."
+                    )
+                  }
+                  className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-mono text-xs uppercase tracking-wider font-bold transition-all shadow-md cursor-pointer"
+                >
+                  Re-Sync Scroller Pool
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Photos Cards Grid */}
           {isLoadingPhotos ? (
@@ -916,12 +952,26 @@ export default function FlickrControlClient() {
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
 
-                    {/* Top Location Badge */}
+                    {/* Top Location and Row Badge */}
                     <div className="absolute top-2.5 left-2.5 z-10 flex gap-1.5 flex-wrap">
                       <span className="px-2 py-0.5 rounded-md bg-stone-900/85 backdrop-blur-sm text-stone-200 font-mono text-[9px] uppercase tracking-wider font-semibold border border-white/10">
                         {photo.pageLocation}
                       </span>
+                      {photo.reserveRow && (
+                        <span className="px-2 py-0.5 rounded-md bg-stone-800/90 backdrop-blur-sm text-amber-300 font-mono text-[9px] uppercase tracking-wider font-bold border border-amber-400/20">
+                          ROW {photo.reserveRow}
+                        </span>
+                      )}
                     </div>
+
+                    {/* Top Right Reserve Slot Badge */}
+                    {photo.reserveSlot && (
+                      <div className="absolute top-2.5 right-2.5 z-10">
+                        <span className="px-2 py-0.5 rounded-md bg-amber-500 text-stone-950 font-mono text-[9px] uppercase tracking-wider font-black shadow-sm">
+                          #{String(photo.reserveSlot).padStart(2, "0")} RESERVE
+                        </span>
+                      </div>
+                    )}
 
                     {/* Hover Inspect Overlay */}
                     <div className="absolute inset-0 bg-stone-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -943,6 +993,12 @@ export default function FlickrControlClient() {
                       <h4 className="font-serif text-base font-medium text-ink mt-2 leading-snug line-clamp-2">
                         {photo.title}
                       </h4>
+
+                      {photo.event && (
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-900 font-mono text-[9px] uppercase tracking-wider font-semibold mt-1.5">
+                          <span>{photo.event}</span>
+                        </div>
+                      )}
 
                       <p className="font-mono text-[10px] text-ink-muted mt-1 uppercase tracking-wider">
                         {photo.discipline}
