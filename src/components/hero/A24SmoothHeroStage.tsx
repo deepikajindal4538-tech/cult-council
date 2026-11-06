@@ -40,7 +40,7 @@ export function A24SmoothHeroStage({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const { pushX, nameShiftX } = dimensions;
+  const { pushX, nameShiftX, isMobile } = dimensions;
 
   return (
     <div
@@ -53,19 +53,22 @@ export function A24SmoothHeroStage({
         {societies.map((soc, idx) => {
           const rawDelta = idx - progress;
 
-          // Strictly show only the current active society's window to completely prevent any icon overlap
-          if (Math.abs(rawDelta) > 0.5) {
+          // Sequential non-overlapping timeline:
+          // A society is only rendered during its own entry, dwell, and exit cycle.
+          // rawDelta > 0.45: Not yet entering (completely hidden)
+          // rawDelta < -0.65: Fully exited (completely unmounted)
+          if (rawDelta > 0.45 || rawDelta < -0.65) {
             return null;
           }
 
-          const isCurrent = Math.abs(rawDelta) < 0.3;
+          const isCurrent = Math.abs(rawDelta) < 0.35;
           const zIndex = 20;
 
-          // Phase Calculations within the [-0.5, 0.5] range:
-          // 1. Incoming Phase (0.15 < rawDelta <= 0.5): Icon flies into center stage alone, name is hidden
-          // 2. Push & Reveal Phase (0 <= rawDelta <= 0.15): Full society name unfolds from behind icon to left, pushing icon rightwards
-          // 3. Dwell Phase (-0.2 <= rawDelta < 0): Full society name sits on left, icon on right
-          // 4. Exit Phase (-0.5 <= rawDelta < -0.2): Dissolves towards bottom-left with zero overlap
+          // Phase Calculations:
+          // 1. Top-Right Incoming (0.15 < rawDelta <= 0.45): Icon swoops in from far top-right corner to center (0,0)
+          // 2. Push & Reveal (0 <= rawDelta <= 0.15): Name unfolds to the left, pushing icon rightwards to (+pushX)
+          // 3. Dwell (-0.35 <= rawDelta < 0): Settled position (name left, icon right)
+          // 4. Exit to Bottom-Left (-0.65 <= rawDelta < -0.35): Drifts down towards bottom-left and dissolves to 0
 
           let iconX = 0;
           let iconY = 0;
@@ -84,26 +87,28 @@ export function A24SmoothHeroStage({
           let rowScale = 1;
 
           if (rawDelta > 0.15) {
-            // PHASE 1: Incoming from top-right towards center (0, 0)
-            const entry = Math.min(1, Math.max(0, (0.5 - rawDelta) / 0.35));
+            // PHASE 1: Incoming from FAR TOP-RIGHT CORNER towards screen center (0, 0)
+            const entry = Math.min(1, Math.max(0, (0.45 - rawDelta) / 0.30));
             const easeEntry = Math.sin(entry * Math.PI * 0.5);
 
-            const startX = 280;
-            const startY = -180;
-            iconX = (1 - easeEntry) * startX;
-            iconY = -(1 - easeEntry) * startY;
-            iconScale = 0.75 + 0.25 * easeEntry;
-            iconOpacity = Math.min(1, easeEntry * 1.4);
-            iconRotateZ = (1 - easeEntry) * 12;
+            // Perched far up in the top-right corner (never touches center until easeEntry approaches 1)
+            const startX = pushX + (isMobile ? 260 : 480);
+            const startY = -(isMobile ? 200 : 360);
 
-            // Name is completely hidden directly behind incoming icon
+            iconX = (1 - easeEntry) * startX;
+            iconY = (1 - easeEntry) * startY;
+            iconScale = 0.55 + 0.45 * easeEntry;
+            iconOpacity = Math.min(1, easeEntry * 1.5);
+            iconRotateZ = (1 - easeEntry) * 16;
+
+            // Watermark name is completely hidden while icon swoops in from top-right
             nameX = 0;
             nameY = 0;
             nameOpacity = 0;
             nameScale = 0.85;
           } else if (rawDelta >= 0) {
             // PHASE 2: Push & Reveal (0 <= rawDelta <= 0.15)
-            // Full society name emerges from behind the icon to the left, pushing the icon rightwards!
+            // Icon is in center stage; full society name unfolds to the left, pushing icon rightwards
             const pushRatio = (0.15 - rawDelta) / 0.15;
             const easePush = 1 - Math.pow(1 - pushRatio, 3); // smooth cubic-out push
 
@@ -119,8 +124,8 @@ export function A24SmoothHeroStage({
             nameY = 0;
             nameOpacity = easePush * 0.14;
             nameScale = 0.88 + 0.12 * easePush;
-          } else if (rawDelta >= -0.2) {
-            // PHASE 3: Dwell (Both fully revealed and resting in place)
+          } else if (rawDelta >= -0.35) {
+            // PHASE 3: Dwell (-0.35 <= rawDelta < 0)
             iconX = pushX;
             iconY = 0;
             iconScale = 1;
@@ -132,25 +137,27 @@ export function A24SmoothHeroStage({
             nameOpacity = 0.14;
             nameScale = 1;
           } else {
-            // PHASE 4: Exit towards bottom-left (-0.5 <= rawDelta < -0.2)
-            const exitRatio = Math.min(1, Math.max(0, (-rawDelta - 0.2) / 0.3));
+            // PHASE 4: Exit towards EXTREME LEFT (-0.65 <= rawDelta < -0.35)
+            // Sends the current icon sweeping all the way across to the extreme left offscreen
+            const exitRatio = Math.min(1, Math.max(0, (-rawDelta - 0.35) / 0.30));
             const easeExit = exitRatio * exitRatio;
 
-            rowX = -easeExit * 260;
-            rowY = easeExit * 150;
-            rowOpacity = Math.max(0, 1 - exitRatio);
-            rowScale = Math.max(0.75, 1 - exitRatio * 0.25);
+            const sweepLeft = easeExit * (isMobile ? 650 : 1300);
+            iconX = pushX - sweepLeft;
+            iconY = easeExit * (isMobile ? 40 : 80);
+            iconScale = Math.max(0.65, 1 - exitRatio * 0.35);
+            iconOpacity = Math.max(0, 1 - exitRatio * 1.35);
+            iconRotateZ = -easeExit * 20;
 
-            iconX = pushX;
-            iconY = 0;
-            iconScale = 1;
-            iconOpacity = 1;
-            iconRotateZ = -easeExit * 6;
+            nameX = -nameShiftX - easeExit * (isMobile ? 350 : 700);
+            nameY = easeExit * (isMobile ? 40 : 80);
+            nameOpacity = Math.max(0, 0.14 * (1 - exitRatio * 1.4));
+            nameScale = Math.max(0.7, 1 - exitRatio * 0.3);
 
-            nameX = -nameShiftX;
-            nameY = 0;
-            nameOpacity = 0.14;
-            nameScale = 1;
+            rowX = 0;
+            rowY = 0;
+            rowOpacity = 1;
+            rowScale = 1;
           }
 
           return (

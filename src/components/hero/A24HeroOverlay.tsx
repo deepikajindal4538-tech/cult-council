@@ -194,8 +194,8 @@ export function A24HeroOverlay({
         </div>
       </header>
 
-      {/* Right Side: The Minimalist A24 Vertical Societies Ladder Rail */}
-      <div className="pointer-events-auto hidden md:flex absolute right-6 sm:right-8 lg:right-12 top-1/2 -translate-y-1/2 z-30">
+      {/* Right Side: The Minimalist A24 Vertical Societies Ladder Rail (Shifted Downwards) */}
+      <div className="pointer-events-auto hidden md:flex absolute right-6 sm:right-8 lg:right-12 bottom-20 sm:bottom-24 lg:bottom-28 z-30">
         <SocietyIndex
           societies={societies}
           activeIndex={activeIndex}
