@@ -24,7 +24,7 @@ export function SocietyInfoPanel({ society, index, total }: SocietyInfoPanelProp
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-6"
         >
-          {/* A24-Style Technical Monospace Dossier Index Header */}
+          {/* Society Header */}
           <div className="flex items-center gap-4 text-[11px] font-mono tracking-widest text-ink-muted uppercase border-b border-stone-300/80 pb-3">
             <span className="font-bold text-ink">
               [{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}]
@@ -34,7 +34,7 @@ export function SocietyInfoPanel({ society, index, total }: SocietyInfoPanelProp
               {society.category}
             </span>
             <span className="text-stone-400">•</span>
-            <span>DOSSIER</span>
+            <span>SOCIETY</span>
           </div>
 
           {/* Large Editorial Serif Society Title */}
@@ -57,7 +57,7 @@ export function SocietyInfoPanel({ society, index, total }: SocietyInfoPanelProp
             {society.description}
           </p>
 
-          {/* Exhibition / Production Technical Credits (A24 film credits aesthetic) */}
+          {/* Exhibition / Production Details */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-stone-300/80 text-xs">
             <div>
               <span className="block font-mono text-[10px] uppercase tracking-wider text-ink-faint">
@@ -73,13 +73,13 @@ export function SocietyInfoPanel({ society, index, total }: SocietyInfoPanelProp
 
             <div>
               <span className="block font-mono text-[10px] uppercase tracking-wider text-ink-faint">
-                Active Troupe
+                Active Members
               </span>
               <span className="font-serif font-semibold text-ink text-sm">
-                {society.stats?.membersCount || 40}+ Artists
+                {society.stats?.membersCount || 40}+ Members
               </span>
               <span className="block text-[11px] text-ink-muted">
-                {society.stats?.eventsPerYear || 12} Productions / yr
+                {society.stats?.eventsPerYear || 12} Events / yr
               </span>
             </div>
 
@@ -90,17 +90,17 @@ export function SocietyInfoPanel({ society, index, total }: SocietyInfoPanelProp
               <span className="font-serif font-semibold text-ink text-sm">
                 Circa {society.stats?.foundedYear || 2004}
               </span>
-              <span className="block text-[11px] text-ink-muted">Campus Guild</span>
+              <span className="block text-[11px] text-ink-muted">Campus Society</span>
             </div>
           </div>
 
-          {/* Action Link: Enter Society Dossier */}
+          {/* Action Link: Enter Society */}
           <div className="pt-2">
             <Link
               href={`/societies/${society.slug}`}
               className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-ink text-canvas text-xs font-mono uppercase tracking-widest hover:bg-ink/90 transition-all shadow-soft"
             >
-              <span>Explore Dossier</span>
+              <span>Explore Society</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
           </div>

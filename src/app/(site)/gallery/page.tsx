@@ -41,20 +41,20 @@ export default async function GalleryPage() {
             <div className="max-w-4xl space-y-3">
               <div className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-stone-200/70 px-3 py-1 font-mono text-xs uppercase tracking-wider text-ink">
                 <Camera className="h-3.5 w-3.5 text-amber-600" />
-                <span>OFFICIAL REPOSITORY • ACOUSTICS &amp; MEDIA SOCIETY (AMS)</span>
+                <span>ACOUSTICS &amp; MEDIA SOCIETY (AMS) • IIIT ALLAHABAD</span>
               </div>
               <h1 className="font-serif text-3xl font-bold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-                The Visual Ledger of IIIT Allahabad
+                Photo &amp; Media Archive
               </h1>
               <p className="font-serif text-lg italic text-ink-muted sm:text-2xl leading-relaxed">
-                High-resolution moments, dramatic stages, quiet rehearsals, and
-                festival euphoria preserved across campus history.
+                Moments, concerts, performances, rehearsals, and festival
+                celebrations captured across campus.
               </p>
             </div>
 
             <div className="font-mono text-xs text-ink-faint flex flex-col items-start lg:items-end gap-1">
               <span>Primary NSID: 129074767@N06</span>
-              <span>Repository: 217,620+ Photographs • 968 Albums</span>
+              <span>Archive: 217,620+ Photographs • 968 Albums</span>
             </div>
           </div>
         </div>
@@ -64,19 +64,19 @@ export default async function GalleryPage() {
       <RevolvingGalleryCarousel
         chapterLabel={
           liveCarousel.isLive
-            ? "LIVE FLICKR ARCHIVAL STREAM // REST UPSTREAM"
-            : "CONTINUOUS ARCHIVAL STREAM // 50-PLATE RESERVE"
+            ? "CAMPUS MEDIA STREAM • ACOUSTICS & MEDIA SOCIETY"
+            : "CAMPUS MEDIA ARCHIVE • CURATED SELECTION"
         }
         curatorLabel={
           liveCarousel.isLive
-            ? "AMS REPOSITORY • STREAMING LIVE VIA FLICKR API"
-            : "AMS REPOSITORY • 50 CURATED PERFORMANCE PLATES"
+            ? "AMS GALLERY • STREAMING VIA FLICKR API"
+            : "AMS GALLERY • CURATED SELECTION"
         }
-        title="Living Exhibition Stream"
+        title="Campus Photo Stream"
         subtitle={
           liveCarousel.isLive
-            ? "Three revolving streams of festival pro-nights, dance battles, theatrical plays, and classical concerts streamed live via Flickr."
-            : "Three revolving streams of pro-night symphonies, arena crowds, dance choreography, and dramatic moments drawn from the 50-image reserve."
+            ? "Three revolving streams of festival pro-nights, dance battles, stage plays, and concerts streamed live via Flickr."
+            : "Three revolving streams of pro-night concerts, arena crowds, dance choreography, and dramatic moments drawn from the curated collection."
         }
         showCatalogLink={false}
         row1={liveCarousel.row1}

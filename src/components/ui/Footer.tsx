@@ -21,16 +21,16 @@ export function Footer() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-serif font-bold text-xl tracking-tight text-ink leading-tight">
+                <span className="font-serif font-bold text-2xl tracking-tight text-ink leading-tight">
                   Cultural Council
                 </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-faint">
+                <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-ink-faint pt-0.5">
                   SHDC • IIIT ALLAHABAD
                 </span>
               </div>
             </div>
             <p className="font-serif italic text-base text-ink-muted max-w-sm leading-relaxed">
-              &ldquo;Autonomous guild union coordinating dramatic productions, acoustics, dance choreography, lens work, and literary discourse at IIIT Allahabad.&rdquo;
+              &ldquo;Coordinating music, dance, dramatics, literature, fine arts, and media at IIIT Allahabad.&rdquo;
             </p>
             <div className="pt-2 font-mono text-[10px] uppercase tracking-widest text-ink-faint">
               INSTITUTE OF NATIONAL IMPORTANCE // PRAYAGRAJ
@@ -45,12 +45,12 @@ export function Footer() {
             <ul className="space-y-2 text-ink-muted">
               <li>
                 <Link href="/societies" className="hover:text-ink transition-colors">
-                  01. Autonomous Guilds
+                  01. Cultural Societies
                 </Link>
               </li>
               <li>
                 <Link href="/events" className="hover:text-ink transition-colors">
-                  02. Production Ledger
+                  02. Events &amp; Calendar
                 </Link>
               </li>
               <li>

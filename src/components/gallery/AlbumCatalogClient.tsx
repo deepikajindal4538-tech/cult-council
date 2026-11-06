@@ -154,7 +154,7 @@ export default function AlbumCatalogClient({
             }`}
           >
             <Layers className="w-3.5 h-3.5 text-amber-700" />
-            <span>Event Albums &amp; Dossiers</span>
+            <span>Event Albums</span>
             <span className="text-[10px] bg-stone-100 px-2 py-0.5 rounded-full text-stone-600 font-normal">
               {initialAlbums.length} Collections
             </span>
@@ -163,8 +163,8 @@ export default function AlbumCatalogClient({
 
         <div className="font-mono text-xs text-ink-faint">
           {activeTab === "photostream"
-            ? "Continuous justified photographic ledger (100% original aspect ratio)"
-            : `${filteredAlbums.length} collective event dossiers ready for exploration`}
+            ? "Full photo stream (original aspect ratio)"
+            : `${filteredAlbums.length} event photo collections`}
         </div>
       </div>
 

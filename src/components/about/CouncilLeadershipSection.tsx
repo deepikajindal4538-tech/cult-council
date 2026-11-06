@@ -134,7 +134,7 @@ export function CouncilLeadershipSection() {
               Executive Body &amp; Council Members
             </h2>
             <p className="text-stone-600 text-sm sm:text-base max-w-2xl mt-2 leading-relaxed">
-              The apex cultural governing office of IIIT Allahabad — comprising the Dean SA, Faculty Coordinator, Executive Directors, and the 9 autonomous wing heads.
+              The student cultural leadership team of IIIT Allahabad — comprising the Dean SA, Faculty Coordinator, student executives, and council members.
             </p>
           </div>
 

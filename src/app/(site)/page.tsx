@@ -50,13 +50,13 @@ export default async function HomePage() {
 
       {/* 3. Chapter 02: Flagship Exhibition (Effervescence & Rangoli) */}
       <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        {/* Editorial Chapter Header */}
+        {/* Editorial Section Header */}
         <div className="border-b border-stone-300/80 pb-3 mb-10 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
-            <span>CHAPTER 03 // THE FESTIVALS</span>
+            <span>CAMPUS FESTIVALS</span>
           </div>
-          <span>FLAGSHIP CALENDAR</span>
+          <span>ANNUAL CALENDAR</span>
         </div>
 
         {/* High-End Editorial Exhibition Card (Light Theme Harmony) */}
@@ -123,14 +123,14 @@ export default async function HomePage() {
                   href="/fests"
                   className="group inline-flex items-center gap-2 px-6 py-3 bg-ink hover:bg-stone-800 text-canvas font-mono text-xs uppercase tracking-widest font-bold transition-all rounded-full shadow-xs hover:shadow cursor-pointer"
                 >
-                  <span>Explore Festival Dossier</span>
+                  <span>Explore Festivals</span>
                   <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </Link>
                 <Link
                   href="/events"
                   className="inline-flex items-center gap-2 px-6 py-3 border border-stone-300 hover:border-stone-400 bg-white/70 hover:bg-white text-ink font-mono text-xs uppercase tracking-widest font-medium transition-all rounded-full cursor-pointer"
                 >
-                  <span>View Complete Event Ledger</span>
+                  <span>View All Events</span>
                 </Link>
               </div>
             </div>
@@ -193,7 +193,7 @@ export default async function HomePage() {
                   href="/fests"
                   className="font-mono text-[10px] uppercase tracking-wider text-amber-800 hover:text-amber-950 font-bold shrink-0 flex items-center gap-1 hover:underline"
                 >
-                  <span>Dossier</span>
+                  <span>Details</span>
                   <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -205,19 +205,19 @@ export default async function HomePage() {
       <RevolvingGalleryCarousel
         chapterLabel={
           liveCarousel.isLive
-            ? "CHAPTER 04 // LIVE FLICKR ARCHIVAL REPOSITORY"
-            : "CHAPTER 04 // VISUAL REPOSITORIES"
+            ? "CAMPUS MEDIA GALLERY • LIVE FLICKR STREAM"
+            : "CAMPUS MEDIA GALLERY"
         }
         curatorLabel={
           liveCarousel.isLive
             ? "CAMPUS ARCHIVES • LIVE FLICKR STREAM"
             : "CAMPUS ARCHIVES"
         }
-        title="Visual Artifacts & Moments"
+        title="Moments &amp; Memories"
         subtitle={
           liveCarousel.isLive
-            ? "High-definition records of live concerts, stage productions, and dance choreography streamed from Flickr."
-            : "Curated high-definition records captured by student photojournalists."
+            ? "High-definition photos of concerts, stage performances, and dance choreography streamed from Flickr."
+            : "Curated photos captured by student photographers across campus."
         }
         row1={liveCarousel.row1}
         row2={liveCarousel.row2}

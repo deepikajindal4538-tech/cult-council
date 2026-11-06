@@ -39,7 +39,7 @@ export default async function SocietyDetailPage({
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-ink pb-32">
-      {/* 1. Dossier Header Navigation */}
+      {/* 1. Page Header Navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex items-center justify-between border-b border-stone-300 pb-4 font-mono text-xs uppercase tracking-widest text-ink-muted">
           <Link
@@ -47,9 +47,9 @@ export default async function SocietyDetailPage({
             className="inline-flex items-center gap-2 hover:text-ink transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>BACK TO GUILD REGISTER</span>
+            <span>BACK TO ALL SOCIETIES</span>
           </Link>
-          <span>DOSSIER // {society.slug.toUpperCase()}</span>
+          <span>SOCIETY // {society.slug.toUpperCase()}</span>
         </div>
       </div>
 
@@ -59,14 +59,14 @@ export default async function SocietyDetailPage({
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Left Column: Metadata Ledger & Headline */}
+            {/* Left Column: Metadata Overview & Headline */}
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-ink-muted border-b border-stone-300 pb-2">
                 <span
                   className="w-2.5 h-2.5 rounded-full"
                   style={{ backgroundColor: society.accentColor }}
                 />
-                <span>DISCIPLINE // {society.category}</span>
+                <span>CATEGORY // {society.category}</span>
                 <span>•</span>
                 <span>EST. {society.stats?.foundedYear || 2004}</span>
               </div>
@@ -87,34 +87,34 @@ export default async function SocietyDetailPage({
               <div className="grid grid-cols-3 gap-6 pt-6 border-t border-stone-300/80 font-mono text-xs">
                 <div>
                   <span className="text-[10px] uppercase text-ink-faint block">
-                    Guild Head
+                    Coordinator
                   </span>
                   <span className="font-serif text-base font-bold text-ink">
                     {society.leads?.[0]?.name || "Student Head"}
                   </span>
                   <span className="text-[11px] text-ink-muted block">
-                    {society.leads?.[0]?.role || "Head of Guild"}
+                    {society.leads?.[0]?.role || "Society Coordinator"}
                   </span>
                 </div>
 
                 <div>
                   <span className="text-[10px] uppercase text-ink-faint block">
-                    Active Artists
+                    Active Members
                   </span>
                   <span className="font-serif text-base font-bold text-ink">
                     {society.stats?.membersCount || 40}+
                   </span>
-                  <span className="text-[11px] text-ink-muted block">Enrolled Troupe</span>
+                  <span className="text-[11px] text-ink-muted block">Student Members</span>
                 </div>
 
                 <div>
                   <span className="text-[10px] uppercase text-ink-faint block">
-                    Annual Slate
+                    Annual Events
                   </span>
                   <span className="font-serif text-base font-bold text-ink">
                     {society.stats?.eventsPerYear || 12}
                   </span>
-                  <span className="text-[11px] text-ink-muted block">Productions / yr</span>
+                  <span className="text-[11px] text-ink-muted block">Events / yr</span>
                 </div>
               </div>
             </div>
@@ -137,10 +137,10 @@ export default async function SocietyDetailPage({
       {/* 3. Detailed Dossier Breakdown & Leadership Roster */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Left: Artistic Manifesto & Mandate */}
+          {/* Left: About & Craft */}
           <div className="lg:col-span-7 space-y-8">
             <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-ink-faint">
-              <span>SECTION 01 // ARTISTIC MANIFESTO</span>
+              <span>SECTION 01 // ABOUT THE SOCIETY</span>
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-ink">
@@ -149,22 +149,22 @@ export default async function SocietyDetailPage({
 
             <div className="space-y-5 text-sm sm:text-base text-ink-muted leading-relaxed">
               <p>
-                At IIIT Allahabad, {society.name} serves as a catalyst for creative autonomy.
-                Operating out of the Student Activity Center, the guild provides student creators
-                with specialized production bays, audio acoustics, rehearsal floors, and institutional
-                travel grants to compete on national collegiate stages.
+                At IIIT Allahabad, {society.name} serves as a creative hub for student passion.
+                Operating out of the Student Activity Center, the society provides students
+                with dedicated practice spaces, equipment, rehearsal rooms, and opportunities
+                to perform on campus and at national collegiate cultural festivals.
               </p>
               <p>
-                Whether organizing hands-on freshman bootcamps, midnight jam sessions, or flagship
-                national tournaments during Effervescence, {society.name} maintains an unyielding
-                commitment to artistic integrity and student-led stewardship.
+                Whether organizing freshman bootcamps, weekly jam sessions, or flagship
+                competitions during Effervescence, {society.name} brings together artists
+                and performers to build a lasting creative community.
               </p>
             </div>
 
-            {/* Leadership & Technical Crew Table */}
+            {/* Leadership & Coordinators Table */}
             <div className="pt-6">
               <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-ink-faint mb-4">
-                <span>COUNCIL ROSTER // CURRENT TENURE</span>
+                <span>COORDINATORS &amp; LEADS // CURRENT TENURE</span>
               </div>
 
               <div className="divide-y divide-stone-200 border-y border-stone-300 font-mono text-xs">
@@ -176,17 +176,17 @@ export default async function SocietyDetailPage({
                       </span>
                       <span className="text-[11px] text-ink-muted">{lead.role}</span>
                     </div>
-                    <span className="text-[10px] uppercase text-ink-faint">EXECUTIVE APPOINTMENT</span>
+                    <span className="text-[10px] uppercase text-ink-faint">COORDINATOR</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Right: Connect, Dispatch & Social Box */}
+          {/* Right: Connect & Social Box */}
           <div className="lg:col-span-5 space-y-8">
             <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-ink-faint">
-              <span>SECTION 02 // DISPATCH & ARCHIVES</span>
+              <span>SECTION 02 // CONNECT &amp; JOIN</span>
             </div>
 
             <div className="bg-[#F4F1EA] p-8 rounded-2xl border border-stone-300 space-y-6 shadow-soft">
@@ -194,7 +194,7 @@ export default async function SocietyDetailPage({
                 Connect with {society.name}
               </h3>
               <p className="text-xs sm:text-sm text-ink-muted leading-relaxed">
-                Auditions, recruitments, and collaborative production inquiries are administered directly through guild coordinates.
+                Auditions, recruitments, and workshop registrations are open to all students throughout the year. Drop by the SAC or reach out online.
               </p>
 
               <div className="space-y-3 pt-2 font-mono text-xs">
@@ -207,7 +207,7 @@ export default async function SocietyDetailPage({
                   >
                     <div className="flex items-center gap-2.5">
                       <Instagram className="w-4 h-4 text-ink-muted" />
-                      <span>Instagram Dispatches</span>
+                      <span>Instagram</span>
                     </div>
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
@@ -222,7 +222,7 @@ export default async function SocietyDetailPage({
                   >
                     <div className="flex items-center gap-2.5">
                       <Youtube className="w-4 h-4 text-ink-muted" />
-                      <span>YouTube Broadcasts</span>
+                      <span>YouTube</span>
                     </div>
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
@@ -236,7 +236,7 @@ export default async function SocietyDetailPage({
                 >
                   <div className="flex items-center gap-2.5">
                     <Mail className="w-4 h-4 text-ink-muted" />
-                    <span>Official Correspondence</span>
+                    <span>Contact via Email</span>
                   </div>
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
@@ -246,12 +246,12 @@ export default async function SocietyDetailPage({
         </div>
       </section>
 
-      {/* 4. Society Productions & Events Ledger */}
+      {/* 4. Society Events */}
       {societyEvents.length > 0 && (
         <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-300">
           <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-ink-faint mb-8 flex items-center justify-between">
-            <span>SECTION 03 // GUILD PRODUCTION LEDGER</span>
-            <span>{societyEvents.length} RECORDED PRODUCTIONS</span>
+            <span>SECTION 03 // EVENTS &amp; PERFORMANCES</span>
+            <span>{societyEvents.length} EVENTS</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -299,7 +299,7 @@ export default async function SocietyDetailPage({
           >
             <div>
               <span className="font-mono text-[10px] uppercase tracking-widest text-ink-faint block">
-                ← PREVIOUS GUILD
+                ← PREVIOUS SOCIETY
               </span>
               <span className="font-serif text-xl font-bold text-ink group-hover:text-stone-700">
                 {prevSociety.name}
@@ -316,7 +316,7 @@ export default async function SocietyDetailPage({
           >
             <div>
               <span className="font-mono text-[10px] uppercase tracking-widest text-ink-faint block">
-                NEXT GUILD →
+                NEXT SOCIETY →
               </span>
               <span className="font-serif text-xl font-bold text-ink group-hover:text-stone-700">
                 {nextSociety.name}

@@ -16,9 +16,9 @@ const navItems = [
       { name: "AMS — Photography & Film", href: "/societies/ams" },
       { name: "Geneticx — Dance Crew", href: "/societies/geneticx" },
       { name: "Sarasva — Literature & Debate", href: "/societies/sarasva" },
-      { name: "Nirmiti — Fine Arts & Scenography", href: "/societies/nirmiti" },
-      { name: "Rangtarangini — Theatrics", href: "/societies/rangtarangini" },
-      { name: "Virtuosi — Live Band & Acoustics", href: "/societies/virtuosi" },
+      { name: "Nirmiti — Fine Arts & Design", href: "/societies/nirmiti" },
+      { name: "Rangtarangini — Dramatics Society", href: "/societies/rangtarangini" },
+      { name: "Virtuosi — Music Society", href: "/societies/virtuosi" },
     ],
   },
   { label: "EVENTS", href: "/events" },
@@ -94,26 +94,26 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-3 sm:gap-3.5 group focus:outline-none"
         >
-          <div className="relative w-11 h-11 sm:w-12 sm:h-12 shrink-0 group-hover:scale-105 transition-transform duration-200">
+          <div className="relative w-12 h-12 sm:w-13 sm:h-13 shrink-0 group-hover:scale-105 transition-transform duration-200">
             <Image
               src="/images/council-logo.png"
               alt="Cultural Council IIIT Allahabad Crest"
               fill
-              sizes="48px"
+              sizes="56px"
               className="object-contain"
               priority
             />
           </div>
           <div className="flex flex-col">
             <span
-              className={`font-serif font-medium text-base sm:text-lg tracking-tight leading-none ${
+              className={`font-serif font-semibold text-xl sm:text-2xl lg:text-[1.65rem] tracking-tight leading-tight ${
                 isHome ? "text-white" : "text-ink"
               }`}
             >
               Cultural Council
             </span>
             <span
-              className={`font-mono text-[9px] uppercase tracking-[0.25em] pt-0.5 ${
+              className={`font-mono text-[9px] sm:text-[10.5px] uppercase tracking-[0.22em] pt-0.5 ${
                 isHome ? "text-stone-300" : "text-ink-faint"
               }`}
             >
@@ -225,20 +225,20 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-stone-300 bg-[#FAF8F5] px-6 pt-4 pb-8 space-y-3 font-mono text-xs uppercase tracking-widest text-ink animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="pb-3 border-b border-stone-200 flex items-center gap-3">
-            <div className="relative w-9 h-9 shrink-0">
+            <div className="relative w-11 h-11 shrink-0">
               <Image
                 src="/images/council-logo.png"
                 alt="Cultural Council Logo"
                 fill
-                sizes="36px"
+                sizes="44px"
                 className="object-contain"
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-serif font-bold text-sm text-ink leading-tight">
+              <span className="font-serif font-bold text-lg sm:text-xl text-ink leading-tight">
                 Cultural Council
               </span>
-              <span className="font-mono text-[9px] text-ink-faint uppercase tracking-wider">
+              <span className="font-mono text-[10px] text-ink-faint uppercase tracking-wider">
                 SHDC • IIIT Allahabad
               </span>
             </div>

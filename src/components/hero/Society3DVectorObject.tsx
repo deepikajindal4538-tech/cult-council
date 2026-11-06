@@ -782,7 +782,7 @@ function VectorVinylDisc3D({
           33 ⅓ RPM • STEREO
         </text>
         <text x="250" y="280" textAnchor="middle" fill="rgba(204,251,241,0.6)" fontFamily="monospace" fontSize="8">
-          IIITA AUDIO GUILD
+          IIITA MUSIC SOCIETY
         </text>
 
         {/* Turntable Spindle Center Hole */}

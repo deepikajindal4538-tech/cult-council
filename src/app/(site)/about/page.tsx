@@ -25,7 +25,7 @@ import { CouncilLeadershipSection } from "@/components/about/CouncilLeadershipSe
 export const metadata = {
   title: "About Cultural Council | IIIT Allahabad",
   description:
-    "Learn about the Cultural Council of IIIT Allahabad — our history, governance, 6 autonomous societies, executive leadership team, and cultural mandate.",
+    "Learn about the Cultural Council of IIIT Allahabad — our history, governance, 6 societies, executive leadership team, and cultural mission.",
 };
 
 export default function AboutPage() {
@@ -47,7 +47,7 @@ export default function AboutPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-900 font-mono text-xs uppercase tracking-wider">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>APEX STATUTORY STUDENT BODY • ESTABLISHED 1999</span>
+                  <span>STUDENT CULTURAL COUNCIL • ESTABLISHED 1999</span>
                 </div>
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200/80 border border-stone-300 font-mono text-xs uppercase tracking-wider text-ink font-semibold">
                   <Sparkles className="w-3.5 h-3.5 text-amber-600" />
@@ -61,7 +61,7 @@ export default function AboutPage() {
               </h1>
 
               <p className="font-serif italic text-xl sm:text-2xl text-ink-muted leading-relaxed">
-                &ldquo;In an institute renowned for algorithmic precision, the Cultural Council breathes life into midnight strings, spontaneous cyphers, thespian confrontations, and visual truth. Many Forms. One Spirit.&rdquo;
+                &ldquo;Beyond academics and code, the Cultural Council brings creative expression to life—from music and dance to theatre, literature, visual arts, and media.&rdquo;
               </p>
             </div>
 
@@ -82,11 +82,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 mt-12 border-t border-stone-300">
             <div>
               <span className="font-serif text-4xl sm:text-5xl font-bold text-ink block">06</span>
-              <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">Autonomous Societies</span>
+              <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">Cultural Societies</span>
             </div>
             <div>
               <span className="font-serif text-4xl sm:text-5xl font-bold text-ink block">75+</span>
-              <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">Annual Events &amp; Acts</span>
+              <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">Annual Events</span>
             </div>
             <div>
               <span className="font-serif text-4xl sm:text-5xl font-bold text-ink block">15K+</span>
@@ -94,21 +94,21 @@ export default function AboutPage() {
             </div>
             <div>
               <span className="font-serif text-4xl sm:text-5xl font-bold text-ink block">320+</span>
-              <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">Active Student Artists</span>
+              <span className="font-mono text-xs uppercase tracking-wider text-ink-muted">Active Student Members</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Council Mandate & Vision */}
+      {/* 2. Council Mission & Vision */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           <div className="lg:col-span-7 space-y-6">
             <div className="font-mono text-xs uppercase tracking-widest text-ink-faint">
-              01 // THE MANDATE
+              01 // OUR MISSION
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-ink leading-tight">
-              A Constitutional Union of Creative Independence
+              Fostering Campus Creativity &amp; Community
             </h2>
             <div className="space-y-4 text-ink-muted text-base sm:text-lg leading-relaxed">
               <p>
@@ -155,7 +155,7 @@ export default function AboutPage() {
 
             <div className="space-y-3.5 text-xs font-mono">
               <div className="flex justify-between border-b border-stone-200 pb-2">
-                <span className="text-ink-muted uppercase">Statutory Framework</span>
+                <span className="text-ink-muted uppercase">Governance</span>
                 <span className="font-serif font-semibold text-ink text-sm">OIC Cultural</span>
               </div>
               <div className="flex justify-between border-b border-stone-200 pb-2">
@@ -217,7 +217,7 @@ export default function AboutPage() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
               <div className="font-mono text-xs uppercase tracking-widest text-ink-faint mb-2">
-                02 // CONSTITUENT GUILDS
+                02 // OUR SOCIETIES
               </div>
               <h2 className="font-serif text-3xl sm:text-5xl font-bold text-ink">
                 The Six Creative Wings
@@ -263,7 +263,7 @@ export default function AboutPage() {
                     href={`/societies/${soc.slug}`}
                     className="font-mono text-xs uppercase tracking-wider text-ink font-semibold hover:text-stone-600 flex items-center gap-1"
                   >
-                    <span>View Wing</span>
+                    <span>View Society</span>
                     <span>&rarr;</span>
                   </Link>
                 </div>

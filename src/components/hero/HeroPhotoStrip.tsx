@@ -45,10 +45,10 @@ export const HERO_PHOTOS: HeroPhoto[] = [
   {
     id: "theatre-prep",
     src: "/images/gallery/theatre-prep.jpg",
-    title: "Thespian Persona & Face Art",
+    title: "Backstage Makeup & Stage Prep",
     society: "Rangtarangini // Dramatics",
     tag: "STAGE & BACKSTAGE",
-    description: "Intricate theatrical mask preparation and makeup artistry before the street play.",
+    description: "Stage makeup preparation and rehearsals before the street play.",
     credit: "AMS Photography",
   },
   {
@@ -63,10 +63,10 @@ export const HERO_PHOTOS: HeroPhoto[] = [
   {
     id: "ramp-walk",
     src: "/images/gallery/ramp-walk.jpg",
-    title: "Cultural Runway & Couture",
+    title: "Cultural Runway & Fashion Show",
     society: "Fine Arts & Design Wing",
     tag: "FASHION & COSTUME",
-    description: "Mythological, traditional, and contemporary sartorial design on the festival stage.",
+    description: "Traditional and contemporary student fashion on the festival stage.",
     credit: "AMS Photography",
   },
 ];

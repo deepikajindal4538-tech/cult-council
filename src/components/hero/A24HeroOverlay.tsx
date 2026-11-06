@@ -44,7 +44,7 @@ export function A24HeroOverlay({
                   style={{ backgroundColor: society.accentColor || "#1C1917" }}
                 />
                 <span className="font-semibold text-ink">
-                  SECTOR 0{activeIndex + 1} // {society.category}
+                  SOCIETY 0{activeIndex + 1} • {society.category}
                 </span>
               </div>
 
@@ -53,14 +53,14 @@ export function A24HeroOverlay({
                 {society.name}
               </h2>
 
-              {/* A24 Hairline Credits Ledger Table (.info-content) */}
+              {/* Society Overview Table */}
               <div className="w-full border-t border-stone-300/90 text-xs font-mono">
                 <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
                   <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    DIRECTED BY
+                    COORDINATOR
                   </span>
                   <span className="col-span-8 font-serif font-medium text-ink text-right truncate">
-                    {society.leads?.[0]?.name || "Student Head"}
+                    {society.leads?.[0]?.name || "Student Coordinator"}
                   </span>
                 </div>
 
@@ -75,7 +75,7 @@ export function A24HeroOverlay({
 
                 <div className="grid grid-cols-12 py-1.5 border-b border-stone-200/80 items-center">
                   <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    DISCIPLINE
+                    CATEGORY
                   </span>
                   <span className="col-span-8 font-serif font-medium text-ink text-right truncate">
                     {society.category}
@@ -84,10 +84,10 @@ export function A24HeroOverlay({
 
                 <div className="grid grid-cols-12 py-1.5 border-b border-stone-300/90 items-center">
                   <span className="col-span-4 text-[10px] uppercase tracking-wider text-ink-faint">
-                    MEMBERSHIP
+                    MEMBERS
                   </span>
                   <span className="col-span-8 font-serif font-medium text-ink text-right">
-                    {society.stats?.membersCount || 45}+ Active Artists
+                    {society.stats?.membersCount || 45}+ Active Members
                   </span>
                 </div>
               </div>
@@ -168,7 +168,7 @@ export function A24HeroOverlay({
               className="space-y-1"
             >
               <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-ink-faint font-semibold">
-                ARTISTIC MANIFESTO
+                ABOUT THE SOCIETY
               </div>
 
               <p className="font-serif italic text-sm sm:text-base text-ink leading-tight max-w-xs sm:max-w-sm">
@@ -178,13 +178,13 @@ export function A24HeroOverlay({
           </AnimatePresence>
         </div>
 
-        {/* Right: Explore Dossier CTA Link */}
+        {/* Right: Explore Society CTA Link */}
         <div className="pointer-events-auto flex justify-end w-48">
           <Link
             href={`/societies/${society.slug}`}
             className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink text-canvas font-mono text-[11px] uppercase tracking-widest hover:bg-stone-800 transition-all duration-200 shadow-xs hover:shadow cursor-pointer"
           >
-            <span>Explore Dossier</span>
+            <span>Explore Society</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </div>

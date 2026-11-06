@@ -5,9 +5,9 @@ import { ArrowUpRight, Users, Calendar, Award } from "lucide-react";
 import { Society3DVectorObject } from "@/components/hero/Society3DVectorObject";
 
 export const metadata = {
-  title: "Cultural Societies Register | Cultural Council IIIT Allahabad",
+  title: "Cultural Societies | Cultural Council IIIT Allahabad",
   description:
-    "Explore the six autonomous student guilds under the Cultural Council: AMS, Geneticx, Sarasva, Nirmiti, Rangtarangini, and Virtuosi.",
+    "Explore the six student cultural societies under the Cultural Council: AMS, Geneticx, Sarasva, Nirmiti, Rangtarangini, and Virtuosi.",
 };
 
 export default async function SocietiesPage() {
@@ -15,10 +15,10 @@ export default async function SocietiesPage() {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-ink pb-28">
-      {/* 1. Archival Register Header */}
+      {/* 1. Societies Directory Header */}
       <section className="pt-24 sm:pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-stone-300">
         <div className="flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint mb-6">
-          <span>DIRECTORY // 06 GUILDS</span>
+          <span>CAMPUS SOCIETIES // 06 WINGS</span>
           <span>EST. 1999 — 2026</span>
         </div>
 
@@ -29,14 +29,14 @@ export default async function SocietiesPage() {
           </h1>
 
           <p className="font-serif italic text-xl sm:text-2xl text-ink-muted leading-relaxed pl-6 border-l-2 border-stone-400">
-            &ldquo;From quiet darkrooms and acoustic chambers to open-air amphitheatre battles,
-            each society operates as a dedicated home for artistic exploration.&rdquo;
+            &ldquo;From jam sessions and darkrooms to street plays, dance battles, and art galleries,
+            each society offers a creative home on campus.&rdquo;
           </p>
 
           <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl">
-            Under the umbrella of the IIIT Allahabad Cultural Council, these six guilds
-            empower student artists, directors, choreographers, and writers to produce over 50
-            performances and exhibitions annually.
+            Under the umbrella of the IIIT Allahabad Cultural Council, these six societies
+            empower student musicians, dancers, thespians, artists, and writers to organize over 50
+            performances and workshops annually.
           </p>
         </div>
       </section>
@@ -96,7 +96,7 @@ export default async function SocietiesPage() {
                   {society.description}
                 </p>
 
-                {/* Ledger Credits Row */}
+                {/* Society Overview Row */}
                 <div className="grid grid-cols-2 gap-4 pt-4 border-t border-stone-300/70 text-xs font-mono">
                   <div>
                     <span className="text-[10px] text-ink-faint uppercase block">Leadership</span>
@@ -109,12 +109,12 @@ export default async function SocietiesPage() {
                   </div>
 
                   <div>
-                    <span className="text-[10px] text-ink-faint uppercase block">Guild Strength</span>
+                    <span className="text-[10px] text-ink-faint uppercase block">Active Members</span>
                     <span className="font-serif text-sm font-semibold text-ink">
-                      {society.stats?.membersCount || 40}+ Artists
+                      {society.stats?.membersCount || 40}+ Members
                     </span>
                     <span className="block text-[11px] text-ink-muted">
-                      {society.stats?.eventsPerYear || 12} Annual Shows
+                      {society.stats?.eventsPerYear || 12} Annual Events
                     </span>
                   </div>
                 </div>
@@ -122,12 +122,12 @@ export default async function SocietiesPage() {
 
               {/* Bottom Action Footer */}
               <div className="p-8 sm:p-10 pt-4 border-t border-stone-300/80 flex items-center justify-between font-mono text-xs uppercase tracking-widest">
-                <span className="text-ink-faint">DOSSIER FILE #{society.slug.toUpperCase()}</span>
+                <span className="text-ink-faint">SOCIETY #{society.slug.toUpperCase()}</span>
                 <Link
                   href={`/societies/${society.slug}`}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-ink text-canvas hover:bg-stone-800 transition-all shadow-sm group-hover:shadow-md"
                 >
-                  <span>Explore Dossier</span>
+                  <span>Explore Society</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
