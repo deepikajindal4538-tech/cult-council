@@ -348,6 +348,10 @@ export default function EventTimelineSection() {
 
   return (
     <section id="timeline" className="relative w-full py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#FAF8F5] border-t border-stone-300/80 overflow-hidden select-none">
+      {/* Background Decorative Ambient Radial Gradients */}
+      <div className="absolute top-1/4 -left-48 w-96 h-96 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-48 w-96 h-96 rounded-full bg-rose-500/5 blur-3xl pointer-events-none" />
+
       <div className="max-w-7xl mx-auto w-full relative z-10">
         {/* 1. SECTION HEADER SPREAD */}
         <div className="border-b border-stone-300/80 pb-8 mb-10 sm:mb-14">
@@ -464,10 +468,13 @@ export default function EventTimelineSection() {
             </button>
           </div>
         ) : viewMode === "timeline" ? (
-          /* CLEAN ARCHITECTURAL TIMELINE */
+          /* CINEMATIC TIMELINE WITH GLOWING SPINE & PASS STUBS */
           <div className="relative">
-            {/* Clean Timeline Spine */}
-            <div className="absolute top-0 bottom-0 left-6 md:left-1/2 -translate-x-1/2 w-px bg-stone-300" />
+            {/* Ambient Vertical Glowing Laser Spine */}
+            <div className="absolute top-0 bottom-0 left-6 md:left-1/2 -translate-x-1/2 w-[2px]">
+              <div className="w-full h-full bg-gradient-to-b from-stone-400 via-amber-600/50 to-stone-400" />
+              <div className="absolute top-0 bottom-0 -left-1 -right-1 bg-amber-500/10 blur-sm pointer-events-none" />
+            </div>
 
             <div className="space-y-12 sm:space-y-16">
               <AnimatePresence mode="popLayout">
@@ -481,23 +488,27 @@ export default function EventTimelineSection() {
                     <motion.div
                       key={evt.id}
                       layout
-                      initial={{ opacity: 0, y: 24 }}
+                      initial={{ opacity: 0, y: 32 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.35, delay: index * 0.03 }}
+                      transition={{ duration: 0.45, delay: index * 0.04 }}
                       className={`relative flex flex-col md:flex-row items-start md:items-center ${
                         isEven ? "md:flex-row-reverse" : ""
                       }`}
                     >
-                      {/* Spine Node: Clean Circular Node with Society Accent */}
+                      {/* Spine Node: Glowing Round Jewel with Category Icon */}
                       <div className="absolute left-6 md:left-1/2 -translate-x-1/2 flex items-center justify-center z-20">
                         <div
-                          className="w-10 h-10 rounded-full bg-white border-2 shadow-xs flex items-center justify-center transition-transform duration-200 hover:scale-110 cursor-pointer"
+                          className="w-12 h-12 rounded-full bg-white border-2 shadow-lg flex items-center justify-center transition-transform duration-300 hover:scale-125 cursor-pointer group"
                           style={{ borderColor: evt.accentColor }}
                           onClick={() => setSelectedEvent(evt)}
-                          title={`View ${evt.title}`}
+                          title={`Inspect ${evt.title}`}
                         >
-                          <Icon className="w-4 h-4" style={{ color: evt.accentColor }} />
+                          <span
+                            className="absolute inset-0 rounded-full opacity-20 animate-ping group-hover:opacity-40"
+                            style={{ backgroundColor: evt.accentColor }}
+                          />
+                          <Icon className="w-5 h-5 transition-transform group-hover:rotate-12" style={{ color: evt.accentColor }} />
                         </div>
                       </div>
 
@@ -505,14 +516,24 @@ export default function EventTimelineSection() {
                       <div className="w-full pl-16 md:pl-0 md:w-1/2 md:px-8 lg:px-12">
                         <div
                           onClick={() => setSelectedEvent(evt)}
-                          className={`group relative rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1 flex flex-col sm:flex-row bg-[#FAF8F5] ${
+                          className={`group relative rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden shadow-xs hover:shadow-2xl hover:-translate-y-1.5 flex flex-col sm:flex-row bg-[#FAF8F5] ${
                             isFlagship
-                              ? "border-amber-400 bg-gradient-to-br from-[#FAF8F5] via-amber-50/40 to-[#FAF8F5]"
+                              ? "border-amber-400/90 ring-1 ring-amber-300/40 bg-gradient-to-br from-[#FAF8F5] via-amber-50/50 to-[#FAF8F5]"
                               : "border-stone-300/90 hover:border-stone-400"
                           }`}
                         >
-                          {/* LEFT COLUMN: DATE STUB */}
-                          <div className="relative shrink-0 w-full sm:w-28 bg-[#F4F1EA] p-4 sm:p-5 border-b sm:border-b-0 sm:border-r border-stone-200 flex flex-row sm:flex-col items-center justify-between sm:justify-center text-center">
+                          {/* Ambient Card Corner Glow */}
+                          <div
+                            className="absolute -top-16 -right-16 w-36 h-36 rounded-full blur-2xl opacity-15 pointer-events-none group-hover:opacity-30 transition-opacity"
+                            style={{ backgroundColor: evt.accentColor }}
+                          />
+
+                          {/* LEFT COLUMN: EVENT PASS STUB */}
+                          <div className="relative shrink-0 w-full sm:w-28 bg-[#F4F1EA] p-4 sm:p-5 border-b sm:border-b-0 sm:border-r border-dashed border-stone-300/90 flex flex-row sm:flex-col items-center justify-between sm:justify-center text-center">
+                            {/* Physical Circular Ticket Punch Cutouts */}
+                            <div className="hidden sm:block absolute -top-2.5 -right-2.5 w-5 h-5 rounded-full bg-[#FAF8F5] border border-stone-300/80 z-10" />
+                            <div className="hidden sm:block absolute -bottom-2.5 -right-2.5 w-5 h-5 rounded-full bg-[#FAF8F5] border border-stone-300/80 z-10" />
+
                             <div className="space-y-0.5">
                               <span className="font-mono text-[9px] uppercase tracking-widest text-amber-800 font-bold block">
                                 {evt.weekday}
@@ -522,6 +543,18 @@ export default function EventTimelineSection() {
                               </span>
                               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-stone-600 block">
                                 {evt.month} &apos;{evt.year.slice(2)}
+                              </span>
+                            </div>
+
+                            {/* Ticket Barcode Motif */}
+                            <div className="pt-2 sm:pt-4 flex flex-col items-center space-y-1">
+                              <div className="flex items-center gap-[1.5px] opacity-40 group-hover:opacity-80 transition-opacity">
+                                {[2, 1, 3, 1, 2, 4, 1, 3, 2, 1, 4, 2, 1, 3].map((w, i) => (
+                                  <div key={i} className="h-3.5 bg-ink" style={{ width: `${w}px` }} />
+                                ))}
+                              </div>
+                              <span className="font-mono text-[8px] text-ink-faint tracking-wider block">
+                                #{evt.passCode}
                               </span>
                             </div>
                           </div>
@@ -659,8 +692,8 @@ export default function EventTimelineSection() {
                             <Icon className="w-4 h-4" style={{ color: evt.accentColor }} />
                           </span>
                           <div>
-                            <span className="font-mono text-[10px] uppercase tracking-wider text-amber-800 font-semibold block">
-                              {evt.societyName}
+                            <span className="font-mono text-[9px] uppercase tracking-widest text-ink-faint block">
+                              #{evt.passCode}
                             </span>
                             <span className="font-mono text-xs font-bold text-ink">
                               {evt.date}
@@ -749,8 +782,9 @@ export default function EventTimelineSection() {
         {/* 4. BOTTOM PRODUCTION CALLOUT BANNER */}
         <div className="mt-16 sm:mt-20 rounded-3xl bg-gradient-to-br from-white via-amber-50/30 to-[#F4F1EA] border border-stone-300/90 p-8 sm:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm hover:shadow-md transition-shadow">
           <div className="space-y-2 max-w-2xl">
-            <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-amber-800 font-bold">
-              CAMPUS CULTURAL CALENDAR • ALL SOCIETIES WELCOME
+            <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-amber-800 font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span>CAMPUS CULTURAL CALENDAR • ALL SOCIETIES WELCOME</span>
             </div>
             <h4 className="font-serif text-2xl sm:text-3xl font-bold text-ink leading-tight">
               Propose a Performance, Workshop, or Jam Session?
@@ -783,12 +817,12 @@ export default function EventTimelineSection() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="relative w-full max-w-xl bg-[#FAF8F5] border border-stone-300 rounded-3xl shadow-2xl overflow-hidden p-6 sm:p-8 space-y-6"
             >
-              {/* Modal Top Header with Close Button */}
+              {/* Modal Top Header with Barcode & Close Button */}
               <div className="flex items-center justify-between border-b border-stone-200/90 pb-4">
                 <div className="flex items-center gap-2.5">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: selectedEvent.accentColor }} />
                   <span className="font-mono text-xs uppercase tracking-widest text-ink font-bold">
-                    EVENT DETAILS
+                    EVENT PASS #{selectedEvent.passCode}
                   </span>
                 </div>
                 <button
@@ -804,7 +838,7 @@ export default function EventTimelineSection() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-amber-800 font-semibold">
                   <span>{selectedEvent.societyName}</span>
-                  <span>•</span>
+                  <span>//</span>
                   <span>{selectedEvent.category}</span>
                 </div>
                 <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-ink leading-tight">
