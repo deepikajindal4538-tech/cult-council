@@ -46,7 +46,7 @@ export function CouncilLeadershipSection() {
         <div>
           {/* Rounded Rectangular Photo Frame */}
           <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-stone-200 mb-5 shadow-inner">
-            {!isFailed ? (
+            {Boolean(person.photoUrl && person.photoUrl.trim() !== "") && !isFailed ? (
               <Image
                 src={person.photoUrl}
                 alt={`${person.name} - ${person.designation}`}

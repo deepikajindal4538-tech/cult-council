@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown } from "lucide-react";
+import FoldText from "@/components/ui/FoldText";
 import type { ISociety } from "@/models/Society";
 
 const SLIDES = [
@@ -172,7 +173,20 @@ export function HeroSlider({}: HeroSliderProps) {
         {/* The Hero Title */}
         <div className="space-y-1">
           <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight text-white uppercase leading-[0.92] drop-shadow-2xl">
-            CULTURAL COUNCIL
+            <FoldText
+              text="CULTURAL COUNCIL"
+              foldStyle="paper"
+              hinge="top"
+              splitBy="char"
+              duration={0.8}
+              stagger={0.035}
+              foldAngle={92}
+              creaseShading={0.45}
+              hoverRefold={true}
+              refoldRadius={120}
+              refoldAngle={35}
+              className="drop-shadow-2xl"
+            />
           </h1>
           <p className="font-serif italic text-2xl sm:text-4xl md:text-5xl text-amber-200/90 tracking-tight drop-shadow-lg">
             IIIT Allahabad

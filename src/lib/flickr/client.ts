@@ -13,6 +13,7 @@ import {
   getFallbackAlbumPhotosResponse,
   FALLBACK_ALBUMS,
 } from "./fallbackData";
+import { isFlickrKilled } from "./killSwitch";
 
 const FLICKR_REST_ENDPOINT = "https://www.flickr.com/services/rest/";
 
@@ -38,6 +39,12 @@ async function callFlickrApi<T>(
   transform: (json: any) => T
 ): Promise<T> {
   const { method, params = {}, customFetcher = fetch } = options;
+
+  // 0. Emergency Kill Switch Verification
+  if (isFlickrKilled()) {
+    console.warn("[FlickrClient] Blocked request: Emergency Flickr kill switch is ENGAGED.");
+    throw new FlickrClientError("Flickr API access is disabled by emergency kill switch.", 503);
+  }
 
   // 1. Enforce strict allowlist
   if (!isAllowedMethod(method)) {
@@ -173,10 +180,12 @@ export async function getAlbumPhotos(
 
 export interface GalleryAlbumsResult extends TrimmedAlbumsResponse {
   isLiveFlickr: boolean;
+  isKilled?: boolean;
 }
 
 export interface GalleryAlbumPhotosResult extends TrimmedAlbumPhotosResponse {
   isLiveFlickr: boolean;
+  isKilled?: boolean;
   curator?: string;
   category?: string;
   description?: string;
@@ -188,6 +197,12 @@ export interface GalleryAlbumPhotosResult extends TrimmedAlbumPhotosResponse {
 export async function getAlbumsWithFallback(
   query: { page?: number; per_page?: number } = {}
 ): Promise<GalleryAlbumsResult> {
+  // If emergency kill switch is active, immediately serve fallback without contacting Flickr
+  if (isFlickrKilled()) {
+    const fallback = getFallbackAlbumsResponse(query.page || 1, query.per_page || 20);
+    return { ...fallback, isLiveFlickr: false, isKilled: true };
+  }
+
   const apiKey = process.env.FLICKR_API_KEY;
   const userId = process.env.FLICKR_USER_ID;
 
@@ -213,9 +228,24 @@ export async function getAlbumPhotosWithFallback(
   albumId: string,
   query: { page?: number; per_page?: number } = {}
 ): Promise<GalleryAlbumPhotosResult | null> {
+  const enriched = FALLBACK_ALBUMS.find((a) => a.id === albumId);
+
+  // If emergency kill switch is active, immediately serve fallback without contacting Flickr
+  if (isFlickrKilled()) {
+    const fallback = getFallbackAlbumPhotosResponse(albumId, query.page || 1, query.per_page || 20);
+    if (!fallback) return null;
+    return {
+      ...fallback,
+      isLiveFlickr: false,
+      isKilled: true,
+      curator: enriched?.curator,
+      category: enriched?.category,
+      description: enriched?.description,
+    };
+  }
+
   const apiKey = process.env.FLICKR_API_KEY;
   const userId = process.env.FLICKR_USER_ID;
-  const enriched = FALLBACK_ALBUMS.find((a) => a.id === albumId);
 
   if (!apiKey || !userId || apiKey.includes("mock") || userId.includes("mock")) {
     const fallback = getFallbackAlbumPhotosResponse(albumId, query.page || 1, query.per_page || 20);
@@ -253,4 +283,117 @@ export async function getAlbumPhotosWithFallback(
       description: enriched?.description,
     };
   }
+}
+
+/**
+ * Diagnostic & Admin Tools
+ */
+export async function testFlickrConnection(): Promise<{
+  success: boolean;
+  message: string;
+  latencyMs?: number;
+  statusCode?: number;
+  isKilled: boolean;
+}> {
+  if (isFlickrKilled()) {
+    return {
+      success: false,
+      message: "Test blocked: Emergency Kill Switch is currently ENGAGED.",
+      isKilled: true,
+    };
+  }
+
+  const apiKey = process.env.FLICKR_API_KEY;
+  const userId = process.env.FLICKR_USER_ID;
+
+  if (!apiKey || !userId) {
+    return {
+      success: false,
+      message: "Credentials missing in environment variables (FLICKR_API_KEY or FLICKR_USER_ID).",
+      isKilled: false,
+    };
+  }
+
+  if (apiKey.includes("mock") || userId.includes("mock")) {
+    return {
+      success: true,
+      message: "Simulated ping successful. Running in local mock mode with verified offline fallback dataset.",
+      latencyMs: 1,
+      statusCode: 200,
+      isKilled: false,
+    };
+  }
+
+  const start = Date.now();
+  try {
+    const url = new URL(FLICKR_REST_ENDPOINT);
+    url.searchParams.set("method", "flickr.photosets.getList");
+    url.searchParams.set("api_key", apiKey);
+    url.searchParams.set("user_id", userId);
+    url.searchParams.set("format", "json");
+    url.searchParams.set("nojsoncallback", "1");
+    url.searchParams.set("per_page", "1");
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 6000);
+
+    const res = await fetch(url.toString(), {
+      signal: controller.signal,
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "IIITA-Cultural-Council-Admin-Test/1.0",
+      },
+      cache: "no-store",
+    });
+    clearTimeout(timeout);
+    const latencyMs = Date.now() - start;
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: `Upstream HTTP ${res.status}: ${res.statusText}`,
+        latencyMs,
+        statusCode: res.status,
+        isKilled: false,
+      };
+    }
+
+    const json = await res.json();
+    if (json.stat !== "ok") {
+      return {
+        success: false,
+        message: `Flickr API returned stat='fail': Code ${json.code} - ${json.message}`,
+        latencyMs,
+        isKilled: false,
+      };
+    }
+
+    return {
+      success: true,
+      message: `Upstream connection verified. Latency: ${latencyMs}ms. Found ${json.photosets?.total || 0} remote albums.`,
+      latencyMs,
+      statusCode: 200,
+      isKilled: false,
+    };
+  } catch (err) {
+    const latencyMs = Date.now() - start;
+    return {
+      success: false,
+      message: `Connection error: ${err instanceof Error ? err.message : "Network error"}`,
+      latencyMs,
+      isKilled: false,
+    };
+  }
+}
+
+export function purgeGalleryCache(): { cleared: boolean; timestamp: string } {
+  cache.clear();
+  return { cleared: true, timestamp: new Date().toISOString() };
+}
+
+export function getGalleryCacheStats(): { size: number; defaultTTLSeconds: number } {
+  return {
+    size: cache.size(),
+    defaultTTLSeconds: 600,
+  };
 }

@@ -29,13 +29,13 @@ export function A24HeroOverlay({
       <header className="w-full flex items-start justify-between">
         {/* Top-Left: Active Society Title & Hairline Metadata Table (.experience_info) */}
         <div className="pointer-events-auto max-w-xs sm:max-w-sm lg:max-w-md">
-          <AnimatePresence mode="popLayout" initial={false}>
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={society.slug}
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
             >
               {/* Category Eyebrow */}
               <div className="flex items-center gap-2 mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-ink-muted">
@@ -99,7 +99,6 @@ export function A24HeroOverlay({
         <div className="pointer-events-auto flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-ink">
           <div className="hidden flex-col items-end text-right text-[10px] tracking-[0.2em] text-ink-faint sm:flex">
             <span className="font-semibold text-ink">IIIT ALLAHABAD</span>
-            <span>APEX CULTURAL BODY</span>
           </div>
           {/* Index Dropdown Toggle (Matching A24 Television Navigation) */}
           <div className="relative">
@@ -225,13 +224,13 @@ export function A24HeroOverlay({
             })}
           </div>
 
-          <AnimatePresence mode="popLayout" initial={false}>
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={society.slug + "-testimonial"}
-              initial={{ opacity: 0, y: 6 }}
+              initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
               className="space-y-1"
             >
               <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-ink-faint font-semibold">

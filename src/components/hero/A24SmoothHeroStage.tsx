@@ -30,14 +30,14 @@ export function A24SmoothHeroStage({
       <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
         {societies.map((soc, idx) => {
           const delta = idx - progress;
+          const absDelta = Math.abs(delta);
 
-          // Skip elements outside visible range for peak 60/120fps performance
-          if (Math.abs(delta) > 2.2) {
+          // Only unmount when far off-screen to avoid abrupt pops during scroll
+          if (absDelta > 2.8) {
             return null;
           }
 
-          const isCurrent = Math.abs(delta) < 0.45;
-          const absDelta = Math.abs(delta);
+          const isCurrent = absDelta < 0.45;
 
           // Diagonal Trajectory:
           // Arrive from Top-Right (delta > 0) -> Center Stage (delta = 0) -> Dissolve in Bottom-Left (delta < 0)
@@ -66,12 +66,13 @@ export function A24SmoothHeroStage({
             <div
               key={soc.slug || idx}
               onClick={() => onSelectIndex?.(idx)}
-              className="absolute flex items-center justify-center cursor-pointer pointer-events-auto"
+              className="absolute flex items-center justify-center cursor-pointer"
               style={{
                 transform: `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0px) scale(${scale.toFixed(3)}) rotate(${rotateZ.toFixed(1)}deg)`,
                 opacity: Math.min(1, Math.max(0, opacity)),
                 zIndex,
                 willChange: "transform, opacity",
+                pointerEvents: isCurrent ? "auto" : "none",
               }}
             >
               <div className="w-[380px] sm:w-[520px] md:w-[620px] lg:w-[700px] h-[380px] sm:h-[520px] md:h-[620px] lg:h-[700px] flex items-center justify-center">

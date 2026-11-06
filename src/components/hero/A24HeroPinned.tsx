@@ -24,8 +24,9 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   });
 
   const smoothEntry = useSpring(entryProgress, {
-    stiffness: 140,
-    damping: 24,
+    stiffness: 90,
+    damping: 22,
+    mass: 0.5,
     restDelta: 0.001,
   });
 
@@ -39,12 +40,12 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
     offset: ["start start", "end end"],
   });
 
-  // High-performance spring: instant response feel, buttery smooth deceleration, zero lag
+  // Luxury cinematic spring: smooth inertia, zero jitter on mouse wheel, buttery deceleration
   const smoothProgress = useSpring(stageScrollProgress, {
-    stiffness: 150,
-    damping: 24,
-    mass: 0.2,
-    restDelta: 0.0001,
+    stiffness: 75,
+    damping: 22,
+    mass: 0.55,
+    restDelta: 0.0005,
   });
 
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -56,14 +57,13 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
 
       // Continuous float progress from 0 to n - 1
       const rawProgress = clamped * (n - 1);
+      const rounded = Math.round(rawProgress);
       const curr = activeIndexRef.current;
 
-      // Hysteresis deadband: prevents boundary flickering between adjacent societies
+      // Clean hysteresis: only switch index when firmly past midpoint to prevent boundary vibration
       let nextIndex = curr;
-      if (rawProgress > curr + 0.55 && curr < n - 1) {
-        nextIndex = Math.min(n - 1, Math.floor(rawProgress + 0.45));
-      } else if (rawProgress < curr - 0.55 && curr > 0) {
-        nextIndex = Math.max(0, Math.ceil(rawProgress - 0.45));
+      if (Math.abs(rawProgress - curr) > 0.52) {
+        nextIndex = Math.min(n - 1, Math.max(0, rounded));
       }
 
       if (nextIndex !== curr) {
@@ -74,10 +74,6 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   }, [smoothProgress, n]);
 
   const handleSelectIndex = (index: number) => {
-    // Prime active index immediately for zero-latency UI feedback
-    activeIndexRef.current = index;
-    setActiveIndex(index);
-
     if (!containerRef.current) return;
     const containerTop = containerRef.current.getBoundingClientRect().top + window.scrollY;
     const scrollDistance = containerRef.current.offsetHeight - window.innerHeight;
@@ -97,14 +93,14 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
       id="societies-stage"
       ref={containerRef}
       className="relative w-full"
-      style={{ height: `${Math.max(250, n * 75)}vh` }}
+      style={{ height: `${Math.max(450, n * 115)}vh` }}
     >
       {/* 100% Full-Viewport Pinned Stage */}
       <section
         aria-label="A24 Cultural Objects Exhibition"
-        className="sticky top-0 h-screen w-full overflow-hidden transition-colors duration-700 ease-out select-none border-b border-stone-300/80"
+        className="sticky top-0 h-screen w-full overflow-hidden transition-colors duration-300 ease-out select-none border-b border-stone-300/80"
         style={{
-          backgroundColor: scrollProgress < 0.03 ? "#FAF8F5" : (activeSociety?.washColor || "#FAF8F5"),
+          backgroundColor: scrollProgress < 0.02 ? "#FAF8F5" : (activeSociety?.washColor || "#FAF8F5"),
         }}
       >
         {/* Subtle Paper Noise Watermark */}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
@@ -29,16 +29,64 @@ export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [societiesDropdownOpen, setSocietiesDropdownOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const lastScrollYRef = useRef(0);
   const isHome = pathname === "/";
 
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (ticking) return;
+
+      window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const lastY = lastScrollYRef.current;
+        const delta = currentScrollY - lastY;
+
+        setIsScrolled(currentScrollY > 20);
+
+        // Always show when close to top of page
+        if (currentScrollY <= 40) {
+          setIsVisible(true);
+        } else if (delta > 8 && currentScrollY > 70) {
+          // Scrolling down -> hide navbar
+          if (!mobileMenuOpen) {
+            setIsVisible(false);
+            setSocietiesDropdownOpen(false);
+          }
+        } else if (delta < -8) {
+          // Scrolling up a bit -> reveal navbar
+          setIsVisible(true);
+        }
+
+        lastScrollYRef.current = currentScrollY;
+        ticking = false;
+      });
+
+      ticking = true;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [mobileMenuOpen]);
+
   return (
-    <header
-      className={`z-50 w-full transition-colors duration-300 ${
-        isHome
-          ? "absolute top-0 left-0 right-0 border-b border-white/15 bg-transparent"
-          : "sticky top-0 backdrop-blur-md bg-[#FAF8F5]/90 border-b border-stone-300/80 shadow-sm"
-      }`}
-    >
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+          isVisible ? "translate-y-0" : "-translate-y-full"
+        } ${
+          isHome
+            ? isScrolled
+              ? "backdrop-blur-md bg-stone-950/70 border-b border-white/15 text-white shadow-lg"
+              : "bg-transparent border-b border-white/15 text-white"
+            : isScrolled
+            ? "backdrop-blur-md bg-[#FAF8F5]/90 border-b border-stone-300/80 shadow-sm text-ink"
+            : "backdrop-blur-md bg-[#FAF8F5]/80 border-b border-stone-300/80 text-ink"
+        }`}
+      >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-16 sm:h-20 flex items-center justify-between">
         {/* College & Council Brand Identity */}
         <Link
@@ -223,5 +271,7 @@ export function Navbar() {
         </div>
       )}
     </header>
+    {!isHome && <div className="h-16 sm:h-20" aria-hidden="true" />}
+  </>
   );
 }

@@ -20,6 +20,7 @@
 # Local env files - NEVER commit secrets
 .env*.local
 .env
+.flickr-control-state.json
 
 # Vercel
 .vercel

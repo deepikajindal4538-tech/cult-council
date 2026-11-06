@@ -5,6 +5,15 @@ import { transformAlbumsList, transformAlbumPhotos } from "../lib/flickr/transfo
 import { cache } from "../lib/cache";
 import { rateLimiter } from "../lib/rateLimit";
 import { getAlbums, getAlbumPhotos, FlickrClientError } from "../lib/flickr/client";
+import { isFlickrKilled, setFlickrKillSwitch, getFlickrControlState } from "../lib/flickr/killSwitch";
+import {
+  verifyAdminPasskey,
+  createAdminSessionToken,
+  verifyAdminSessionToken,
+  checkAdminLoginRateLimit,
+  recordFailedAdminLogin,
+  resetAdminLoginAttempts,
+} from "../lib/flickr/adminAuth";
 
 // Set test environment variables
 process.env.FLICKR_API_KEY = "test_api_key_123";
@@ -222,6 +231,81 @@ async function runTests() {
     const blocked = rateLimiter.check(testIp);
     assert.strictEqual(blocked.success, false);
     assert.strictEqual(blocked.remaining, 0);
+  });
+
+  // Test 9: Emergency Kill Switch blocks outbound API requests
+  await test("Emergency Kill Switch blocks outbound API calls immediately", async () => {
+    // Ensure disarmed first
+    setFlickrKillSwitch(false, "Reset test state");
+    assert.strictEqual(isFlickrKilled(), false);
+
+    // Engage kill switch
+    setFlickrKillSwitch(true, "Security breach test", "TEST_SUITE");
+    assert.strictEqual(isFlickrKilled(), true);
+
+    const controlState = getFlickrControlState();
+    assert.strictEqual(controlState.killed, true);
+    assert.strictEqual(controlState.killedReason, "Security breach test");
+
+    // Any attempt to call getAlbums must throw 503
+    await assert.rejects(
+      async () => {
+        await getAlbums({ page: 1, per_page: 5 });
+      },
+      (err: any) => {
+        assert(err instanceof FlickrClientError);
+        assert.strictEqual(err.statusCode, 503);
+        assert(err.message.includes("kill switch"));
+        return true;
+      }
+    );
+
+    // Disarm kill switch
+    setFlickrKillSwitch(false, "Restore test state");
+    assert.strictEqual(isFlickrKilled(), false);
+  });
+
+  // Test 10: Admin Passkey verification
+  await test("Admin Passkey verification validates correctly and rejects bad inputs", () => {
+    process.env.FLICKR_ADMIN_PASSKEY = "super-secret-admin-token-2026";
+    assert.strictEqual(verifyAdminPasskey("super-secret-admin-token-2026"), true);
+    assert.strictEqual(verifyAdminPasskey("wrong-password"), false);
+    assert.strictEqual(verifyAdminPasskey(""), false);
+    assert.strictEqual(verifyAdminPasskey("super-secret-admin-token-2026-extra"), false);
+  });
+
+  // Test 11: Admin Session Token cryptographic verification
+  await test("Admin Session Token generation and tamper rejection", () => {
+    const token = createAdminSessionToken();
+    assert(typeof token === "string");
+    assert.strictEqual(verifyAdminSessionToken(token), true);
+
+    // Tampered token must fail
+    const tampered = token.slice(0, -4) + "abcd";
+    assert.strictEqual(verifyAdminSessionToken(tampered), false);
+
+    // Arbitrary string must fail
+    assert.strictEqual(verifyAdminSessionToken("invalid.token.structure"), false);
+    assert.strictEqual(verifyAdminSessionToken(""), false);
+  });
+
+  // Test 12: Admin login brute-force rate limiter
+  await test("Admin login brute-force rate limiter locks out after 5 failures", () => {
+    const adminTestIp = "10.0.0.99";
+    resetAdminLoginAttempts(adminTestIp);
+
+    for (let i = 0; i < 5; i++) {
+      const check = checkAdminLoginRateLimit(adminTestIp);
+      assert.strictEqual(check.allowed, true);
+      recordFailedAdminLogin(adminTestIp);
+    }
+
+    // 6th attempt must be locked out
+    const locked = checkAdminLoginRateLimit(adminTestIp);
+    assert.strictEqual(locked.allowed, false);
+    assert(locked.retryAfter !== undefined && locked.retryAfter > 0);
+
+    resetAdminLoginAttempts(adminTestIp);
   });
 
   console.log("\n=========================================");

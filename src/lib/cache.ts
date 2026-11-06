@@ -38,6 +38,10 @@ class MemoryCache {
   clear(): void {
     this.cache.clear();
   }
+
+  size(): number {
+    return this.cache.size;
+  }
 }
 
 // Global cache instance across module loads
