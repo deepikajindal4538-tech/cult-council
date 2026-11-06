@@ -109,8 +109,8 @@ export default function AlbumExhibitionClient({ album }: AlbumExhibitionClientPr
         </div>
       </div>
 
-      {/* Photo Plates Grid with Museum Mat Framing */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* Photo Plates Grid with Clean Minimalist Framing: Only Image & File Name */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {album.photos.map((photo, index) => {
           const plateNumber = String(index + 1).padStart(2, "0");
 
@@ -118,10 +118,10 @@ export default function AlbumExhibitionClient({ album }: AlbumExhibitionClientPr
             <div
               key={photo.id}
               onClick={() => openLightbox(index)}
-              className="group cursor-pointer bg-white rounded-2xl border border-stone-300 shadow-sm hover:shadow-xl hover:border-stone-400 transition-all duration-300 overflow-hidden flex flex-col justify-between"
+              className="group cursor-pointer bg-white rounded-2xl border border-stone-300 shadow-2xs hover:shadow-xl hover:border-stone-400 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col"
             >
-              {/* Mat Mount Frame */}
-              <div className="p-4 bg-[#F4F1EA] border-b border-stone-200">
+              {/* Mat Mount Frame & Image */}
+              <div className="p-3 bg-[#F4F1EA] border-b border-stone-200">
                 <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-stone-200">
                   <Image
                     src={photo.displayUrl || photo.thumbnailUrl}
@@ -132,52 +132,20 @@ export default function AlbumExhibitionClient({ album }: AlbumExhibitionClientPr
                     priority={index < 4}
                   />
 
-                  {/* Dark gradient on hover */}
-                  <div className="absolute inset-0 bg-stone-900/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/95 backdrop-blur-sm text-ink font-mono text-xs uppercase tracking-wider font-semibold shadow-xl scale-95 group-hover:scale-100 transition-transform">
+                  {/* Clean minimal expand icon on hover */}
+                  <div className="absolute top-2.5 right-2.5 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <span className="p-2 rounded-full bg-stone-900/80 backdrop-blur-md text-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform">
                       <Maximize2 className="w-3.5 h-3.5" />
-                      <span>Inspect Plate</span>
                     </span>
                   </div>
-
-                  {/* Plate label badge */}
-                  <div className="absolute top-3 left-3">
-                    <span className="inline-flex items-center px-2 py-1 rounded-md bg-stone-900/80 backdrop-blur-sm text-white font-mono text-[10px] uppercase tracking-wider font-semibold">
-                      PL-{plateNumber}
-                    </span>
-                  </div>
-
-                  {/* Resolution tag */}
-                  {photo.width && photo.height && (
-                    <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded bg-black/75 backdrop-blur-sm text-stone-200 font-mono text-[10px]">
-                        {photo.width} × {photo.height}
-                      </span>
-                    </div>
-                  )}
                 </div>
               </div>
 
-              {/* Title & Metadata */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                <div className="space-y-1">
-                  <div className="flex items-center justify-between font-mono text-[10px] text-ink-faint">
-                    <span className="uppercase tracking-widest">
-                      Plate {plateNumber} of {album.photos.length}
-                    </span>
-                    <span>ID: {photo.id}</span>
-                  </div>
-                  <h3 className="font-serif text-xl font-bold text-ink group-hover:text-amber-900 transition-colors line-clamp-2 leading-snug">
-                    {photo.title || `Exhibition Plate #${plateNumber}`}
-                  </h3>
-                </div>
-
-                <div className="pt-3 border-t border-stone-100 flex items-center justify-between font-mono text-xs text-ink-muted">
-                  <span className="text-[11px]">AMS Photographic Archive</span>
-                  <span className="text-amber-800 font-medium group-hover:underline">
-                    Expand →
-                  </span>
-                </div>
+              {/* Only File Name */}
+              <div className="px-5 py-3.5 bg-white">
+                <h3 className="font-serif text-lg font-bold text-ink group-hover:text-amber-900 transition-colors truncate">
+                  {photo.title || `Plate ${plateNumber}`}
+                </h3>
               </div>
             </div>
           );
