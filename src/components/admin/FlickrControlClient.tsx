@@ -48,13 +48,17 @@ import {
   Globe,
   Server,
   Zap,
+  X,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import GalleryLightbox from "@/components/gallery/GalleryLightbox";
 import { CarouselReservePlate } from "@/lib/flickr/carouselReserveData";
-import {
+import type {
   FolderRouteDirective,
   CustomHeroSlide,
   CarouselRowConfig,
+  CarouselPlate,
   FlickrAuditEntry,
 } from "@/lib/flickr/killSwitch";
 
@@ -172,6 +176,17 @@ export default function FlickrControlClient() {
   const [isLoadingCarouselHero, setIsLoadingCarouselHero] = useState(false);
   const [isSavingCarouselHero, setIsSavingCarouselHero] = useState(false);
   const [editingHeroSlide, setEditingHeroSlide] = useState<CustomHeroSlide | null>(null);
+
+  // Carousel Row Image Picker State
+  const [pickerModalRow, setPickerModalRow] = useState<1 | 2 | 3 | null>(null);
+  const [pickerTab, setPickerTab] = useState<"reserve" | "flickr" | "custom">("reserve");
+  const [pickerSearchQuery, setPickerSearchQuery] = useState("");
+  const [pickerAlbumId, setPickerAlbumId] = useState("");
+  const [pickerFlickrPhotos, setPickerFlickrPhotos] = useState<any[]>([]);
+  const [isLoadingPickerFlickr, setIsLoadingPickerFlickr] = useState(false);
+  const [customPlateUrl, setCustomPlateUrl] = useState("");
+  const [customPlateTitle, setCustomPlateTitle] = useState("");
+  const [customPlateDiscipline, setCustomPlateDiscipline] = useState("");
 
   // =========================================================================
   // Tab 4: Folder Routing Directives State
@@ -668,6 +683,103 @@ export default function FlickrControlClient() {
       showToast("error", "Failed to save settings.");
     } finally {
       setIsSavingCarouselHero(false);
+    }
+  };
+
+  // Filter reserve plates for image picker
+  const filteredReserveForPicker = useMemo(() => {
+    if (!pickerSearchQuery.trim()) return reservePlates;
+    const q = pickerSearchQuery.toLowerCase();
+    return reservePlates.filter(
+      (p) =>
+        p.title.toLowerCase().includes(q) ||
+        p.event.toLowerCase().includes(q) ||
+        p.discipline.toLowerCase().includes(q)
+    );
+  }, [reservePlates, pickerSearchQuery]);
+
+  // Open Picker Modal for a specific Row
+  const handleOpenPicker = (row: 1 | 2 | 3) => {
+    setPickerModalRow(row);
+    setPickerSearchQuery("");
+    setPickerTab("reserve");
+    if (availableRemoteAlbums.length > 0 && !pickerAlbumId) {
+      setPickerAlbumId(availableRemoteAlbums[0].id);
+      fetchFlickrAlbumPhotos(availableRemoteAlbums[0].id);
+    }
+  };
+
+  const fetchFlickrAlbumPhotos = async (albumId: string) => {
+    if (!albumId) return;
+    setIsLoadingPickerFlickr(true);
+    try {
+      const res = await fetch(`/api/gallery/albums/${albumId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setPickerFlickrPhotos(data.photos || []);
+      }
+    } catch (err) {
+      console.warn("Could not load Flickr album photos:", err);
+    } finally {
+      setIsLoadingPickerFlickr(false);
+    }
+  };
+
+  const handleAddPhotoToRow = (row: 1 | 2 | 3, plate: CarouselPlate) => {
+    const rowKey = row === 1 ? "row1Photos" : row === 2 ? "row2Photos" : "row3Photos";
+    const currentList = carouselConfig[rowKey] || [];
+    if (currentList.some((p) => p.id === plate.id)) {
+      showToast("info", `Photo is already in Row ${row}.`);
+      return;
+    }
+    const updated = [...currentList, plate];
+    setCarouselConfig({
+      ...carouselConfig,
+      [rowKey]: updated,
+    });
+    showToast("success", `Added "${plate.title.slice(0, 25)}..." to Row ${row}`);
+  };
+
+  const handleRemovePhotoFromRow = (row: 1 | 2 | 3, index: number) => {
+    const rowKey = row === 1 ? "row1Photos" : row === 2 ? "row2Photos" : "row3Photos";
+    const currentList = [...(carouselConfig[rowKey] || [])];
+    currentList.splice(index, 1);
+    setCarouselConfig({
+      ...carouselConfig,
+      [rowKey]: currentList,
+    });
+    showToast("info", `Removed photo from Row ${row}`);
+  };
+
+  const handleMovePhoto = (row: 1 | 2 | 3, index: number, direction: "left" | "right") => {
+    const rowKey = row === 1 ? "row1Photos" : row === 2 ? "row2Photos" : "row3Photos";
+    const list = [...(carouselConfig[rowKey] || [])];
+    const target = direction === "left" ? index - 1 : index + 1;
+    if (target < 0 || target >= list.length) return;
+    const temp = list[index];
+    list[index] = list[target];
+    list[target] = temp;
+    setCarouselConfig({
+      ...carouselConfig,
+      [rowKey]: list,
+    });
+  };
+
+  const handleMoveToRow = (fromRow: 1 | 2 | 3, toRow: 1 | 2 | 3, index: number) => {
+    if (fromRow === toRow) return;
+    const fromKey = fromRow === 1 ? "row1Photos" : fromRow === 2 ? "row2Photos" : "row3Photos";
+    const toKey = toRow === 1 ? "row1Photos" : toRow === 2 ? "row2Photos" : "row3Photos";
+    const fromList = [...(carouselConfig[fromKey] || [])];
+    const toList = [...(carouselConfig[toKey] || [])];
+    const [item] = fromList.splice(index, 1);
+    if (item) {
+      toList.push(item);
+      setCarouselConfig({
+        ...carouselConfig,
+        [fromKey]: fromList,
+        [toKey]: toList,
+      });
+      showToast("success", `Moved photo to Row ${toRow}`);
     }
   };
 

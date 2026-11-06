@@ -67,12 +67,6 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Festival Dossier & Details (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
-              {/* Eyebrow Tag */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-900 font-mono text-[11px] uppercase tracking-widest font-medium">
-                <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
-                <span>NORTH INDIA&apos;S PREMIER CULTURAL EXTRAVAGANZA</span>
-              </div>
-
               {/* Title & Theme */}
               <div className="space-y-1.5">
                 <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[0.95]">
@@ -95,31 +89,6 @@ export default async function HomePage() {
               {/* Live Dynamic Countdown to February */}
               <FestivalCountdown />
 
-              {/* 4 Headlining Acts Grid */}
-              <div className="space-y-2.5 pt-1">
-                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-ink-faint font-semibold">
-                  HEADLINING PILLARS &amp; ACTS
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {nextFest.highlights.map((h, i) => (
-                    <div
-                      key={i}
-                      className="group flex items-center justify-between p-3 rounded-xl bg-white/80 hover:bg-white border border-stone-200/90 hover:border-amber-400/60 shadow-2xs hover:shadow-xs transition-all duration-200"
-                    >
-                      <div className="flex items-center gap-2.5 truncate">
-                        <span className="font-mono text-[10px] text-amber-800 font-bold px-1.5 py-0.5 rounded bg-amber-50 border border-amber-200/60 shrink-0">
-                          0{i + 1}
-                        </span>
-                        <span className="font-serif text-sm font-semibold text-ink group-hover:text-amber-950 transition-colors truncate">
-                          {h}
-                        </span>
-                      </div>
-                      <ArrowRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-800 group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
               {/* Key Quick Metrics Bar */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-y border-stone-300/80 font-mono text-xs">
                 <div>
@@ -131,7 +100,7 @@ export default async function HomePage() {
                 <div>
                   <span className="text-[10px] text-ink-faint block uppercase tracking-wider">FOOTFALL</span>
                   <span className="font-serif text-sm sm:text-base font-bold text-ink">
-                    15,000+ Guests
+                    2,500+ Guests
                   </span>
                 </div>
                 <div>
@@ -196,7 +165,7 @@ export default async function HomePage() {
                   <div className="absolute bottom-3 inset-x-3 text-white">
                     <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-amber-300 mb-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
-                      <span>THE ARENA GROUND // 15,000+ CAPACITY</span>
+                      <span>THE ARENA GROUND // 2,500+ CAPACITY</span>
                     </div>
                     <p className="font-serif text-xs sm:text-sm text-stone-200 line-clamp-1">
                       Thousands gathered under the main stage floodlights.

@@ -191,7 +191,7 @@ export function CinematicAboutSection() {
                 Festival Footfall
               </span>
               <div className="text-right">
-                <span className="font-serif text-3xl font-bold text-ink">15,000+</span>
+                <span className="font-serif text-3xl font-bold text-ink">2,500+</span>
                 <span className="block font-mono text-[9px] text-amber-700">
                   EFFERVESCENCE ARENA
                 </span>
