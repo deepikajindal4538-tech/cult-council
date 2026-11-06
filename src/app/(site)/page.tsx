@@ -5,6 +5,7 @@ import { initialFests, initialEvents, councilTeam } from "@/lib/seedData";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
 import { HeroSlider } from "@/components/hero/HeroSlider";
 import { CinematicAboutSection } from "@/components/home/CinematicAboutSection";
+import EventTimelineSection from "@/components/home/EventTimelineSection";
 import { FestivalCountdown } from "@/components/home/FestivalCountdown";
 import RevolvingGalleryCarousel from "@/components/gallery/RevolvingGalleryCarousel";
 import { getLiveCarouselRows } from "@/lib/flickr/client";
@@ -44,13 +45,16 @@ export default async function HomePage() {
       {/* 2. Cinematic About Section: "Where Culture Finds Its Voice" // "Many Forms. One Spirit." */}
       <CinematicAboutSection />
 
+      {/* 2.5 Event Timeline Section */}
+      <EventTimelineSection />
+
       {/* 3. Chapter 02: Flagship Exhibition (Effervescence & Rangoli) */}
       <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         {/* Editorial Chapter Header */}
         <div className="border-b border-stone-300/80 pb-3 mb-10 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
-            <span>CHAPTER 02 // THE FESTIVALS</span>
+            <span>CHAPTER 03 // THE FESTIVALS</span>
           </div>
           <span>FLAGSHIP CALENDAR</span>
         </div>
@@ -229,77 +233,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. Chapter 03: Upcoming Cultural Productions */}
-      <section className="bg-[#F4F1EA] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-t border-stone-300/80">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
-            <div>
-              <div className="font-mono text-xs uppercase tracking-widest text-ink-faint mb-1.5">
-                CHAPTER 03 // UPCOMING CALENDAR
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-ink">
-                Live Campus Productions &amp; Acts
-              </h2>
-            </div>
-            <Link
-              href="/events"
-              className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-ink hover:text-stone-600 font-semibold mt-3 md:mt-0"
-            >
-              <span>View Full Schedule &rarr;</span>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {initialEvents.slice(0, 3).map((evt) => (
-              <div
-                key={evt.id}
-                className="bg-[#FAF8F5] p-6 sm:p-7 rounded-2xl border border-stone-300/80 shadow-soft hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between font-mono text-xs">
-                    <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-semibold text-[10px] uppercase">
-                      {evt.category}
-                    </span>
-                    <span className="text-ink-faint text-[10px]">{evt.status.toUpperCase()}</span>
-                  </div>
-                  <h3 className="font-serif text-xl font-bold text-ink leading-snug">
-                    {evt.title}
-                  </h3>
-                  <p className="text-xs text-ink-muted leading-relaxed line-clamp-2">
-                    {evt.description}
-                  </p>
-                  <div className="pt-2 font-mono text-xs text-stone-600 space-y-1">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-ink-muted" />
-                      <span>{evt.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-ink-muted" />
-                      <span>{evt.venue}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 mt-4 border-t border-stone-200/80">
-                  <Link
-                    href={`/societies/${evt.societySlug}`}
-                    className="font-mono text-xs uppercase tracking-wider text-ink font-semibold flex items-center justify-between hover:text-stone-600"
-                  >
-                    <span>{evt.societyName.split(" ")[0]} Wing</span>
-                    <span>&rarr;</span>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <RevolvingGalleryCarousel
         chapterLabel={
           liveCarousel.isLive
-            ? "CHAPTER 05 // LIVE FLICKR ARCHIVAL REPOSITORY"
-            : "CHAPTER 05 // VISUAL REPOSITORIES"
+            ? "CHAPTER 04 // LIVE FLICKR ARCHIVAL REPOSITORY"
+            : "CHAPTER 04 // VISUAL REPOSITORIES"
         }
         curatorLabel={
           liveCarousel.isLive

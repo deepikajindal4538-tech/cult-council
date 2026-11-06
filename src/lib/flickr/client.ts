@@ -14,7 +14,16 @@ import {
   getFallbackAlbumPhotosResponse,
   FALLBACK_ALBUMS,
 } from "./fallbackData";
-import { isFlickrKilled } from "./killSwitch";
+import { isFlickrKilled, getReserveOverrides } from "./killSwitch";
+import { CAROUSEL_RESERVE_50 } from "./carouselReserveData";
+
+function getMergedReservePlates() {
+  const overrides = getReserveOverrides();
+  return CAROUSEL_RESERVE_50.map((plate) => {
+    const override = overrides[plate.id] || {};
+    return { ...plate, ...override };
+  });
+}
 
 const FLICKR_REST_ENDPOINT = "https://www.flickr.com/services/rest/";
 
@@ -172,7 +181,7 @@ export async function getAlbumPhotos(
         photoset_id: validatedId,
         page: validatedQuery.page,
         per_page: validatedQuery.per_page,
-        extras: "url_q,url_z,url_b,width_z,height_z,width_b,height_b",
+        extras: "url_q,url_m,url_z,url_c,url_l,url_b,url_o,width_q,width_m,width_z,width_c,width_l,width_b,width_o,height_q,height_m,height_z,height_c,height_l,height_b,height_o",
       },
       customFetcher,
     },
@@ -258,13 +267,16 @@ export async function searchLiveFlickrPhotos(
     return [];
   }
 
+  const userId = process.env.FLICKR_USER_ID || "129074767@N06";
+
   const params: Record<string, string | number> = {
+    user_id: userId,
     page,
     per_page,
-    extras: "url_q,url_z,url_b,width_z,height_z,width_b,height_b",
+    extras: "url_q,url_m,url_z,url_c,url_l,url_b,url_o,width_q,width_m,width_z,width_c,width_l,width_b,width_o,height_q,height_m,height_z,height_c,height_l,height_b,height_o",
     format: "json",
     nojsoncallback: "1",
-    sort: "interestingness-desc",
+    sort: "date-posted-desc",
   };
   if (searchQuery.text) params.text = searchQuery.text;
   if (searchQuery.tags) {
@@ -290,9 +302,27 @@ export async function searchLiveFlickrPhotos(
       const secret = p.secret;
 
       const baseStatic = `https://live.staticflickr.com/${server}/${id}_${secret}`;
-      const displayUrl = p.url_z || `${baseStatic}_z.jpg`;
       const thumbnailUrl = p.url_q || `${baseStatic}_q.jpg`;
-      const fullUrl = p.url_b || `${baseStatic}_b.jpg`;
+      const displayUrl = p.url_l || p.url_c || p.url_z || p.url_b || `${baseStatic}_z.jpg`;
+      const fullUrl = p.url_o || p.url_l || p.url_b || p.url_c || displayUrl;
+
+      const width =
+        (p.width_l && parseInt(String(p.width_l), 10)) ||
+        (p.width_b && parseInt(String(p.width_b), 10)) ||
+        (p.width_c && parseInt(String(p.width_c), 10)) ||
+        (p.width_z && parseInt(String(p.width_z), 10)) ||
+        (p.width_m && parseInt(String(p.width_m), 10)) ||
+        (p.width_o && parseInt(String(p.width_o), 10)) ||
+        640;
+
+      const height =
+        (p.height_l && parseInt(String(p.height_l), 10)) ||
+        (p.height_b && parseInt(String(p.height_b), 10)) ||
+        (p.height_c && parseInt(String(p.height_c), 10)) ||
+        (p.height_z && parseInt(String(p.height_z), 10)) ||
+        (p.height_m && parseInt(String(p.height_m), 10)) ||
+        (p.height_o && parseInt(String(p.height_o), 10)) ||
+        427;
 
       return {
         id: String(p.id),
@@ -300,8 +330,8 @@ export async function searchLiveFlickrPhotos(
         thumbnailUrl,
         displayUrl,
         fullUrl,
-        width: Number(p.width_z) || 640,
-        height: Number(p.height_z) || 427,
+        width,
+        height,
       };
     });
 
@@ -484,6 +514,88 @@ export async function getAlbumPhotosWithFallback(
     curator: enriched?.curator,
     category: enriched?.category,
     description: enriched?.description,
+  };
+}
+
+export interface PhotostreamResult {
+  photos: TrimmedPhoto[];
+  total: number;
+  page: number;
+  isLiveFlickr: boolean;
+}
+
+export async function getPhotostreamWithFallback(
+  query: { page?: number; per_page?: number; text?: string } = {}
+): Promise<PhotostreamResult> {
+  const page = Math.max(query.page || 1, 1);
+  const per_page = Math.min(Math.max(query.per_page || 36, 1), 60);
+
+  // If kill switch is active or mock, serve reserve plates
+  if (isFlickrKilled() || !process.env.FLICKR_API_KEY || process.env.FLICKR_API_KEY.includes("mock")) {
+    const reservePlates = getMergedReservePlates();
+    const activePlates = reservePlates.filter((p) => p.reserveStatus === "Active");
+    const startIndex = (page - 1) * per_page;
+    const paged = activePlates.slice(startIndex, startIndex + per_page);
+
+    const photos: TrimmedPhoto[] = paged.map((p) => ({
+      id: p.id,
+      title: `${p.title} (${p.event})`,
+      thumbnailUrl: p.thumbnailUrl,
+      displayUrl: p.url,
+      fullUrl: p.url,
+      width: p.width,
+      height: p.height,
+    }));
+
+    return {
+      photos,
+      total: activePlates.length,
+      page,
+      isLiveFlickr: false,
+    };
+  }
+
+  // Live Flickr photostream via search
+  try {
+    const livePhotos = await searchLiveFlickrPhotos({
+      page,
+      per_page,
+      text: query.text,
+    });
+
+    if (livePhotos && livePhotos.length > 0) {
+      return {
+        photos: livePhotos,
+        total: 217624,
+        page,
+        isLiveFlickr: true,
+      };
+    }
+  } catch (err) {
+    console.warn("[FlickrClient] Photostream search failed, serving reserve plates:", err);
+  }
+
+  // Fallback to reserve plates
+  const reservePlates = getMergedReservePlates();
+  const activePlates = reservePlates.filter((p) => p.reserveStatus === "Active");
+  const startIndex = (page - 1) * per_page;
+  const paged = activePlates.slice(startIndex, startIndex + per_page);
+
+  const photos: TrimmedPhoto[] = paged.map((p) => ({
+    id: p.id,
+    title: `${p.title} (${p.event})`,
+    thumbnailUrl: p.thumbnailUrl,
+    displayUrl: p.url,
+    fullUrl: p.url,
+    width: p.width,
+    height: p.height,
+  }));
+
+  return {
+    photos,
+    total: activePlates.length,
+    page,
+    isLiveFlickr: false,
   };
 }
 

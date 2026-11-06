@@ -46,10 +46,10 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAF8F5] text-ink selection:bg-stone-300">
-      {/* Editorial Header */}
-      <section className="border-b border-stone-300 bg-[#F4F1EA] pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-ink-faint mb-4">
+      {/* Editorial Header - Expansive and Wide */}
+      <section className="border-b border-stone-300/80 bg-[#FAF8F5] pt-14 pb-10 px-4 sm:px-6 md:px-8 xl:px-12">
+        <div className="max-w-[1920px] mx-auto w-full">
+          <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-ink-faint mb-3">
             <Link href="/" className="hover:text-ink transition-colors">
               HOME
             </Link>
@@ -58,56 +58,57 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
               GALLERY
             </Link>
             <span>/</span>
-            <span className="text-ink font-semibold truncate max-w-xs sm:max-w-md">
+            <span className="text-ink font-semibold truncate max-w-xs sm:max-w-lg">
               {album.title}
             </span>
           </div>
 
-          <div className="max-w-4xl space-y-4">
-            <div className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-wider">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-900 font-semibold">
-                <Camera className="w-3.5 h-3.5" />
-                <span>{album.category || "EXHIBITION"}</span>
-              </span>
-
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-stone-300 text-ink-muted">
-                <Layers className="w-3.5 h-3.5" />
-                <span>{album.photos.length} HIGH-RES PLATES</span>
-              </span>
-
-              {album.isLiveFlickr ? (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>LIVE FLICKR</span>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <div className="space-y-3 max-w-4xl">
+              <div className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-wider">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/80 border border-amber-300 text-amber-900 font-semibold">
+                  <Camera className="w-3.5 h-3.5 text-amber-700" />
+                  <span>{album.category || "EXHIBITION"}</span>
                 </span>
-              ) : (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200 border border-stone-300 text-stone-700">
-                  <span>CURATED ARCHIVE</span>
+
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-stone-300 text-ink-muted">
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>{album.photos.length} HIGH-RES PLATES</span>
                 </span>
+
+                {album.isLiveFlickr ? (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>LIVE FLICKR PHOTOSTREAM</span>
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200 border border-stone-300 text-stone-700">
+                    <span>CURATED ARCHIVE</span>
+                  </span>
+                )}
+              </div>
+
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink leading-tight">
+                {album.title}
+              </h1>
+
+              {album.description && (
+                <p className="font-serif italic text-lg sm:text-xl text-ink-muted leading-relaxed">
+                  {album.description}
+                </p>
               )}
             </div>
 
-            <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-ink leading-tight">
-              {album.title}
-            </h1>
-
-            {album.description && (
-              <p className="font-serif italic text-xl sm:text-2xl text-ink-muted max-w-3xl leading-relaxed">
-                {album.description}
-              </p>
-            )}
-
-            <div className="pt-2 font-mono text-xs text-ink-faint flex items-center gap-4">
+            <div className="font-mono text-xs text-ink-faint flex flex-col items-start lg:items-end gap-1">
               <span>Curated by {album.curator || "Acoustics & Media Society (AMS)"}</span>
-              <span>•</span>
               <span>Photoset ID: {album.albumId}</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Exhibition Grid */}
-      <main className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex-1">
+      {/* Main Exhibition Grid - Full Screen Width Flickr Photostream */}
+      <main className="py-8 px-2 sm:px-4 md:px-6 xl:px-10 max-w-[1920px] mx-auto w-full flex-1">
         <AlbumExhibitionClient album={album} />
       </main>
     </div>
