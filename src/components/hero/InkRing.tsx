@@ -30,7 +30,7 @@ export function InkRing({
     >
       <svg
         viewBox="0 0 340 340"
-        className="w-[125%] h-[125%] max-w-[620px] max-h-[620px] sm:max-w-[720px] sm:max-h-[720px] overflow-visible select-none"
+        className="w-[125%] h-[125%] max-w-[380px] max-h-[380px] sm:max-w-[420px] sm:max-h-[420px] overflow-visible select-none"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >

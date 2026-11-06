@@ -15,18 +15,11 @@ export function Society3DVectorObject({
 
   return (
     <div className="relative w-full h-full flex items-center justify-center select-none">
-      {/* 1. Darker Editorial Watermark Typography */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-20">
-        <span className="font-serif text-[180px] sm:text-[280px] lg:text-[340px] font-bold text-stone-900/[0.09] select-none tracking-tighter transition-colors duration-500">
-          {society.slug?.toUpperCase() || "IIITA"}
-        </span>
-      </div>
-
-      {/* 2. Hand-Drawn Light Black Ink Ring */}
+      {/* Hand-Drawn Light Black Ink Ring */}
       <InkRing isActive={isActive} />
 
-      {/* 3. The 3D Vector Drawn Physical Exhibition Object */}
-      <div className="relative z-10 flex items-center justify-center">
+      {/* The 3D Vector Drawn Physical Exhibition Object */}
+      <div className="relative z-10 w-full h-full flex items-center justify-center">
         {objectType === "camera" && (
           <VectorCamera3D isActive={isActive} isReducedMotion={isReducedMotion} />
         )}
@@ -62,7 +55,7 @@ export function Society3DVectorObject({
           opacity: isActive ? 0.22 : 0.08,
         }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -bottom-8 w-64 sm:w-[420px] md:w-[500px] h-8 rounded-full bg-stone-950/40 blur-2xl pointer-events-none -z-10"
+        className="absolute -bottom-6 w-44 sm:w-56 md:w-64 h-6 rounded-full bg-stone-950/35 blur-xl pointer-events-none -z-10"
       />
     </div>
   );
@@ -92,7 +85,7 @@ function VectorCamera3D({
         y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
         rotateZ: { duration: 7, repeat: Infinity, ease: "easeInOut" },
       }}
-      className="w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] md:w-[540px] md:h-[540px] lg:w-[620px] lg:h-[620px] relative flex items-center justify-center"
+      className="w-full h-full relative flex items-center justify-center"
     >
       <svg
         viewBox="0 0 500 500"
@@ -292,7 +285,7 @@ function VectorDiscoBall3D({
         y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
         rotate: { duration: 28, repeat: Infinity, ease: "linear" },
       }}
-      className="w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] md:w-[540px] md:h-[540px] lg:w-[620px] lg:h-[620px] relative flex items-center justify-center"
+      className="w-full h-full relative flex items-center justify-center"
     >
       <svg
         viewBox="0 0 500 500"
@@ -422,27 +415,27 @@ function VectorLetterScroll3D({
   const unrolled = isReducedMotion || isActive;
 
   return (
-    <div className="relative w-[340px] sm:w-[480px] md:w-[560px] lg:w-[620px] flex flex-col items-center justify-center">
+    <div className="relative w-full max-w-[280px] sm:max-w-[340px] flex flex-col items-center justify-center">
       {/* Top 3D Turned Mahogany Roller Bar */}
-      <div className="w-full h-8 rounded-full bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 shadow-xl border border-stone-800 flex items-center justify-between px-5 z-30">
-        <span className="w-4 h-4 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow-md border border-amber-900" />
-        <span className="text-[11px] uppercase tracking-widest font-mono text-amber-200/80 font-bold">
+      <div className="w-full h-7 rounded-full bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 shadow-xl border border-stone-800 flex items-center justify-between px-4 z-30">
+        <span className="w-3 h-3 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow-md border border-amber-900" />
+        <span className="text-[10px] uppercase tracking-widest font-mono text-amber-200/80 font-bold truncate">
           SARASVA ARCHIVE // MANUSCRIPT
         </span>
-        <span className="w-4 h-4 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow-md border border-amber-900" />
+        <span className="w-3 h-3 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow-md border border-amber-900" />
       </div>
 
       {/* 3D Real HTML Parchment Body (Expands when reaching center) */}
       <motion.div
         animate={{
-          height: unrolled ? 480 : 160,
+          height: unrolled ? 260 : 100,
           opacity: 1,
         }}
         transition={{
           duration: 0.85,
           ease: [0.16, 1, 0.3, 1],
         }}
-        className="w-[94%] bg-[#FAF6EE] border-x-2 border-stone-300 shadow-2xl overflow-hidden relative p-8 sm:p-10 flex flex-col justify-between transition-all z-20"
+        className="w-[94%] bg-[#FAF6EE] border-x-2 border-stone-300 shadow-2xl overflow-hidden relative p-4 sm:p-6 flex flex-col justify-between transition-all z-20"
       >
         {/* Parchment Antique Fiber Watermark */}
         <div className="absolute inset-0 bg-gradient-to-b from-stone-200/30 via-transparent to-stone-300/40 pointer-events-none" />
@@ -513,7 +506,7 @@ function VectorPaintbrush3D({
         y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
         rotateZ: { duration: 6, repeat: Infinity, ease: "easeInOut" },
       }}
-      className="w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] md:w-[540px] md:h-[540px] lg:w-[620px] lg:h-[620px] relative flex items-center justify-center"
+      className="w-full h-full relative flex items-center justify-center"
     >
       <svg
         viewBox="0 0 500 500"
@@ -623,7 +616,7 @@ function VectorClapboard3D({
         y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
         rotateZ: { duration: 6, repeat: Infinity, ease: "easeInOut" },
       }}
-      className="w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] md:w-[540px] md:h-[540px] lg:w-[620px] lg:h-[620px] relative flex items-center justify-center"
+      className="w-full h-full relative flex items-center justify-center"
     >
       <svg
         viewBox="0 0 500 500"
@@ -718,7 +711,7 @@ function VectorVinylDisc3D({
         rotateZ: { duration: 20, repeat: Infinity, ease: "linear" },
         y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
       }}
-      className="w-[340px] h-[340px] sm:w-[460px] sm:h-[460px] md:w-[540px] md:h-[540px] lg:w-[620px] lg:h-[620px] relative flex items-center justify-center"
+      className="w-full h-full relative flex items-center justify-center"
     >
       <svg
         viewBox="0 0 500 500"

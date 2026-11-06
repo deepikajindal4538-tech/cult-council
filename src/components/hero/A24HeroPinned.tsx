@@ -95,7 +95,7 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   };
 
   const activeSociety = societies[activeIndex] || societies[0];
-  const continuousProgress = Math.min(n - 1, scrollProgress * totalUnits);
+  const continuousProgress = scrollProgress * (n - 1 + 0.45) - 0.35;
   const containerHeightVh = Math.max(500, Math.round(totalUnits * 120 + 100));
 
   return (
@@ -125,8 +125,8 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
           }}
         />
 
-        {/* Soft top gradient dissolve transitioning seamlessly from hero section */}
-        <div className="absolute top-0 inset-x-0 h-28 sm:h-36 pointer-events-none z-30 bg-gradient-to-b from-[#FAF8F5] via-[#FAF8F5]/70 to-transparent" />
+        {/* Soft slim top gradient dissolve */}
+        <div className="absolute top-0 inset-x-0 h-10 sm:h-14 pointer-events-none z-30 bg-gradient-to-b from-[#FAF8F5]/80 via-[#FAF8F5]/30 to-transparent" />
 
         {/* Smooth Crossfade Stage Wrapper: Eliminates direct cut from previous section */}
         <motion.div

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { ISociety } from "@/models/Society";
 import { Society3DVectorObject } from "./Society3DVectorObject";
 
@@ -20,66 +20,223 @@ export function A24SmoothHeroStage({
   const containerRef = useRef<HTMLDivElement>(null);
   const n = societies.length;
 
+  // Responsive push distance calculation - shifted further right
+  const [dimensions, setDimensions] = useState({
+    pushX: 410,
+    nameShiftX: 260,
+    isMobile: false,
+    width: 1440,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const w = window.innerWidth;
+      if (w < 640) {
+        setDimensions({ pushX: 85, nameShiftX: 55, isMobile: true, width: w });
+      } else if (w < 768) {
+        setDimensions({ pushX: 110, nameShiftX: 70, isMobile: true, width: w });
+      } else if (w < 1024) {
+        setDimensions({ pushX: 250, nameShiftX: 160, isMobile: false, width: w });
+      } else if (w < 1366) {
+        setDimensions({ pushX: 350, nameShiftX: 220, isMobile: false, width: w });
+      } else {
+        setDimensions({ pushX: 420, nameShiftX: 260, isMobile: false, width: w });
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const { pushX, nameShiftX, isMobile, width } = dimensions;
+
   return (
     <div
       ref={containerRef}
       className="absolute inset-0 w-full h-full overflow-hidden flex items-center justify-center select-none"
       style={{ touchAction: "pan-y" }}
     >
-      {/* Dynamic diagonal trajectory stage */}
+      {/* Dynamic trajectory stage */}
       <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
         {societies.map((soc, idx) => {
-          const delta = idx - progress;
-          const absDelta = Math.abs(delta);
+          const rawDelta = idx - progress;
 
-          // Only unmount when far off-screen to avoid abrupt pops during scroll
-          if (absDelta > 2.8) {
+          // Sequential non-overlapping timeline:
+          // A society is only rendered during its own entry, dwell, and exit cycle.
+          // rawDelta > 0.45: Not yet entering (completely hidden)
+          // rawDelta < -0.65: Fully exited (completely unmounted)
+          if (rawDelta > 0.45 || rawDelta < -0.65) {
             return null;
           }
 
-          const isCurrent = absDelta < 0.45;
+          const isCurrent = Math.abs(rawDelta) < 0.35;
+          const zIndex = 20;
 
-          // Diagonal Trajectory:
-          // Arrive from Top-Right (delta > 0) -> Center Stage (delta = 0) -> Dissolve in Bottom-Left (delta < 0)
-          const arc = Math.sin(delta * Math.PI * 0.4) * 24;
-          const x = delta * 460 + arc;
-          const y = -delta * 280 - arc * 0.6;
+          const isClapboard =
+            soc.objectConfig?.type === "clapboard" ||
+            soc.slug === "rangtarangini" ||
+            soc.name?.toLowerCase().includes("rangtarangini");
 
-          // Scale: Center is prominent (1.06), smoothly falls off in both directions
-          const scale = Math.max(
-            0.52,
-            1.06 - absDelta * 0.24 - (delta < 0 ? delta * delta * 0.05 : 0)
-          );
+          const isLongName =
+            (soc.name && soc.name.length > 9) || soc.slug === "rangtarangini";
 
-          // Opacity: Center is 1.0, dissolving smoothly in bottom-left, entering from top-right
-          let opacity = 1;
-          if (delta < 0) {
-            opacity = Math.max(0, 1 - Math.pow(absDelta, 1.2) * 0.95);
+          // Extra rightward shift for clapboard / Rangtarangini to provide 100% clearance for long names
+          const clapboardBonus = isMobile ? 40 : width < 1366 ? 90 : 130;
+          const itemPushX = isClapboard ? pushX + clapboardBonus : pushX;
+
+          // Extra leftward shift for long watermark names (e.g. RANGTARANGINI)
+          const nameBonus = isLongName ? (isMobile ? 30 : 80) : 0;
+          const itemNameShiftX = nameShiftX + nameBonus;
+
+          const displayName = (soc.slug === "ams" ? "AMS" : soc.name).toUpperCase();
+
+          // Phase Calculations:
+          // 1. Top-Right Incoming (0.15 < rawDelta <= 0.45): Icon swoops in from far top-right corner to center (0,0)
+          // 2. Push & Reveal (0 <= rawDelta <= 0.15): Name unfolds to the left, pushing icon rightwards to (+itemPushX)
+          // 3. Dwell (-0.35 <= rawDelta < 0): Settled position (name left, icon right)
+          // 4. Exit to Bottom-Left (-0.65 <= rawDelta < -0.35): Drifts down towards bottom-left and dissolves to 0
+
+          let iconX = 0;
+          let iconY = 0;
+          let iconScale = 1;
+          let iconOpacity = 1;
+          let iconRotateZ = 0;
+
+          let nameX = 0;
+          let nameY = 0;
+          let nameOpacity = 0;
+          let nameScale = 0.85;
+
+          let rowX = 0;
+          let rowY = 0;
+          let rowOpacity = 1;
+          let rowScale = 1;
+
+          if (rawDelta > 0.15) {
+            // PHASE 1: Incoming from FAR TOP-RIGHT CORNER towards screen center (0, 0)
+            const entry = Math.min(1, Math.max(0, (0.45 - rawDelta) / 0.30));
+            const easeEntry = Math.sin(entry * Math.PI * 0.5);
+
+            // Perched far up in the top-right corner (never touches center until easeEntry approaches 1)
+            const startX = itemPushX + (isMobile ? 260 : 480);
+            const startY = -(isMobile ? 200 : 360);
+
+            iconX = (1 - easeEntry) * startX;
+            iconY = (1 - easeEntry) * startY;
+            iconScale = 0.55 + 0.45 * easeEntry;
+            iconOpacity = Math.min(1, easeEntry * 1.5);
+            iconRotateZ = (1 - easeEntry) * 16;
+
+            // Watermark name is completely hidden while icon swoops in from top-right
+            nameX = 0;
+            nameY = 0;
+            nameOpacity = 0;
+            nameScale = 0.85;
+          } else if (rawDelta >= 0) {
+            // PHASE 2: Push & Reveal (0 <= rawDelta <= 0.15)
+            // Icon is in center stage; full society name unfolds to the left, pushing icon rightwards
+            const pushRatio = (0.15 - rawDelta) / 0.15;
+            const easePush = 1 - Math.pow(1 - pushRatio, 3); // smooth cubic-out push
+
+            // Icon is pushed rightwards from center (0) to (+itemPushX)
+            iconX = easePush * itemPushX;
+            iconY = 0;
+            iconScale = 1;
+            iconOpacity = 1;
+            iconRotateZ = 0;
+
+            // Full society name emerges from behind the icon towards the left (-itemNameShiftX)
+            nameX = -easePush * itemNameShiftX;
+            nameY = 0;
+            nameOpacity = easePush * 0.14;
+            nameScale = 0.88 + 0.12 * easePush;
+          } else if (rawDelta >= -0.35) {
+            // PHASE 3: Dwell (-0.35 <= rawDelta < 0)
+            iconX = itemPushX;
+            iconY = 0;
+            iconScale = 1;
+            iconOpacity = 1;
+            iconRotateZ = 0;
+
+            nameX = -itemNameShiftX;
+            nameY = 0;
+            nameOpacity = 0.14;
+            nameScale = 1;
           } else {
-            opacity = Math.max(0, 1 - Math.max(0, delta - 0.2) * 0.9);
-          }
+            // PHASE 4: Exit towards EXTREME LEFT (-0.65 <= rawDelta < -0.35)
+            // Sends the current icon sweeping all the way across to the extreme left offscreen
+            const exitRatio = Math.min(1, Math.max(0, (-rawDelta - 0.35) / 0.30));
+            const easeExit = exitRatio * exitRatio;
 
-          const rotateZ = delta * 12;
-          const zIndex = Math.round(20 - absDelta * 8);
+            const sweepLeft = easeExit * (isMobile ? 700 : 1500);
+            iconX = itemPushX - sweepLeft;
+            iconY = easeExit * (isMobile ? 40 : 80);
+            iconScale = Math.max(0.65, 1 - exitRatio * 0.35);
+            iconOpacity = Math.max(0, 1 - exitRatio * 1.35);
+            iconRotateZ = -easeExit * 20;
+
+            nameX = -itemNameShiftX - easeExit * (isMobile ? 350 : 700);
+            nameY = easeExit * (isMobile ? 40 : 80);
+            nameOpacity = Math.max(0, 0.14 * (1 - exitRatio * 1.4));
+            nameScale = Math.max(0.7, 1 - exitRatio * 0.3);
+
+            rowX = 0;
+            rowY = 0;
+            rowOpacity = 1;
+            rowScale = 1;
+          }
 
           return (
             <div
               key={soc.slug || idx}
               onClick={() => onSelectIndex?.(idx)}
-              className="absolute flex items-center justify-center cursor-pointer"
+              className="absolute inset-0 flex items-center justify-center pointer-events-auto"
               style={{
-                transform: `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0px) scale(${scale.toFixed(3)}) rotate(${rotateZ.toFixed(1)}deg)`,
-                opacity: Math.min(1, Math.max(0, opacity)),
                 zIndex,
+                transform: `translate3d(${rowX.toFixed(1)}px, ${rowY.toFixed(1)}px, 0px) scale(${rowScale.toFixed(3)})`,
+                opacity: Math.min(1, Math.max(0, rowOpacity)),
                 willChange: "transform, opacity",
                 pointerEvents: isCurrent ? "auto" : "none",
               }}
             >
-              <div className="w-[380px] sm:w-[520px] md:w-[620px] lg:w-[700px] h-[380px] sm:h-[520px] md:h-[620px] lg:h-[700px] flex items-center justify-center">
+              {/* 1. Full Society Name Watermark Typography: Emerges from behind icon to the left */}
+              <div
+                className={`absolute pointer-events-none -z-10 flex flex-col items-center justify-center text-center ${
+                  isLongName
+                    ? "max-w-2xl sm:max-w-3xl lg:max-w-5xl px-2"
+                    : "max-w-xl sm:max-w-2xl lg:max-w-4xl px-4"
+                }`}
+                style={{
+                  transform: `translate3d(${nameX.toFixed(1)}px, ${nameY.toFixed(1)}px, 0px) scale(${nameScale.toFixed(3)})`,
+                  opacity: Math.min(0.25, Math.max(0, nameOpacity)),
+                  willChange: "transform, opacity",
+                }}
+              >
+                <span
+                  className={`font-serif font-black whitespace-nowrap leading-[0.88] tracking-tighter text-stone-900 select-none uppercase ${
+                    isLongName
+                      ? "text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl"
+                      : "text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+                  }`}
+                >
+                  {displayName}
+                </span>
+              </div>
+
+              {/* 2. Decreased Size 3D Vector Icon: Enters first at center, pushed rightwards */}
+              <div
+                className="relative w-[220px] h-[220px] sm:w-[270px] sm:h-[270px] md:w-[310px] md:h-[310px] lg:w-[340px] lg:h-[340px] flex items-center justify-center shrink-0 z-20 cursor-pointer"
+                style={{
+                  transform: `translate3d(${iconX.toFixed(1)}px, ${iconY.toFixed(1)}px, 0px) scale(${iconScale.toFixed(3)}) rotate(${iconRotateZ.toFixed(1)}deg)`,
+                  opacity: Math.min(1, Math.max(0, iconOpacity)),
+                  willChange: "transform, opacity",
+                }}
+              >
                 <Society3DVectorObject
                   society={soc}
                   isActive={isCurrent}
-                  progress={isCurrent ? 1 : Math.max(0, 1 - absDelta)}
+                  progress={isCurrent ? 1 : Math.max(0, 1 - Math.abs(rawDelta))}
                   globalProgress={progress / (n - 1 || 1)}
                 />
               </div>
