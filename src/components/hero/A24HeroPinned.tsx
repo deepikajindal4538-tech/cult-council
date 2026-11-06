@@ -95,7 +95,7 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   };
 
   const activeSociety = societies[activeIndex] || societies[0];
-  const continuousProgress = Math.min(n - 1, scrollProgress * totalUnits);
+  const continuousProgress = scrollProgress * (n - 1 + 0.45) - 0.35;
   const containerHeightVh = Math.max(500, Math.round(totalUnits * 120 + 100));
 
   return (
