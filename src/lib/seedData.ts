@@ -197,7 +197,7 @@ export const councilDetails = {
   established: 1999,
   tagline: "The Nexus of Creative Expression & Collegiate Artistry",
   mandate:
-    "The Cultural Council of IIIT Allahabad is the central statutory body dedicated to fostering creative expression, theatrical disciplines, acoustic excellence, choreographic mastery, visual arts, and literary inquiry across the campus community.",
+    "The cultural societies operate within the Cultural Council of the Students' Body. They are student-led, but function under guidance of the Officer-In-Charge (Cultural Council) and institutional oversight through the Dean (Student Affairs). The cultural societies function through a collaborative model. Society Coordinators lead genre-specific initiatives, Senior Members and Members execute cultural events and artistic activities, while Volunteers participate in performances, workshops, fests, and outreach, ensuring broad student involvement.",
   officeLocation: "Student Activity Center (SAC), Ground Floor, Devghat, Jhalwa, Prayagraj 211015",
   contactEmail: "culturalcouncil@iiita.ac.in",
   facultyInCharge: {
@@ -233,45 +233,51 @@ export const councilDetails = {
   ],
 };
 
+import { councilRoster } from "./councilData";
+export { councilRoster };
+
 export const councilTeam = [
   {
-    role: "President / Faculty In-Charge",
-    name: "Dr. Pragya Singh",
-    type: "Faculty",
-    email: "pragya@iiita.ac.in",
-    avatar: "PS",
+    role: "Dean (Student Affairs) / Dean SA",
+    name: "Dr. KP Singh",
+    type: "Patron / Faculty",
+    email: "dean.sa@iiita.ac.in",
+    avatar: "KP",
+  },
+  {
+    role: "Faculty Coordinator (Cultural Affairs)",
+    name: "Dr. Sunny Sharma",
+    type: "Faculty Coordinator",
+    department: "Department of Management & Humanities",
+    email: "sunny@iiita.ac.in",
+    avatar: "SS",
+  },
+  {
+    role: "President, Cultural Council",
+    name: "Aditya Anil Halwai",
+    type: "Student Executive",
+    department: "B.Tech IT, 3rd Year",
+    email: "iit2024214@iiita.ac.in",
+    avatar: "AH",
+    photoUrl: "/images/team/president.jpg",
   },
   {
     role: "General Secretary (Cultural)",
-    name: "Aryan Deshmukh",
-    type: "Student Executive",
-    department: "B.Tech IT, 4th Year",
-    email: "cultsec@iiita.ac.in",
-    avatar: "AD",
-  },
-  {
-    role: "Joint Secretary (Events & Logistics)",
-    name: "Riya Kapoor",
-    type: "Student Executive",
-    department: "B.Tech ECE, 3rd Year",
-    email: "riya.events@iiita.ac.in",
-    avatar: "RK",
-  },
-  {
-    role: "Joint Secretary (Media & Brand)",
-    name: "Tushar Bansal",
+    name: "Chinmay Raheja",
     type: "Student Executive",
     department: "B.Tech IT, 3rd Year",
-    email: "tushar.media@iiita.ac.in",
-    avatar: "TB",
+    email: "iit2024164@iiita.ac.in",
+    avatar: "CR",
+    photoUrl: "/images/team/chinmay.jpg",
   },
   {
-    role: "Treasurer & Sponsorship Coordinator",
-    name: "Harshita Sengupta",
+    role: "Treasurer (Cultural Council)",
+    name: "Aryan Pandey",
     type: "Student Executive",
-    department: "B.Tech IT-BI, 3rd Year",
-    email: "harshita.finance@iiita.ac.in",
-    avatar: "HS",
+    department: "B.Tech IT, 3rd Year",
+    email: "iit2024abc@iiita.ac.in",
+    avatar: "AP",
+    photoUrl: "/images/team/aryan.jpg"
   },
 ];
 

@@ -15,16 +15,16 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   const n = Math.max(1, societies.length);
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [selectedTargetIndex, setSelectedTargetIndex] = useState<number | undefined>(undefined);
+  const activeIndexRef = useRef(0);
 
-  // 1. Entry scroll monitor: smoothly crossfades the A24 stage when entering the viewport
+  // 1. Entry scroll monitor: smoothly crossfades the A24 stage when entering viewport
   const { scrollYProgress: entryProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "start start"],
   });
 
   const smoothEntry = useSpring(entryProgress, {
-    stiffness: 120,
+    stiffness: 140,
     damping: 24,
     restDelta: 0.001,
   });
@@ -33,30 +33,53 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   const stageOpacity = useTransform(smoothEntry, [0.15, 0.88], [0, 1]);
   const stageScale = useTransform(smoothEntry, [0.15, 0.88], [0.97, 1]);
 
-  // 2. Internal pin scroll progress across all 6 societies
+  // 2. Internal pin scroll progress across all societies
   const { scrollYProgress: stageScrollProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
+  // High-performance spring: instant response feel, buttery smooth deceleration, zero lag
   const smoothProgress = useSpring(stageScrollProgress, {
-    stiffness: 95,
-    damping: 22,
-    restDelta: 0.001,
+    stiffness: 150,
+    damping: 24,
+    mass: 0.2,
+    restDelta: 0.0001,
   });
 
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     return smoothProgress.on("change", (latest) => {
-      setScrollProgress(latest);
+      const clamped = Math.max(0, Math.min(1, latest));
+      setScrollProgress(clamped);
+
+      // Continuous float progress from 0 to n - 1
+      const rawProgress = clamped * (n - 1);
+      const curr = activeIndexRef.current;
+
+      // Hysteresis deadband: prevents boundary flickering between adjacent societies
+      let nextIndex = curr;
+      if (rawProgress > curr + 0.55 && curr < n - 1) {
+        nextIndex = Math.min(n - 1, Math.floor(rawProgress + 0.45));
+      } else if (rawProgress < curr - 0.55 && curr > 0) {
+        nextIndex = Math.max(0, Math.ceil(rawProgress - 0.45));
+      }
+
+      if (nextIndex !== curr) {
+        activeIndexRef.current = nextIndex;
+        setActiveIndex(nextIndex);
+      }
     });
-  }, [smoothProgress]);
+  }, [smoothProgress, n]);
 
   const handleSelectIndex = (index: number) => {
-    setSelectedTargetIndex(index);
+    // Prime active index immediately for zero-latency UI feedback
+    activeIndexRef.current = index;
+    setActiveIndex(index);
+
     if (!containerRef.current) return;
-    const containerTop = containerRef.current.offsetTop;
+    const containerTop = containerRef.current.getBoundingClientRect().top + window.scrollY;
     const scrollDistance = containerRef.current.offsetHeight - window.innerHeight;
     const target = containerTop + (index / (n - 1 || 1)) * scrollDistance;
 
@@ -67,6 +90,7 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   };
 
   const activeSociety = societies[activeIndex] || societies[0];
+  const continuousProgress = scrollProgress * (n - 1);
 
   return (
     <div
@@ -103,15 +127,16 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
           {/* 1. Full-Window Ultra-Smooth GPU Trajectory Stage */}
           <A24SmoothHeroStage
             societies={societies}
-            targetIndex={selectedTargetIndex}
-            externalProgress={scrollProgress}
-            onIndexChange={(idx) => setActiveIndex(idx)}
+            progress={continuousProgress}
+            activeIndex={activeIndex}
+            onSelectIndex={handleSelectIndex}
           />
 
-          {/* 2. Full-Window A24 Editorial Overlay */}
+          {/* 2. Full-Window A24 Editorial Overlay with Smooth Ladder */}
           <A24HeroOverlay
             societies={societies}
             activeIndex={activeIndex}
+            continuousProgress={continuousProgress}
             onSelectIndex={handleSelectIndex}
           />
         </motion.div>
