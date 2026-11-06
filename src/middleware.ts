@@ -56,9 +56,9 @@ export function middleware(request: NextRequest) {
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    img-src 'self' blob: data: https://*.staticflickr.com https://live.staticflickr.com https://images.unsplash.com;
+    img-src 'self' blob: data: https://*.staticflickr.com https://live.staticflickr.com;
     font-src 'self' data: https://fonts.gstatic.com;
-    connect-src 'self' https://*.staticflickr.com https://live.staticflickr.com https://images.unsplash.com;
+    connect-src 'self' https://*.staticflickr.com https://live.staticflickr.com;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
