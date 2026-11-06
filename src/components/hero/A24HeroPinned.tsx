@@ -48,6 +48,11 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
     restDelta: 0.0005,
   });
 
+  // Extra scroll units specifically allocated to the final society so it has generous dwell time
+  // Each unit corresponds to ~120vh of travel; 1.5 units gives ~180vh of dedicated dwell time for the last society
+  const LAST_SOCIETY_DWELL_UNITS = 1.5;
+  const totalUnits = (n - 1) + LAST_SOCIETY_DWELL_UNITS;
+
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
@@ -55,8 +60,9 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
       const clamped = Math.max(0, Math.min(1, latest));
       setScrollProgress(clamped);
 
-      // Continuous float progress from 0 to n - 1
-      const rawProgress = clamped * (n - 1);
+      // Continuous float progress from 0 to totalUnits
+      const unitProgress = clamped * totalUnits;
+      const rawProgress = Math.min(n - 1, unitProgress);
       const rounded = Math.round(rawProgress);
       const curr = activeIndexRef.current;
 
@@ -71,13 +77,16 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
         setActiveIndex(nextIndex);
       }
     });
-  }, [smoothProgress, n]);
+  }, [smoothProgress, n, totalUnits]);
 
   const handleSelectIndex = (index: number) => {
     if (!containerRef.current) return;
     const containerTop = containerRef.current.getBoundingClientRect().top + window.scrollY;
     const scrollDistance = containerRef.current.offsetHeight - window.innerHeight;
-    const target = containerTop + (index / (n - 1 || 1)) * scrollDistance;
+    // Intermediate societies target their exact unit (0, 1, 2, ...).
+    // Final society targets slightly into its dwell (e.g. + 0.15) so it rests firmly centered on stage.
+    const targetUnit = index < n - 1 ? index : (n - 1) + 0.15;
+    const target = containerTop + (targetUnit / (totalUnits || 1)) * scrollDistance;
 
     window.scrollTo({
       top: target,
@@ -86,21 +95,25 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   };
 
   const activeSociety = societies[activeIndex] || societies[0];
-  const continuousProgress = scrollProgress * (n - 1);
+  const continuousProgress = Math.min(n - 1, scrollProgress * totalUnits);
+  const containerHeightVh = Math.max(500, Math.round(totalUnits * 120 + 100));
 
   return (
     <div
       id="societies-stage"
       ref={containerRef}
       className="relative w-full"
-      style={{ height: `${Math.max(450, n * 115)}vh` }}
+      style={{ height: `${containerHeightVh}vh` }}
     >
       {/* 100% Full-Viewport Pinned Stage */}
       <section
         aria-label="A24 Cultural Objects Exhibition"
         className="sticky top-0 h-screen w-full overflow-hidden transition-colors duration-300 ease-out select-none border-b border-stone-300/80"
         style={{
-          backgroundColor: scrollProgress < 0.02 ? "#FAF8F5" : (activeSociety?.washColor || "#FAF8F5"),
+          backgroundColor:
+            scrollProgress < 0.02 || scrollProgress > 0.98
+              ? "#FAF8F5"
+              : (activeSociety?.washColor || "#FAF8F5"),
         }}
       >
         {/* Subtle Paper Noise Watermark */}

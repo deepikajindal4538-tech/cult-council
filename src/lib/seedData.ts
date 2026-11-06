@@ -10,7 +10,6 @@ export const initialSocieties = [
     order: 1,
     objectConfig: {
       type: "camera",
-      imageUrl: "/objects/camera.png",
       fallbackColor: "#D97706",
     },
     socialLinks: {
@@ -38,7 +37,6 @@ export const initialSocieties = [
     order: 2,
     objectConfig: {
       type: "discoball",
-      imageUrl: "/objects/discoball.png",
       fallbackColor: "#E11D48",
     },
     socialLinks: {
@@ -65,7 +63,6 @@ export const initialSocieties = [
     order: 3,
     objectConfig: {
       type: "letter",
-      imageUrl: "/objects/letter.png",
       fallbackColor: "#4F46E5",
       letterContent: "To the dreamers and the seekers: Here between quiet halls and starlit skies, we write not just stories, but the spirit of who we are becoming.",
     },
@@ -93,7 +90,6 @@ export const initialSocieties = [
     order: 4,
     objectConfig: {
       type: "paintbrush",
-      imageUrl: "/objects/paintbrush.png",
       fallbackColor: "#EA580C",
     },
     socialLinks: {
@@ -120,7 +116,6 @@ export const initialSocieties = [
     order: 5,
     objectConfig: {
       type: "clapboard",
-      imageUrl: "/objects/clapboard.png",
       fallbackColor: "#B91C1C",
     },
     socialLinks: {
@@ -147,7 +142,6 @@ export const initialSocieties = [
     order: 6,
     objectConfig: {
       type: "vinyldisc",
-      imageUrl: "/objects/vinyldisc.png",
       fallbackColor: "#0D9488",
     },
     socialLinks: {
