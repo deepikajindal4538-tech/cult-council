@@ -70,7 +70,8 @@ export default function AlbumCatalogClient({
             titleLower.includes("rangtarangini") ||
             titleLower.includes("theatrics") ||
             titleLower.includes("drama") ||
-            descLower.includes("thespian") ||
+            descLower.includes("theatre") ||
+            descLower.includes("dramatics") ||
             descLower.includes("nukkad");
         } else if (catLower.includes("virtuosi") || catLower.includes("music")) {
           matchesCategory =
