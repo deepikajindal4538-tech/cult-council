@@ -105,7 +105,7 @@ export default function FlickrControlClient() {
   // Dashboard & State
   const [status, setStatus] = useState<FlickrStatusData | null>(null);
   const [isLoadingStatus, setIsLoadingStatus] = useState(false);
-  const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [notification, setNotification] = useState<{ type: "success" | "error" | "info"; message: string } | null>(null);
 
   // =========================================================================
   // Tab 1: Audit & IP Logs State
@@ -227,7 +227,7 @@ export default function FlickrControlClient() {
   const [isPurgingCache, setIsPurgingCache] = useState(false);
 
   // Toast Helper
-  const showToast = (type: "success" | "error", message: string) => {
+  const showToast = (type: "success" | "error" | "info", message: string) => {
     setNotification({ type, message });
     setTimeout(() => setNotification(null), 5000);
   };
@@ -933,11 +933,15 @@ export default function FlickrControlClient() {
             className={`fixed top-4 right-4 z-50 px-5 py-3 rounded-xl shadow-xl font-mono text-xs flex items-center gap-2.5 border ${
               notification.type === "success"
                 ? "bg-emerald-900 text-emerald-100 border-emerald-700"
+                : notification.type === "info"
+                ? "bg-stone-900 text-stone-100 border-stone-700"
                 : "bg-rose-900 text-rose-100 border-rose-700"
             }`}
           >
             {notification.type === "success" ? (
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            ) : notification.type === "info" ? (
+              <Activity className="w-4 h-4 text-amber-400" />
             ) : (
               <AlertTriangle className="w-4 h-4 text-rose-400" />
             )}
