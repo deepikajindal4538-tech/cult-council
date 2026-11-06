@@ -67,9 +67,9 @@ export default async function SocietiesPage() {
 
               {/* Central 3D Vector Visual Showcase & Title */}
               <div className="p-8 sm:p-10 py-6 space-y-6">
-                {/* 3D Visual Object Miniature */}
-                <div className="w-full h-52 sm:h-64 relative flex items-center justify-center overflow-hidden pointer-events-none">
-                  <div className="scale-75 sm:scale-90 transition-transform duration-500 group-hover:scale-100">
+                {/* 3D Visual Object Miniature (Increased 50% Area) */}
+                <div className="w-full h-64 sm:h-76 relative flex items-center justify-center overflow-hidden pointer-events-none">
+                  <div className="scale-90 sm:scale-110 transition-transform duration-500 group-hover:scale-125">
                     <Society3DVectorObject
                       society={society}
                       isActive={true}

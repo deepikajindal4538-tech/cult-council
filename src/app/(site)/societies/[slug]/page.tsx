@@ -119,9 +119,9 @@ export default async function SocietyDetailPage({
               </div>
             </div>
 
-            {/* Right Column: 3D Vector Physical Artifact Showcase */}
+            {/* Right Column: 3D Vector Physical Artifact Showcase (Increased 50% Area) */}
             <div className="lg:col-span-5 flex items-center justify-center">
-              <div className="w-[340px] sm:w-[440px] md:w-[480px] h-[340px] sm:h-[440px] md:h-[480px] relative flex items-center justify-center">
+              <div className="w-[416px] sm:w-[540px] md:w-[588px] h-[416px] sm:h-[540px] md:h-[588px] relative flex items-center justify-center">
                 <Society3DVectorObject
                   society={society}
                   isActive={true}

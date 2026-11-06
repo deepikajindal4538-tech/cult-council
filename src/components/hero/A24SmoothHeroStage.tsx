@@ -224,9 +224,9 @@ export function A24SmoothHeroStage({
                 </span>
               </div>
 
-              {/* 2. Decreased Size 3D Vector Icon: Enters first at center, pushed rightwards */}
+              {/* 2. 3D Vector Exhibition Artifact (Increased 50% Area): Enters first at center, pushed rightwards */}
               <div
-                className="relative w-[220px] h-[220px] sm:w-[270px] sm:h-[270px] md:w-[310px] md:h-[310px] lg:w-[340px] lg:h-[340px] flex items-center justify-center shrink-0 z-20 cursor-pointer"
+                className="relative w-[270px] h-[270px] sm:w-[330px] sm:h-[330px] md:w-[380px] md:h-[380px] lg:w-[416px] lg:h-[416px] flex items-center justify-center shrink-0 z-20 cursor-pointer"
                 style={{
                   transform: `translate3d(${iconX.toFixed(1)}px, ${iconY.toFixed(1)}px, 0px) scale(${iconScale.toFixed(3)}) rotate(${iconRotateZ.toFixed(1)}deg)`,
                   opacity: Math.min(1, Math.max(0, iconOpacity)),

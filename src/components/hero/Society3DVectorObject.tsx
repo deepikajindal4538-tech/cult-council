@@ -55,7 +55,7 @@ export function Society3DVectorObject({
           opacity: isActive ? 0.22 : 0.08,
         }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -bottom-6 w-44 sm:w-56 md:w-64 h-6 rounded-full bg-stone-950/35 blur-xl pointer-events-none -z-10"
+        className="absolute -bottom-7 sm:-bottom-8 w-54 sm:w-68 md:w-80 h-7 sm:h-8 rounded-full bg-stone-950/35 blur-xl pointer-events-none -z-10"
       />
     </div>
   );

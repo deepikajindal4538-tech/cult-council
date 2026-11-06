@@ -107,9 +107,9 @@ export function HeroPinned({ societies }: HeroPinnedProps) {
             />
           </div>
 
-          {/* Center: Horizontal Physical Artifact Carousel */}
+          {/* Center: Horizontal Physical Artifact Carousel (Increased 50% Area) */}
           <div
-            className="w-full lg:w-5/12 h-72 sm:h-96 md:h-[460px] relative flex items-center justify-center order-1 lg:order-2"
+            className="w-full lg:w-5/12 h-88 sm:h-[470px] md:h-[564px] relative flex items-center justify-center order-1 lg:order-2"
             style={{ perspective: 1200 }}
           >
             {societies.map((soc, idx) => {
