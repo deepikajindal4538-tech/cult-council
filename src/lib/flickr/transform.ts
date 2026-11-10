@@ -23,14 +23,27 @@ interface RawFlickrPhotoItem {
   secret?: string;
   server?: string;
   title?: { _content?: string } | string;
+  width_q?: number | string;
+  height_q?: number | string;
+  width_m?: number | string;
+  height_m?: number | string;
   width_z?: number | string;
   height_z?: number | string;
+  width_c?: number | string;
+  height_c?: number | string;
+  width_l?: number | string;
+  height_l?: number | string;
   width_b?: number | string;
   height_b?: number | string;
-  url_z?: string;
-  url_b?: string;
-  url_m?: string;
+  width_o?: number | string;
+  height_o?: number | string;
   url_q?: string;
+  url_m?: string;
+  url_z?: string;
+  url_c?: string;
+  url_l?: string;
+  url_b?: string;
+  url_o?: string;
 }
 
 function extractText(field: { _content?: string } | string | undefined): string {
@@ -57,9 +70,11 @@ export function transformAlbumsList(raw: any): TrimmedAlbumsResponse {
     const server = item.server || "65535";
     const primary = item.primary || item.id;
     const secret = item.secret || "";
-    const coverImageUrl = secret
+    const primaryExtras = (item as any).primary_photo_extras;
+    const extrasUrl = primaryExtras?.url_b || primaryExtras?.url_z || primaryExtras?.url_m;
+    const coverImageUrl = extrasUrl || (secret
       ? buildFlickrPhotoUrl(server, primary, secret, "b")
-      : `https://live.staticflickr.com/${server}/${primary}_default_b.jpg`;
+      : `https://live.staticflickr.com/${server}/${primary}_default_b.jpg`);
 
     const count = typeof item.photos === "number"
       ? item.photos
@@ -100,20 +115,37 @@ export function transformAlbumPhotos(albumId: string, raw: any): TrimmedAlbumPho
     const id = String(photo.id);
 
     const thumbnailUrl = photo.url_q || buildFlickrPhotoUrl(server, id, secret, "q");
-    const displayUrl = photo.url_z || buildFlickrPhotoUrl(server, id, secret, "z");
-    const fullUrl = photo.url_b || buildFlickrPhotoUrl(server, id, secret, "b");
+    const displayUrl =
+      photo.url_l ||
+      photo.url_c ||
+      photo.url_z ||
+      photo.url_b ||
+      buildFlickrPhotoUrl(server, id, secret, "z");
 
-    const width = photo.width_b
-      ? parseInt(String(photo.width_b), 10)
-      : photo.width_z
-      ? parseInt(String(photo.width_z), 10)
-      : undefined;
+    const fullUrl =
+      photo.url_o ||
+      photo.url_l ||
+      photo.url_b ||
+      photo.url_c ||
+      buildFlickrPhotoUrl(server, id, secret, "b");
 
-    const height = photo.height_b
-      ? parseInt(String(photo.height_b), 10)
-      : photo.height_z
-      ? parseInt(String(photo.height_z), 10)
-      : undefined;
+    const width =
+      (photo.width_l && parseInt(String(photo.width_l), 10)) ||
+      (photo.width_b && parseInt(String(photo.width_b), 10)) ||
+      (photo.width_c && parseInt(String(photo.width_c), 10)) ||
+      (photo.width_z && parseInt(String(photo.width_z), 10)) ||
+      (photo.width_m && parseInt(String(photo.width_m), 10)) ||
+      (photo.width_o && parseInt(String(photo.width_o), 10)) ||
+      undefined;
+
+    const height =
+      (photo.height_l && parseInt(String(photo.height_l), 10)) ||
+      (photo.height_b && parseInt(String(photo.height_b), 10)) ||
+      (photo.height_c && parseInt(String(photo.height_c), 10)) ||
+      (photo.height_z && parseInt(String(photo.height_z), 10)) ||
+      (photo.height_m && parseInt(String(photo.height_m), 10)) ||
+      (photo.height_o && parseInt(String(photo.height_o), 10)) ||
+      undefined;
 
     return {
       id,

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ArrowDown, ArrowUpRight, X } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { ISociety } from "@/models/Society";
 import { SocietyIndex } from "./SocietyIndex";
 
@@ -21,7 +21,6 @@ export function A24HeroOverlay({
   continuousProgress = 0,
   onSelectIndex,
 }: A24HeroOverlayProps) {
-  const [indexMenuOpen, setIndexMenuOpen] = useState(false);
   const society = societies[activeIndex] || societies[0];
 
   return (
@@ -45,12 +44,12 @@ export function A24HeroOverlay({
                   style={{ backgroundColor: society.accentColor || "#1C1917" }}
                 />
                 <span className="font-semibold text-ink">
-                  SECTOR 0{activeIndex + 1} // {society.category}
+                  {society.category}
                 </span>
               </div>
 
               {/* Massive Editorial Serif Title */}
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink uppercase leading-none mb-4">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink uppercase leading-none mb-3">
                 {society.name}
               </h2>
 
@@ -157,7 +156,7 @@ export function A24HeroOverlay({
           </AnimatePresence>
         </div>
 
-        {/* Top-Right: A24 Centered Pill Navigation with Index Button */}
+        {/* Top-Right: Council Branding */}
         <div className="pointer-events-auto flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-ink">
           <div className="hidden sm:flex items-center gap-2.5">
             <div className="relative w-9 h-9 shrink-0">
@@ -174,84 +173,6 @@ export function A24HeroOverlay({
               <span>CULTURAL COUNCIL</span>
             </div>
           </div>
-          {/* Index Dropdown Toggle (Matching A24 Television Navigation) */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setIndexMenuOpen(!indexMenuOpen)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-stone-300/90 bg-[#FAF8F5]/80 hover:bg-stone-200/60 backdrop-blur-md text-ink text-xs transition-colors duration-200 cursor-pointer"
-              aria-label="Toggle Societies Index"
-              aria-expanded={indexMenuOpen}
-            >
-              <span className="font-semibold">INDEX</span>
-              <ChevronDown
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                  indexMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {/* A24 Archival Index Dropdown Menu */}
-            <AnimatePresence>
-              {indexMenuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -6, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -6, scale: 0.98 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                  className="absolute top-full right-0 mt-2 w-72 sm:w-80 bg-[#FAF8F5]/98 backdrop-blur-lg border border-stone-300 rounded-2xl shadow-xl p-3 z-50 overflow-hidden"
-                >
-                  <div className="flex items-center justify-between border-b border-stone-200/90 pb-2 mb-2 px-2">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-ink-faint font-semibold">
-                      ARCHIVAL SOCIETIES INDEX
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setIndexMenuOpen(false)}
-                      className="text-stone-400 hover:text-ink transition-colors cursor-pointer"
-                      aria-label="Close index"
-                    >
-                      <X className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <div className="space-y-1">
-                    {societies.map((soc, idx) => {
-                      const isItemActive = idx === activeIndex;
-                      return (
-                        <button
-                          key={soc.slug}
-                          type="button"
-                          onClick={() => {
-                            onSelectIndex(idx);
-                            setIndexMenuOpen(false);
-                          }}
-                          className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-mono transition-all duration-200 cursor-pointer ${
-                            isItemActive
-                              ? "bg-stone-900 text-white font-bold shadow-xs"
-                              : "text-stone-600 hover:text-ink hover:bg-stone-200/60"
-                          }`}
-                        >
-                          <div className="flex items-center gap-2.5 truncate">
-                            <span
-                              className="w-2 h-2 rounded-full shrink-0"
-                              style={{
-                                backgroundColor: isItemActive ? "#FAF8F5" : (soc.accentColor || "#1C1917"),
-                              }}
-                            />
-                            <span className="uppercase truncate">{soc.name}</span>
-                          </div>
-                          <span className={`text-[10px] shrink-0 ${isItemActive ? "text-stone-300" : "text-stone-400"}`}>
-                            {soc.stats?.foundedYear || 2004}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
         </div>
       </header>
 
@@ -265,7 +186,7 @@ export function A24HeroOverlay({
         />
       </div>
 
-      {/* 2. BOTTOM SECTION: CENTER TESTIMONIAL, MOBILE LADDER, & RIGHT DOSSIER CTA */}
+      {/* 2. BOTTOM SECTION: CENTER TESTIMONIAL, MOBILE LADDER, & RIGHT SOCIETY CTA */}
       <footer className="w-full flex flex-col md:flex-row items-center justify-between gap-4 pt-4">
         {/* Left Indicator / Drag Cue */}
         <div className="pointer-events-auto hidden lg:flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-ink-faint w-48">
@@ -273,7 +194,7 @@ export function A24HeroOverlay({
           <span>SCROLL TO ADVANCE</span>
         </div>
 
-        {/* Center: Society Artistic Manifesto & Mobile Mini Ladder */}
+        {/* Center: Society Overview & Mobile Mini Ladder */}
         <div className="pointer-events-auto flex flex-col items-center justify-center text-center max-w-md mx-auto space-y-2">
           {/* Mobile Mini Societies Ladder Track */}
           <div className="flex md:hidden items-center justify-center gap-1.5 py-1">
@@ -308,7 +229,7 @@ export function A24HeroOverlay({
               className="space-y-1"
             >
               <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-ink-faint font-semibold">
-                ARTISTIC MANIFESTO
+                ABOUT THE SOCIETY
               </div>
 
               <p className="font-serif italic text-sm sm:text-base text-ink leading-tight max-w-xs sm:max-w-sm">
@@ -318,13 +239,13 @@ export function A24HeroOverlay({
           </AnimatePresence>
         </div>
 
-        {/* Right: Explore Dossier CTA Link */}
+        {/* Right: Explore Society CTA Link */}
         <div className="pointer-events-auto flex justify-end w-48">
           <Link
             href={`/societies/${society.slug}`}
             className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink text-canvas font-mono text-[11px] uppercase tracking-widest hover:bg-stone-800 transition-all duration-200 shadow-xs hover:shadow cursor-pointer"
           >
-            <span>Explore Dossier</span>
+            <span>Explore Society</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
         </div>

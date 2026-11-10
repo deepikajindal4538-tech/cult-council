@@ -20,8 +20,8 @@ export default async function FestsPage() {
       {/* 1. Header */}
       <section className="pt-24 sm:pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-stone-300">
         <div className="flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint mb-6">
-          <span>FLAGSHIP CALENDAR // ANNUAL FESTS</span>
-          <span>CAMPUS EXTRAVAGANZA</span>
+          <span>CAMPUS FESTIVALS • ANNUAL EVENTS</span>
+          <span>CAMPUS CELEBRATIONS</span>
         </div>
 
         <div className="max-w-4xl space-y-6">
@@ -31,7 +31,7 @@ export default async function FestsPage() {
           </h1>
 
           <p className="font-serif italic text-xl sm:text-2xl text-ink-muted leading-relaxed pl-6 border-l-2 border-stone-400">
-            &ldquo;Three days of electric unbridled energy drawing thousands of students across India to celebrate music, theatre, and the arts.&rdquo;
+            &ldquo;Three days of electric energy drawing thousands of students to celebrate music, theatre, and the arts.&rdquo;
           </p>
         </div>
       </section>
@@ -39,21 +39,17 @@ export default async function FestsPage() {
       {/* 2. Flagship Fest Showcase: Effervescence '26 */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="relative rounded-3xl bg-ink text-canvas overflow-hidden p-8 sm:p-14 lg:p-20 shadow-soft-xl border border-stone-800">
-          {/* Subtle Ambient Glows */}
-          <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-amber-500/20 blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-rose-500/15 blur-3xl pointer-events-none" />
-
           <div className="relative z-10 max-w-4xl space-y-8">
             <div className="font-mono text-xs uppercase tracking-[0.25em] text-amber-300/90 border-b border-amber-300/30 pb-2">
-              NORTH INDIA&apos;S PREMIER CULTURAL EXTRAVAGANZA
+              ANNUAL CULTURAL FESTIVAL
             </div>
 
             <div>
               <h2 className="font-serif text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-canvas leading-[0.96]">
                 {flagshipFest.name} &apos;{flagshipFest.edition}
               </h2>
-              <p className="font-mono text-base uppercase tracking-widest text-amber-200/80 mt-3">
-                THEME // &ldquo;{flagshipFest.theme.toUpperCase()}&rdquo;
+              <p className="font-serif italic text-lg text-amber-200/90 mt-2">
+                Theme: &ldquo;{flagshipFest.theme}&rdquo;
               </p>
             </div>
 
@@ -98,7 +94,7 @@ export default async function FestsPage() {
             {/* Headlining Pillars */}
             <div className="space-y-3">
               <span className="font-mono text-xs uppercase tracking-widest text-amber-300/90 block">
-                HEADLINING EXTRAVAGANZAS
+                FESTIVAL HIGHLIGHTS
               </span>
               <div className="flex flex-wrap gap-3">
                 {flagshipFest.highlights.map((h: string, idx: number) => (
@@ -176,7 +172,7 @@ export default async function FestsPage() {
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-stone-300">
         <div className="border-b border-stone-300 pb-3 font-mono text-xs uppercase tracking-widest text-ink-faint mb-8 flex items-center justify-between">
           <span>HOSTED IN COORDINATION BY</span>
-          <span>ALL SIX AUTONOMOUS GUILDS</span>
+          <span>ALL SIX CULTURAL SOCIETIES</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 font-mono text-xs uppercase tracking-wider text-center">

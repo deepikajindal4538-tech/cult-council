@@ -4,7 +4,7 @@ import { getAllEvents, getAllSocieties } from "@/lib/societies";
 import { Calendar, MapPin, Clock, ArrowUpRight, Sparkles } from "lucide-react";
 
 export const metadata = {
-  title: "Events & Production Ledger | Cultural Council IIIT Allahabad",
+  title: "Events & Cultural Calendar | Cultural Council IIIT Allahabad",
   description:
     "Explore upcoming collegiate cultural competitions, street plays, acoustic jam nights, dance battles, and art exhibitions at IIIT Allahabad.",
 };
@@ -27,22 +27,22 @@ export default async function EventsPage({
       {/* 1. Page Header */}
       <section className="pt-24 sm:pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-stone-300">
         <div className="flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint mb-6">
-          <span>COUNCIL CALENDAR // LEDGER</span>
-          <span>{allEvents.length} RECORDED PRODUCTIONS</span>
+          <span>CAMPUS CALENDAR</span>
+          <span>{allEvents.length} SCHEDULED EVENTS</span>
         </div>
 
         <div className="max-w-4xl space-y-6">
           <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[1.02]">
-            Annual Production <br />
-            <span className="italic font-normal text-stone-600">Ledger & Calendar</span>
+            Campus Events <br />
+            <span className="italic font-normal text-stone-600">&amp; Schedule</span>
           </h1>
 
           <p className="font-serif italic text-xl sm:text-2xl text-ink-muted leading-relaxed pl-6 border-l-2 border-stone-400">
-            &ldquo;From twilight open-mics and acoustic lawns to amphitheatre street clashes and live graffiti marathons.&rdquo;
+            &ldquo;From open-mics and acoustic jam sessions to street plays, dance battles, and live art showcases.&rdquo;
           </p>
 
           <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl">
-            Every semester features a continuous series of open-entry student competitions,
+            Every semester features a series of open-entry student competitions,
             workshops, and festival showcases organized by the six societies.
           </p>
         </div>
@@ -57,7 +57,7 @@ export default async function EventsPage({
                 : "bg-[#F4F1EA] text-ink border-stone-300 hover:border-ink"
             }`}
           >
-            All Guilds ({allEvents.length})
+            All Societies ({allEvents.length})
           </Link>
 
           {societies.map((soc) => {
@@ -99,8 +99,8 @@ export default async function EventsPage({
                 <div>
                   {/* Top Metadata */}
                   <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-ink-faint pb-3 border-b border-stone-300/80 mb-4">
-                    <span className="font-bold text-ink">
-                      ACT [{String(i + 1).padStart(2, "0")}]
+                    <span className="font-bold text-amber-800">
+                      {evt.category || "CAMPUS EVENT"}
                     </span>
                     <span
                       className="px-2.5 py-0.5 rounded-full font-semibold"
@@ -153,7 +153,7 @@ export default async function EventsPage({
                         href={`/societies/${socSlug}`}
                         className="inline-flex items-center gap-1 text-[11px] font-semibold text-ink hover:text-stone-600 transition-colors"
                       >
-                        <span>Host Guild</span>
+                        <span>View Society</span>
                         <ArrowUpRight className="w-3 h-3" />
                       </Link>
                     )}

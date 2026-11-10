@@ -5,8 +5,10 @@ import { initialFests, initialEvents, councilTeam } from "@/lib/seedData";
 import { A24HeroPinned } from "@/components/hero/A24HeroPinned";
 import { HeroSlider } from "@/components/hero/HeroSlider";
 import { CinematicAboutSection } from "@/components/home/CinematicAboutSection";
+import EventTimelineSection from "@/components/home/EventTimelineSection";
 import { FestivalCountdown } from "@/components/home/FestivalCountdown";
 import RevolvingGalleryCarousel from "@/components/gallery/RevolvingGalleryCarousel";
+import { getLiveCarouselRows } from "@/lib/flickr/client";
 import {
   ArrowUpRight,
   Disc,
@@ -30,6 +32,7 @@ import {
 export default async function HomePage() {
   const societies = await getAllSocieties();
   const nextFest = initialFests.find((f) => f.isCurrentOrNext) || initialFests[0];
+  const liveCarousel = await getLiveCarouselRows();
 
   return (
     <div className="flex flex-col min-h-screen bg-[#FAF8F5] text-ink selection:bg-stone-300">
@@ -42,31 +45,25 @@ export default async function HomePage() {
       {/* 2. Cinematic About Section: "Where Culture Finds Its Voice" // "Many Forms. One Spirit." */}
       <CinematicAboutSection />
 
+      {/* 2.5 Event Timeline Section */}
+      <EventTimelineSection />
+
       {/* 3. Chapter 02: Flagship Exhibition (Effervescence & Rangoli) */}
       <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        {/* Editorial Chapter Header */}
+        {/* Editorial Section Header */}
         <div className="border-b border-stone-300/80 pb-3 mb-10 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-ink-faint">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
-            <span>CHAPTER 02 // THE FESTIVALS</span>
+            <span>CAMPUS FESTIVALS</span>
           </div>
-          <span>FLAGSHIP CALENDAR</span>
+          <span>ANNUAL CALENDAR</span>
         </div>
 
         {/* High-End Editorial Exhibition Card (Light Theme Harmony) */}
         <div className="relative rounded-3xl bg-[#F4F1EA] border border-stone-300/90 p-7 sm:p-10 lg:p-12 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
-          {/* Subtle Ambient Warm Glow */}
-          <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl pointer-events-none" />
-
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column: Festival Dossier & Details (7 cols) */}
+            {/* Left Column: Festival Details (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
-              {/* Eyebrow Tag */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-900 font-mono text-[11px] uppercase tracking-widest font-medium">
-                <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
-                <span>NORTH INDIA&apos;S PREMIER CULTURAL EXTRAVAGANZA</span>
-              </div>
-
               {/* Title & Theme */}
               <div className="space-y-1.5">
                 <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-ink leading-[0.95]">
@@ -89,31 +86,6 @@ export default async function HomePage() {
               {/* Live Dynamic Countdown to February */}
               <FestivalCountdown />
 
-              {/* 4 Headlining Acts Grid */}
-              <div className="space-y-2.5 pt-1">
-                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-ink-faint font-semibold">
-                  HEADLINING PILLARS &amp; ACTS
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {nextFest.highlights.map((h, i) => (
-                    <div
-                      key={i}
-                      className="group flex items-center justify-between p-3 rounded-xl bg-white/80 hover:bg-white border border-stone-200/90 hover:border-amber-400/60 shadow-2xs hover:shadow-xs transition-all duration-200"
-                    >
-                      <div className="flex items-center gap-2.5 truncate">
-                        <span className="font-mono text-[10px] text-amber-800 font-bold px-1.5 py-0.5 rounded bg-amber-50 border border-amber-200/60 shrink-0">
-                          0{i + 1}
-                        </span>
-                        <span className="font-serif text-sm font-semibold text-ink group-hover:text-amber-950 transition-colors truncate">
-                          {h}
-                        </span>
-                      </div>
-                      <ArrowRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-800 group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
               {/* Key Quick Metrics Bar */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-y border-stone-300/80 font-mono text-xs">
                 <div>
@@ -125,7 +97,7 @@ export default async function HomePage() {
                 <div>
                   <span className="text-[10px] text-ink-faint block uppercase tracking-wider">FOOTFALL</span>
                   <span className="font-serif text-sm sm:text-base font-bold text-ink">
-                    15,000+ Guests
+                    2,500+ Guests
                   </span>
                 </div>
                 <div>
@@ -148,14 +120,14 @@ export default async function HomePage() {
                   href="/fests"
                   className="group inline-flex items-center gap-2 px-6 py-3 bg-ink hover:bg-stone-800 text-canvas font-mono text-xs uppercase tracking-widest font-bold transition-all rounded-full shadow-xs hover:shadow cursor-pointer"
                 >
-                  <span>Explore Festival Dossier</span>
+                  <span>Explore Festivals</span>
                   <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </Link>
                 <Link
                   href="/events"
                   className="inline-flex items-center gap-2 px-6 py-3 border border-stone-300 hover:border-stone-400 bg-white/70 hover:bg-white text-ink font-mono text-xs uppercase tracking-widest font-medium transition-all rounded-full cursor-pointer"
                 >
-                  <span>View Complete Event Ledger</span>
+                  <span>View All Events</span>
                 </Link>
               </div>
             </div>
@@ -190,7 +162,7 @@ export default async function HomePage() {
                   <div className="absolute bottom-3 inset-x-3 text-white">
                     <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-amber-300 mb-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
-                      <span>THE ARENA GROUND // 15,000+ CAPACITY</span>
+                      <span>THE ARENA GROUND // 2,500+ CAPACITY</span>
                     </div>
                     <p className="font-serif text-xs sm:text-sm text-stone-200 line-clamp-1">
                       Thousands gathered under the main stage floodlights.
@@ -218,7 +190,7 @@ export default async function HomePage() {
                   href="/fests"
                   className="font-mono text-[10px] uppercase tracking-wider text-amber-800 hover:text-amber-950 font-bold shrink-0 flex items-center gap-1 hover:underline"
                 >
-                  <span>Dossier</span>
+                  <span>Details</span>
                   <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -227,77 +199,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. Chapter 03: Upcoming Cultural Productions */}
-      <section className="bg-[#F4F1EA] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-t border-stone-300/80">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
-            <div>
-              <div className="font-mono text-xs uppercase tracking-widest text-ink-faint mb-1.5">
-                CHAPTER 03 // UPCOMING CALENDAR
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-ink">
-                Live Campus Productions &amp; Acts
-              </h2>
-            </div>
-            <Link
-              href="/events"
-              className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-ink hover:text-stone-600 font-semibold mt-3 md:mt-0"
-            >
-              <span>View Full Schedule &rarr;</span>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {initialEvents.slice(0, 3).map((evt) => (
-              <div
-                key={evt.id}
-                className="bg-[#FAF8F5] p-6 sm:p-7 rounded-2xl border border-stone-300/80 shadow-soft hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between font-mono text-xs">
-                    <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-semibold text-[10px] uppercase">
-                      {evt.category}
-                    </span>
-                    <span className="text-ink-faint text-[10px]">{evt.status.toUpperCase()}</span>
-                  </div>
-                  <h3 className="font-serif text-xl font-bold text-ink leading-snug">
-                    {evt.title}
-                  </h3>
-                  <p className="text-xs text-ink-muted leading-relaxed line-clamp-2">
-                    {evt.description}
-                  </p>
-                  <div className="pt-2 font-mono text-xs text-stone-600 space-y-1">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-ink-muted" />
-                      <span>{evt.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-ink-muted" />
-                      <span>{evt.venue}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 mt-4 border-t border-stone-200/80">
-                  <Link
-                    href={`/societies/${evt.societySlug}`}
-                    className="font-mono text-xs uppercase tracking-wider text-ink font-semibold flex items-center justify-between hover:text-stone-600"
-                  >
-                    <span>{evt.societyName.split(" ")[0]} Wing</span>
-                    <span>&rarr;</span>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <RevolvingGalleryCarousel
-        chapterLabel="CHAPTER 04 // VISUAL REPOSITORIES"
-        curatorLabel="CAMPUS ARCHIVES"
-        title="Visual Artifacts & Moments"
-        subtitle="Curated high-definition records captured by student photojournalists."
+        chapterLabel={
+          liveCarousel.isLive
+            ? "CAMPUS MEDIA GALLERY • LIVE FLICKR STREAM"
+            : "CAMPUS MEDIA GALLERY"
+        }
+        curatorLabel={
+          liveCarousel.isLive
+            ? "CAMPUS ARCHIVES • LIVE FLICKR STREAM"
+            : "CAMPUS ARCHIVES"
+        }
+        title="Moments &amp; Memories"
+        subtitle={
+          liveCarousel.isLive
+            ? "High-definition photos of concerts, stage performances, and dance choreography streamed from Flickr."
+            : "Curated photos captured by student photographers across campus."
+        }
+        row1={liveCarousel.row1}
+        row2={liveCarousel.row2}
+        row3={liveCarousel.row3}
       />
     </div>
   );

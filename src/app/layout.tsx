@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
-import { SkipLink } from "@/components/ui/SkipLink";
-import { Navbar } from "@/components/ui/Navbar";
-import { Footer } from "@/components/ui/Footer";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -54,12 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable} ${cormorant.variable}`}>
       <body className="font-sans bg-canvas text-ink antialiased selection:bg-amber-100 selection:text-amber-900">
-        <SkipLink />
-        <Navbar />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

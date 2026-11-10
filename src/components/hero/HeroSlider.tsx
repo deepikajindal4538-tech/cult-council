@@ -25,9 +25,9 @@ const SLIDES = [
   {
     id: "theatre-prep",
     src: "/images/gallery/theatre-prep.jpg",
-    title: "Rangtarangini Thespians",
+    title: "Rangtarangini Dramatics",
     category: "Theatrics & Face Art",
-    caption: "Theatrical mask and persona formulation backstage",
+    caption: "Backstage rehearsals and preparations before the curtains rise",
   },
   {
     id: "pronite-crowd",
@@ -155,12 +155,12 @@ export function HeroSlider({}: HeroSliderProps) {
           }}
         />
 
-        {/* Reduced, subtle bottom fade to connect smoothly with the canvas background */}
+        {/* Generous smooth bottom fade to connect seamlessly with the canvas background */}
         <div
-          className="absolute inset-x-0 bottom-0 h-16 sm:h-24 pointer-events-none z-10"
+          className="absolute inset-x-0 bottom-0 h-28 sm:h-44 pointer-events-none z-10"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(250,248,245,0) 0%, rgba(250,248,245,0.3) 60%, #FAF8F5 100%)",
+              "linear-gradient(to bottom, rgba(250,248,245,0) 0%, rgba(250,248,245,0.4) 50%, rgba(250,248,245,0.85) 80%, #FAF8F5 100%)",
           }}
         />
       </div>
@@ -195,7 +195,7 @@ export function HeroSlider({}: HeroSliderProps) {
 
         {/* Narrative Subtitle */}
         <p className="max-w-2xl mx-auto font-serif text-sm sm:text-lg md:text-xl text-stone-200 leading-relaxed pt-2 drop-shadow">
-          Where technical precision yields to unfiltered artistic fervor. The statutory apex body governing music, dramatics, choreography, fine arts, literature, and visual storytelling.
+          The heart of campus culture at IIIT Allahabad—bringing together music, dance, theatre, fine arts, literature, and media.
         </p>
       </div>
 
@@ -205,7 +205,7 @@ export function HeroSlider({}: HeroSliderProps) {
           href="#societies-stage"
           className="group inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/80 hover:text-ink transition-colors py-2.5 px-6 rounded-full bg-white/90 hover:bg-white backdrop-blur-md border border-stone-300 shadow-sm hover:shadow"
         >
-          <span>EXPLORE SOCIETIES LADDER</span>
+          <span>EXPLORE SOCIETIES</span>
           <ArrowDown className="w-3.5 h-3.5 text-amber-800 animate-bounce group-hover:translate-y-0.5 transition-transform" />
         </a>
       </footer>

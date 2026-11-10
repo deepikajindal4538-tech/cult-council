@@ -80,22 +80,6 @@ export function CinematicAboutSection() {
       className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full select-none overflow-hidden"
       aria-label="About the Cultural Council"
     >
-      {/* 1. TOP LEDGER RIBBON */}
-      <div className="border-b border-stone-300/80 pb-3 mb-10 sm:mb-14 flex items-center justify-between font-mono text-[11px] uppercase tracking-widest text-ink-faint">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
-          <span className="text-ink font-semibold">CHAPTER 01 // MANIFESTO</span>
-          <span className="hidden sm:inline text-stone-400">//</span>
-          <span className="hidden sm:inline text-stone-500">
-            IIIT ALLAHABAD APEX CULTURAL MANDATE
-          </span>
-        </div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200/70 border border-stone-300 font-mono text-[10px] uppercase tracking-wider text-ink font-semibold">
-          <Sparkles className="w-3 h-3 text-amber-600" />
-          <span>MANY FORMS. ONE SPIRIT.</span>
-        </div>
-      </div>
-
       {/* 2. CINEMATIC HEADLINE SPREAD & MINIMAL STORYTELLING */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start pb-14 border-b border-stone-300/80">
         {/* Left Column: Monumental Headline */}
@@ -114,22 +98,21 @@ export function CinematicAboutSection() {
           </h2>
 
           <p className="font-serif italic text-lg sm:text-2xl text-stone-700 leading-relaxed border-l-2 border-stone-400 pl-5 pt-1">
-            &ldquo;In an institute renowned for algorithmic rigor, we are the
-            counter-rhythm—the midnight amplifier, the dust stirred by dancers&apos;
-            feet, the street play that silences a crowd.&rdquo;
+            &ldquo;Beyond the classrooms and code, we bring creative energy to
+            campus—late-night jam sessions, the rhythm of dance, street plays
+            that move a crowd, and stories told through art.&rdquo;
           </p>
 
           <div className="space-y-3.5 text-sm sm:text-base text-ink-muted leading-relaxed font-sans max-w-2xl pt-2">
             <p>
-              The <strong>Cultural Council of IIIT Allahabad</strong> serves as the
-              statutory apex body governing campus artistic life under the Office of
-              the Dean of Student Affairs (DoSA). We do not merely schedule events; we
-              steward six autonomous guilds, foster independent creative thought, and
-              unite hundreds of musicians, thespians, poets, painters, and cinematographers
-              into a singular institutional voice.
+              The <strong>Cultural Council of IIIT Allahabad</strong> coordinates student
+              cultural life, flagship festivals, and creative events under the Office of the
+              Dean of Student Affairs (DoSA). We bring together six student-led societies
+              across music, dance, dramatics, literature, fine arts, and media to build a
+              vibrant and welcoming campus community.
             </p>
             <p className="font-mono text-xs text-stone-500 uppercase tracking-widest pt-1">
-              MANY FORMS. ONE SPIRIT. // MUSIC • DANCE • THEATRE • LITERATURE • ART • CINEMA
+              MANY FORMS. ONE SPIRIT. • MUSIC • DANCE • THEATRE • LITERATURE • ART • MEDIA
             </p>
           </div>
 
@@ -138,7 +121,7 @@ export function CinematicAboutSection() {
               href="/about"
               className="inline-flex items-center gap-2 px-6 py-3 bg-ink text-canvas rounded-xl font-mono text-xs uppercase tracking-widest hover:bg-stone-800 transition-all shadow-sm hover:shadow"
             >
-              <span>Explore Council Charter</span>
+              <span>About the Council</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
             <Link
@@ -151,7 +134,7 @@ export function CinematicAboutSection() {
           </div>
         </div>
 
-        {/* Right Column: Institutional Archival Ledger */}
+        {/* Right Column: Council Overview */}
         <div className="lg:col-span-5 bg-white p-6 sm:p-9 rounded-3xl border border-stone-300/90 shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-stone-200 pb-4">
             <div className="flex items-center gap-3">
@@ -181,24 +164,24 @@ export function CinematicAboutSection() {
           <div className="space-y-4">
             <div className="flex items-baseline justify-between border-b border-stone-100 pb-3">
               <span className="font-mono text-xs uppercase tracking-wider text-stone-500">
-                Autonomous Guilds
+                Cultural Societies
               </span>
               <div className="text-right">
                 <span className="font-serif text-3xl font-bold text-ink">06</span>
                 <span className="block font-mono text-[9px] text-stone-400">
-                  WINGS UNIFIED
+                  ACTIVE SOCIETIES
                 </span>
               </div>
             </div>
 
             <div className="flex items-baseline justify-between border-b border-stone-100 pb-3">
               <span className="font-mono text-xs uppercase tracking-wider text-stone-500">
-                Annual Stage Acts
+                Annual Events
               </span>
               <div className="text-right">
                 <span className="font-serif text-3xl font-bold text-ink">75+</span>
                 <span className="block font-mono text-[9px] text-stone-400">
-                  PRODUCTIONS / YEAR
+                  EVENTS / YEAR
                 </span>
               </div>
             </div>
@@ -208,7 +191,7 @@ export function CinematicAboutSection() {
                 Festival Footfall
               </span>
               <div className="text-right">
-                <span className="font-serif text-3xl font-bold text-ink">15,000+</span>
+                <span className="font-serif text-3xl font-bold text-ink">2,500+</span>
                 <span className="block font-mono text-[9px] text-amber-700">
                   EFFERVESCENCE ARENA
                 </span>
@@ -217,19 +200,19 @@ export function CinematicAboutSection() {
 
             <div className="flex items-baseline justify-between border-b border-stone-100 pb-3">
               <span className="font-mono text-xs uppercase tracking-wider text-stone-500">
-                Active Performers
+                Student Members
               </span>
               <div className="text-right">
                 <span className="font-serif text-3xl font-bold text-ink">320+</span>
                 <span className="block font-mono text-[9px] text-stone-400">
-                  STUDENT ARTISTS
+                  ACROSS SOCIETIES
                 </span>
               </div>
             </div>
 
             <div className="flex items-baseline justify-between pt-1">
               <span className="font-mono text-xs uppercase tracking-wider text-stone-500">
-                Auditorium Capacity
+                Main Venues
               </span>
               <div className="text-right">
                 <span className="font-serif text-lg font-bold text-ink">
@@ -244,14 +227,14 @@ export function CinematicAboutSection() {
               href="/societies"
               className="group flex items-center justify-between text-xs font-mono uppercase tracking-widest text-ink hover:text-stone-600 transition-colors"
             >
-              <span>Explore All 6 Autonomous Guilds</span>
+              <span>Explore All 6 Societies</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-amber-700" />
             </Link>
           </div>
         </div>
       </div>
 
-      {/* 3. "MANY FORMS. ONE SPIRIT." — THE SIX GUILDS MATRIX */}
+      {/* 3. "MANY FORMS. ONE SPIRIT." — THE SIX SOCIETIES MATRIX */}
       <div className="pt-12 sm:pt-16">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
@@ -260,13 +243,12 @@ export function CinematicAboutSection() {
               <span>MANY FORMS. ONE SPIRIT.</span>
             </div>
             <h3 className="font-serif text-2xl sm:text-4xl font-bold tracking-tight text-ink">
-              Six Autonomous Disciplines, Unified in Purpose
+              Six Societies, One Creative Community
             </h3>
           </div>
           <p className="max-w-md font-sans text-xs text-ink-muted leading-relaxed">
-            Every society operates autonomously with elected student directors,
-            yet convenes under the Cultural Council to deliver a cohesive campus
-            arts season.
+            Each society is led by passionate student coordinators who organize regular
+            sessions, workshops, competitions, and flagship festival events throughout the year.
           </p>
         </div>
 
@@ -307,7 +289,7 @@ export function CinematicAboutSection() {
                 </div>
 
                 <div className="pt-4 mt-4 border-t border-stone-100 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-ink font-semibold">
-                  <span>Explore Wing</span>
+                  <span>View Society</span>
                   <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-amber-700" />
                 </div>
               </Link>
