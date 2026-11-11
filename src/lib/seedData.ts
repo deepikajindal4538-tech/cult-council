@@ -23,9 +23,6 @@ export const initialSocieties = [
       { name: "Rajiv Teja", role: "Coordinator" },
     ],
     stats: {
-      membersCount: 96,
-      eventsPerYear: 14,
-      foundedYear: 2005,
       teamStrengthBreakdown: "3 Coordinators, 8 Senior Members, 18 Members, 67 Volunteers",
     },
   },
@@ -52,9 +49,6 @@ export const initialSocieties = [
       { name: "Vishnu Bhawani", role: "Coordinator" },
     ],
     stats: {
-      membersCount: 60,
-      eventsPerYear: 16,
-      foundedYear: 2004,
       teamStrengthBreakdown: "3 Coordinators, 15 Senior Members, 22 Members, 33 Volunteers",
     },
   },
@@ -75,14 +69,14 @@ export const initialSocieties = [
     socialLinks: {
       instagram: "https://instagram.com/sarasva_iiita",
     },
+    email: "sarasva.society@iiita.ac.in",
     leads: [
-      { name: "Devansh Rastogi", role: "Society Head" },
-      { name: "Kavya Saxena", role: "Editorial Lead" },
+      { name: "Utkarsh Singh", role: "Coordinator" },
+      { name: "Samhita Renu", role: "Coordinator" },
+      { name: "Aryan Pandey", role: "Coordinator" },
     ],
     stats: {
-      membersCount: 40,
-      eventsPerYear: 12,
-      foundedYear: 2003,
+      teamStrengthBreakdown: "3 Coordinators, 7 Senior Members, 16 Members, 73 Volunteers",
     },
   },
   {
@@ -101,14 +95,14 @@ export const initialSocieties = [
     socialLinks: {
       instagram: "https://instagram.com/nirmiti_iiita",
     },
+    email: "nirmiti@iiita.ac.in",
     leads: [
-      { name: "Sanya Gupta", role: "Society Head" },
-      { name: "Aditya Verma", role: "Creative Director" },
+      { name: "Karan Raj Surya", role: "Coordinator" },
+      { name: "Rishabh", role: "Coordinator" },
+      { name: "Tarun Gupta", role: "Coordinator" },
     ],
     stats: {
-      membersCount: 38,
-      eventsPerYear: 10,
-      foundedYear: 2004,
+      teamStrengthBreakdown: "3 Coordinators, 3 Senior Members, 15 Members, 51 Volunteers",
     },
   },
   {
@@ -125,16 +119,16 @@ export const initialSocieties = [
       fallbackColor: "#B91C1C",
     },
     socialLinks: {
-      instagram: "https://instagram.com/rangtarangini_iiita",
+      instagram: "https://instagram.com/rangtarangini",
     },
+    email: "rangtarangini.society@iiita.ac.in",
     leads: [
-      { name: "Vikas Jha", role: "Society Head" },
-      { name: "Tanvi Mathur", role: "Director of Productions" },
+      { name: "Himansh Arora", role: "Coordinator" },
+      { name: "Arghya Shubshiv", role: "Coordinator" },
+      { name: "Niharika Singh", role: "Coordinator" },
     ],
     stats: {
-      membersCount: 52,
-      eventsPerYear: 15,
-      foundedYear: 2003,
+      teamStrengthBreakdown: "3 Coordinators, 17 Senior Members, 24 Members, 60 Volunteers",
     },
   },
   {
@@ -151,17 +145,16 @@ export const initialSocieties = [
       fallbackColor: "#0D9488",
     },
     socialLinks: {
-      instagram: "https://instagram.com/virtuosi_iiita",
-      youtube: "https://youtube.com/@virtuosi_iiita",
+      instagram: "https://instagram.com/virtuosi.iiita",
     },
+    email: "virtuosi.society@iiita.ac.in",
     leads: [
-      { name: "Kunal Ghosh", role: "Society Head" },
-      { name: "Meera Sen", role: "Vocal Arranger" },
+      { name: "Sanchita Agte", role: "Coordinator" },
+      { name: "Chinmay Raheja", role: "Coordinator" },
+      { name: "Shon Waghchoure", role: "Coordinator" },
     ],
     stats: {
-      membersCount: 48,
-      eventsPerYear: 18,
-      foundedYear: 2002,
+      teamStrengthBreakdown: "3 Coordinators, 12 Senior Members, 13 Members, 13 Volunteers",
     },
   },
 ];
