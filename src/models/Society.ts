@@ -29,10 +29,12 @@ export interface ISociety extends Document {
     role: string;
     avatarUrl?: string;
   }>;
+  email?: string;
   stats: {
     membersCount?: number;
     eventsPerYear?: number;
     foundedYear?: number;
+    teamStrengthBreakdown?: string;
   };
   createdAt: Date;
   updatedAt: Date;

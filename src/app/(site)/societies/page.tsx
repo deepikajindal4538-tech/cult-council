@@ -84,7 +84,7 @@ export default async function SocietiesPage() {
                     {society.name}
                   </h2>
                   <p className="font-mono text-xs uppercase tracking-widest text-ink-faint mt-1">
-                    ESTD. {society.stats?.foundedYear || 2004} • {society.category}
+                    ESTD. {(society.stats as any)?.foundedYear || 2004} • {society.category}
                   </p>
                 </div>
 
@@ -111,10 +111,10 @@ export default async function SocietiesPage() {
                   <div>
                     <span className="text-[10px] text-ink-faint uppercase block">Active Members</span>
                     <span className="font-serif text-sm font-semibold text-ink">
-                      {society.stats?.membersCount || 40}+ Members
+                      {(society.stats as any)?.membersCount || 40}+ Members
                     </span>
                     <span className="block text-[11px] text-ink-muted">
-                      {society.stats?.eventsPerYear || 12} Annual Events
+                      {(society.stats as any)?.eventsPerYear || 12} Annual Events
                     </span>
                   </div>
                 </div>

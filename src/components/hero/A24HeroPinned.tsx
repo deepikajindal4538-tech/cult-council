@@ -80,6 +80,9 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   }, [smoothProgress, n, totalUnits]);
 
   const handleSelectIndex = (index: number) => {
+    activeIndexRef.current = index;
+    setActiveIndex(index);
+
     if (!containerRef.current) return;
     const containerTop = containerRef.current.getBoundingClientRect().top + window.scrollY;
     const scrollDistance = containerRef.current.offsetHeight - window.innerHeight;
@@ -95,7 +98,7 @@ export function A24HeroPinned({ societies }: A24HeroPinnedProps) {
   };
 
   const activeSociety = societies[activeIndex] || societies[0];
-  const continuousProgress = scrollProgress * (n - 1 + 0.45) - 0.35;
+  const continuousProgress = Math.min(n - 1, Math.max(0, scrollProgress * totalUnits));
   const containerHeightVh = Math.max(500, Math.round(totalUnits * 120 + 100));
 
   return (

@@ -237,7 +237,7 @@ export default function AboutPage() {
                       {soc.name}
                     </span>
                     <span className="font-mono text-[10px] uppercase text-ink-faint">
-                      ESTD. {soc.stats.foundedYear}
+                      ESTD. {(soc.stats as any)?.foundedYear || 2004}
                     </span>
                   </div>
 
